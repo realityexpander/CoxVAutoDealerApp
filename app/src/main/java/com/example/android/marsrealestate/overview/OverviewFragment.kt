@@ -74,7 +74,7 @@ class OverviewFragment : Fragment() {
 
         viewModel.dealers.observe(this, Observer {
 //            if ( null != it ) {
-                it?.dealers?.forEach { e ->
+                it?.forEach { e ->
                     println("Dealer name: ${e.name}")
                     println("Dealer id: ${e.dealerId}")
                     println("Dealer vehicles: ${e.vehicles?.size}")

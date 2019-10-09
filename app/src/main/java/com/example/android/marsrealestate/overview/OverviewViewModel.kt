@@ -38,21 +38,28 @@ class OverviewViewModel : ViewModel() {
     val status: LiveData<MarsApiStatus>
         get() = _status
 
+    // ** delete
     // Internally, we use a MutableLiveData, because we will be updating the List of MarsProperty
     // with new values
     private val _properties = MutableLiveData<List<MarsProperty>>()
     val properties: LiveData<List<MarsProperty>>
         get() = _properties
 
-    // Dealers
-    private val _dealers = MutableLiveData<Dealers>()
-    val dealers: LiveData<Dealers>
+    // Dealers List
+    private val _dealers = MutableLiveData<List<Dealer>>()
+    val dealers: LiveData<List<Dealer>>
       get() = _dealers
 
+    // ** delete
     // LiveData to handle navigation to the selected property
     private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
     val navigateToSelectedProperty: LiveData<MarsProperty>
         get() = _navigateToSelectedProperty
+
+    // LiveData to handle navigation to the selected property
+    private val _navigateToSelectedDealer = MutableLiveData<Dealer>()
+    val navigateToSelectedDealer: LiveData<Dealer>
+      get() = _navigateToSelectedDealer
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
@@ -99,10 +106,15 @@ class OverviewViewModel : ViewModel() {
         // this will run on a thread managed by Retrofit
         val listResult = getDealersDeferred.await()
         _status.value = MarsApiStatus.DONE
-        _dealers.value = listResult
+
+        // Map the retrieved dealers object to an array for the gridview
+        _dealers.value = ArrayList()
+        listResult.dealers?.map {
+          (_dealers.value as ArrayList<Dealer>).add(it)
+        }
       } catch (e: Exception) {
         _status.value = MarsApiStatus.ERROR
-        _dealers.value = Dealers()
+        _dealers.value = ArrayList()
       }
     }
   }
