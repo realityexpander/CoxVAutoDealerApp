@@ -20,9 +20,7 @@ package com.example.android.marsrealestate.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.marsrealestate.network.MarsApi
-import com.example.android.marsrealestate.network.CarsApiFilter
-import com.example.android.marsrealestate.network.MarsProperty
+import com.example.android.marsrealestate.network.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,20 +33,21 @@ enum class MarsApiStatus { LOADING, ERROR, DONE }
  */
 class OverviewViewModel : ViewModel() {
 
-    // The internal MutableLiveData that stores the status of the most recent request
+    // The MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<MarsApiStatus>()
-
-    // The external immutable LiveData for the request status
     val status: LiveData<MarsApiStatus>
         get() = _status
 
     // Internally, we use a MutableLiveData, because we will be updating the List of MarsProperty
     // with new values
     private val _properties = MutableLiveData<List<MarsProperty>>()
-
-    // The external LiveData interface to the property is immutable, so only this class can modify
     val properties: LiveData<List<MarsProperty>>
         get() = _properties
+
+    // Dealers
+    private val _dealers = MutableLiveData<Dealers>()
+    val dealers: LiveData<Dealers>
+      get() = _dealers
 
     // LiveData to handle navigation to the selected property
     private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
@@ -57,7 +56,6 @@ class OverviewViewModel : ViewModel() {
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
-
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -65,7 +63,8 @@ class OverviewViewModel : ViewModel() {
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
      */
     init {
-        getMarsRealEstateProperties(CarsApiFilter.SHOW_ALL)
+      getMarsRealEstateProperties(CarsApiFilter.SHOW_ALL)
+      getDealersList()
     }
 
     /**
@@ -90,6 +89,23 @@ class OverviewViewModel : ViewModel() {
             }
         }
     }
+
+  private fun getDealersList() {
+    coroutineScope.launch {
+      // Get the Deferred object for our Retrofit request
+      var getDealersDeferred = CarsApi.retrofitService2.getDealersAsync()
+      try {
+        _status.value = MarsApiStatus.LOADING
+        // this will run on a thread managed by Retrofit
+        val listResult = getDealersDeferred.await()
+        _status.value = MarsApiStatus.DONE
+        _dealers.value = listResult
+      } catch (e: Exception) {
+        _status.value = MarsApiStatus.ERROR
+        _dealers.value = Dealers()
+      }
+    }
+  }
 
     /**
      * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the

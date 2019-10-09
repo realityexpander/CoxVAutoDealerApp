@@ -1,20 +1,3 @@
-/*
- * Copyright 2019, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package com.example.android.marsrealestate.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -31,7 +14,10 @@ enum class CarsApiFilter(val value: String) {
     SHOW_BUY("buy"),
     SHOW_ALL("all") }
 
-private const val BASE_URL = " https://android-kotlin-fun-mars-server.appspot.com/"
+private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com/"
+
+private const val BASE_URL2 = "http://api.coxauto-interview.com/api/"
+private const val DATASET_ID = "4x7xITpJ1wg"
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -51,6 +37,12 @@ private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .build()
 
+private val retrofit2 = Retrofit.Builder()
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+    .baseUrl(BASE_URL2)
+    .build()
+
 /**
  * A public interface that exposes the [getProperties] method
  */
@@ -67,9 +59,19 @@ interface MarsApiService {
             Deferred<List<MarsProperty>>
 }
 
+interface DealersApiService {
+    @GET("/api/${DATASET_ID}/cheat")
+    fun getDealersAsync():
+        Deferred<Dealers>
+}
+
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
 object MarsApi {
     val retrofitService : MarsApiService by lazy { retrofit.create(MarsApiService::class.java) }
+}
+
+object CarsApi {
+    val retrofitService2 : DealersApiService by lazy { retrofit2.create(DealersApiService::class.java) }
 }

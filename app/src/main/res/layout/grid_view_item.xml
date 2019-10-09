@@ -35,7 +35,7 @@
         <ImageView
             android:id="@+id/mars_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:adjustViewBounds="true"
             android:padding="2dp"
             android:scaleType="centerCrop"
@@ -53,5 +53,13 @@
             android:visibility="@{property.rental ? View.GONE : View.VISIBLE}"
             android:src="@drawable/ic_for_sale_outline"
             tools:src="@drawable/ic_for_sale_outline"/>
+
+        <TextView
+          android:id="@+id/dealerName"
+          android:layout_width="80dp"
+          android:layout_height="29dp"
+          android:layout_gravity="bottom|start"
+          android:text="Text Sample"
+          tools:src="@tools:sample/last_names"/>
     </FrameLayout>
 </layout>

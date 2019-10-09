@@ -72,6 +72,16 @@ class OverviewFragment : Fragment() {
             }
         })
 
+        viewModel.dealers.observe(this, Observer {
+//            if ( null != it ) {
+                it?.dealers?.forEach { e ->
+                    println("Dealer name: ${e.name}")
+                    println("Dealer id: ${e.dealerId}")
+                    println("Dealer vehicles: ${e.vehicles?.size}")
+                }
+//            }
+        })
+
         setHasOptionsMenu(true)
         return binding.root
     }
