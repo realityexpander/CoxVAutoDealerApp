@@ -1,19 +1,3 @@
-/*
- * Copyright 2019, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
 
 package com.example.android.marsrealestate.overview
 
@@ -28,7 +12,7 @@ import com.example.android.marsrealestate.databinding.FragmentOverviewBinding
 import com.example.android.marsrealestate.network.CarsApiFilter
 
 /**
- * This fragment shows the the status of the Mars real-estate web services transaction.
+ * This fragment shows the the status of the Dealer List web services transaction.
  */
 class OverviewFragment : Fragment() {
 
@@ -46,7 +30,7 @@ class OverviewFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentOverviewBinding.inflate(inflater)
-        //val binding = GridViewItemBinding.inflate(inflater)
+        //val binding = GridViewItemBinding.inflate(inflater) // ** delete
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
@@ -56,13 +40,18 @@ class OverviewFragment : Fragment() {
 
         // Sets the adapter of the photosGrid RecyclerView with clickHandler lambda that
         // tells the viewModel when our property is clicked
+        // ** delete
         binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
             viewModel.displayPropertyDetails(it)
         })
+//        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+//          viewModel.displayDealerDetails(it)
+//        })
 
         // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
         // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
         // for another navigation event.
+        // ** delete
         viewModel.navigateToSelectedProperty.observe(this, Observer {
             if ( null != it ) {
                 // Must find the NavController from the Fragment
@@ -72,14 +61,21 @@ class OverviewFragment : Fragment() {
             }
         })
 
+//        viewModel.navigateToSelectedDealer.observe(this, Observer {
+//          if ( null != it ) {
+//            // Must find the NavController from the Fragment
+//            this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
+//            // Tell the ViewModel we've made the navigate call to prevent multiple navigation
+//            viewModel.displayDealerDetailsComplete()
+//          }
+//        })
+
         viewModel.dealers.observe(this, Observer {
-//            if ( null != it ) {
-                it?.forEach { e ->
-                    println("Dealer name: ${e.name}")
-                    println("Dealer id: ${e.dealerId}")
-                    println("Dealer vehicles: ${e.vehicles?.size}")
-                }
-//            }
+            it?.forEach { e ->
+                println("Dealer name: ${e.name}")
+                println("Dealer id: ${e.dealerId}")
+                println("Dealer vehicles: ${e.vehicles?.size}")
+            }
         })
 
         setHasOptionsMenu(true)
@@ -89,6 +85,7 @@ class OverviewFragment : Fragment() {
     /**
      * Inflates the overflow menu that contains filtering options.
      */
+    // ** delete?
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -98,6 +95,7 @@ class OverviewFragment : Fragment() {
      * Updates the filter in the [OverviewViewModel] when the menu items are selected from the
      * overflow menu.
      */
+    // ** delete?
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         viewModel.updateFilter(
                 when (item.itemId) {

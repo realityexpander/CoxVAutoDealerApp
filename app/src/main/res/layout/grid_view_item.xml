@@ -24,42 +24,54 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="property"
-            type="com.example.android.marsrealestate.network.MarsProperty"/>
+        name="dealer"
+        type="com.example.android.marsrealestate.network.Dealer"/>
     </data>
+
+<!--    name="property"-->
+<!--    type="com.example.android.marsrealestate.network.MarsProperty"/>-->
+<!--</data>-->
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="170dp">
 
-        <ImageView
-            android:id="@+id/mars_image"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:adjustViewBounds="true"
-            android:padding="2dp"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{property.imgSrcUrl}"
-            tools:src="@tools:sample/backgrounds/scenic"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/mars_image"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:adjustViewBounds="true"-->
+<!--            android:padding="2dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            app:imageUrl="@{property.imgSrcUrl}"-->
+<!--            tools:src="@tools:sample/backgrounds/scenic"/>-->
 
-        <ImageView
-            android:id="@+id/mars_property_type"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_gravity="bottom|end"
-            android:adjustViewBounds="true"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:visibility="@{property.rental ? View.GONE : View.VISIBLE}"
-            android:src="@drawable/ic_for_sale_outline"
-            tools:src="@drawable/ic_for_sale_outline"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/mars_property_type"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_gravity="bottom|end"-->
+<!--            android:adjustViewBounds="true"-->
+<!--            android:padding="5dp"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:visibility="@{property.rental ? View.GONE : View.VISIBLE}"-->
+<!--            android:src="@drawable/ic_for_sale_outline"-->
+<!--            tools:src="@drawable/ic_for_sale_outline"/>-->
+
+        <TextView
+          android:id="@+id/dealerId"
+          android:layout_width="80dp"
+          android:layout_height="29dp"
+          android:layout_gravity="bottom|end"
+          android:text="@{dealer.dealerId}"
+          tools:src="@tools:sample/last_names"/>
 
         <TextView
           android:id="@+id/dealerName"
           android:layout_width="80dp"
           android:layout_height="29dp"
           android:layout_gravity="bottom|start"
-          android:text="Text Sample"
+          android:text="@{dealer.name}"
           tools:src="@tools:sample/last_names"/>
     </FrameLayout>
 </layout>

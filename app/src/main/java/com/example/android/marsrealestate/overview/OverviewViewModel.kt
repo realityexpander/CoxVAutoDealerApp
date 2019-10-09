@@ -26,7 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-enum class MarsApiStatus { LOADING, ERROR, DONE }
+enum class CarsApiStatus { LOADING, ERROR, DONE }
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -34,8 +34,8 @@ enum class MarsApiStatus { LOADING, ERROR, DONE }
 class OverviewViewModel : ViewModel() {
 
     // The MutableLiveData that stores the status of the most recent request
-    private val _status = MutableLiveData<MarsApiStatus>()
-    val status: LiveData<MarsApiStatus>
+    private val _status = MutableLiveData<CarsApiStatus>()
+    val status: LiveData<CarsApiStatus>
         get() = _status
 
     // ** delete
@@ -76,22 +76,23 @@ class OverviewViewModel : ViewModel() {
 
     /**
      * Gets filtered Mars real estate property information from the Mars API Retrofit service and
-     * updates the [MarsProperty] [List] and [MarsApiStatus] [LiveData]. The Retrofit service
+     * updates the [Dealer] [List] and [CarsApiStatus] [LiveData]. The Retrofit service
      * returns a coroutine Deferred, which we await to get the result of the transaction.
      * @param filter the [CarsApiFilter] that is sent as part of the web server request
      */
+    // ** delete
     private fun getMarsRealEstateProperties(filter: CarsApiFilter) {
         coroutineScope.launch {
             // Get the Deferred object for our Retrofit request
             var getPropertiesDeferred = MarsApi.retrofitService.getProperties(filter.value)
             try {
-                _status.value = MarsApiStatus.LOADING
+                _status.value = CarsApiStatus.LOADING
                 // this will run on a thread managed by Retrofit
                 val listResult = getPropertiesDeferred.await()
-                _status.value = MarsApiStatus.DONE
+                _status.value = CarsApiStatus.DONE
                 _properties.value = listResult
             } catch (e: Exception) {
-                _status.value = MarsApiStatus.ERROR
+                _status.value = CarsApiStatus.ERROR
                 _properties.value = ArrayList()
             }
         }
@@ -102,10 +103,10 @@ class OverviewViewModel : ViewModel() {
       // Get the Deferred object for our Retrofit request
       var getDealersDeferred = CarsApi.retrofitService2.getDealersAsync()
       try {
-        _status.value = MarsApiStatus.LOADING
+        _status.value = CarsApiStatus.LOADING
         // this will run on a thread managed by Retrofit
         val listResult = getDealersDeferred.await()
-        _status.value = MarsApiStatus.DONE
+        _status.value = CarsApiStatus.DONE
 
         // Map the retrieved dealers object to an array for the gridview
         _dealers.value = ArrayList()
@@ -113,7 +114,7 @@ class OverviewViewModel : ViewModel() {
           (_dealers.value as ArrayList<Dealer>).add(it)
         }
       } catch (e: Exception) {
-        _status.value = MarsApiStatus.ERROR
+        _status.value = CarsApiStatus.ERROR
         _dealers.value = ArrayList()
       }
     }
@@ -141,14 +142,23 @@ class OverviewViewModel : ViewModel() {
      * When the property is clicked, set the [_navigateToSelectedProperty] [MutableLiveData]
      * @param marsProperty The [MarsProperty] that was clicked on.
      */
+    // ** delete
     fun displayPropertyDetails(marsProperty: MarsProperty) {
         _navigateToSelectedProperty.value = marsProperty
+    }
+
+    fun displayDealerDetails(dealer: Dealer) {
+      _navigateToSelectedDealer.value = dealer
     }
 
     /**
      * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
      */
+    // ** delete
     fun displayPropertyDetailsComplete() {
         _navigateToSelectedProperty.value = null
+    }
+    fun displayDealerDetailsComplete() {
+      _navigateToSelectedProperty.value = null
     }
 }
