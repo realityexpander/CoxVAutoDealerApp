@@ -2,9 +2,7 @@
 <layout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto">
-
+  xmlns:tools="http://schemas.android.com/tools" >
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -65,103 +63,3 @@
       </data>
 
 </layout>
-
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-
-
-<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--  xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--  xmlns:tools="http://schemas.android.com/tools"-->
-<!--  xmlns:card_view="http://schemas.android.com/apk/res-auto">-->
-
-<!--&lt;!&ndash;  android:layout_width="match_parent"&ndash;&gt;-->
-
-<!--&lt;!&ndash;  <FrameLayout&ndash;&gt;-->
-<!--&lt;!&ndash;    android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;    android:layout_height="100dp">&ndash;&gt;-->
-
-<!--    &lt;!&ndash;        <ImageView&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:id="@+id/mars_image"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_height="100dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:adjustViewBounds="true"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:padding="2dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:scaleType="centerCrop"&ndash;&gt;-->
-<!--    &lt;!&ndash;            app:imageUrl="@{property.imgSrcUrl}"&ndash;&gt;-->
-<!--    &lt;!&ndash;            tools:src="@tools:sample/backgrounds/scenic"/>&ndash;&gt;-->
-
-<!--    &lt;!&ndash;        <ImageView&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:id="@+id/mars_property_type"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_height="45dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:layout_gravity="bottom|end"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:adjustViewBounds="true"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:padding="5dp"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:scaleType="fitCenter"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:visibility="@{property.rental ? View.GONE : View.VISIBLE}"&ndash;&gt;-->
-<!--    &lt;!&ndash;            android:src="@drawable/ic_for_sale_outline"&ndash;&gt;-->
-<!--    &lt;!&ndash;            tools:src="@drawable/ic_for_sale_outline"/>&ndash;&gt;-->
-
-<!--  <LinearLayout-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="@color/cardview_light_background"-->
-<!--    android:layout_margin="4dp">-->
-
-<!--  <androidx.cardview.widget.CardView-->
-<!--    android:id="@+id/card_view"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:layout_gravity="center"-->
-<!--    android:elevation="2dp"-->
-<!--    android:padding="15dp"-->
-<!--    card_view:cardCornerRadius="5dp">-->
-
-
-<!--    <RelativeLayout-->
-<!--      android:layout_width="match_parent"-->
-<!--      android:layout_height="match_parent">-->
-
-<!--    <TextView-->
-<!--      android:id="@+id/dealerId"-->
-<!--      android:layout_width="80dp"-->
-<!--      android:layout_height="29dp"-->
-<!--      android:layout_gravity="end"-->
-<!--      android:layout_marginStart="150dp"-->
-<!--      android:gravity="end"-->
-<!--      android:lines="1"-->
-<!--      android:text="@{dealer.dealerIdStr}"-->
-<!--      android:textColor="@color/colorPrimaryDark"-->
-<!--      tools:src="@tools:sample/last_names" />-->
-
-<!--    <TextView-->
-<!--      android:id="@+id/dealerName"-->
-<!--      android:layout_width="221dp"-->
-<!--      android:layout_height="40dp"-->
-<!--      android:gravity="start|top|left"-->
-<!--      android:lines="1"-->
-<!--      android:text="@{dealer.name}"-->
-<!--      android:textColor="@color/colorPrimaryDark"-->
-<!--      tools:src="@tools:sample/last_names" />-->
-
-<!--    </RelativeLayout>-->
-
-<!--  </androidx.cardview.widget.CardView>-->
-
-<!--  </LinearLayout>-->
-
-<!--&lt;!&ndash;  </FrameLayout>&ndash;&gt;-->
-
-<!--  &lt;!&ndash;    name="property"&ndash;&gt;-->
-<!--&lt;!&ndash;    type="com.example.android.marsrealestate.network.MarsProperty"/>&ndash;&gt;-->
-<!--&lt;!&ndash;</data>&ndash;&gt;-->
-
-<!--    <data>-->
-<!--        <import type="android.view.View"/>-->
-<!--        <variable-->
-<!--        name="dealer"-->
-<!--        type="com.example.android.marsrealestate.network.Dealer"/>-->
-<!--    </data>-->
-<!--</layout>-->
