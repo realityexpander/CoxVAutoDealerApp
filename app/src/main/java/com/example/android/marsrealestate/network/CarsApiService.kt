@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import kotlinx.coroutines.Deferred
+import retrofit2.Call
 import retrofit2.http.Query
 
 enum class CarsApiFilter(val value: String) {
@@ -44,7 +45,7 @@ private val retrofit2 = Retrofit.Builder()
     .build()
 
 /**
- * A public interface that exposes the [getProperties] method
+ * A public interface that exposes the [getPropertiesAsync] method
  */
 interface MarsApiService {
     /**
@@ -55,7 +56,7 @@ interface MarsApiService {
      */
     // ** delete
     @GET("realestate")
-    fun getProperties(@Query("filter") type: String):
+    fun getPropertiesAsync(@Query("filter") type: String):
             Deferred<List<MarsProperty>>
 }
 
@@ -63,6 +64,9 @@ interface DealersApiService {
     @GET("/api/${DATASET_ID}/cheat")
     fun getDealersAsync():
         Deferred<Dealers>
+
+    @GET("/api/${DATASET_ID}/cheat")
+    fun getDealers(): Call<Dealers>
 }
 
 /**

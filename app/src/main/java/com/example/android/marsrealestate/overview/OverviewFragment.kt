@@ -44,7 +44,7 @@ class OverviewFragment : Fragment() {
 //        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
 //            viewModel.displayPropertyDetails(it)
 //        })
-        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+        binding.dealersList.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
           viewModel.displayDealerDetails(it)
         })
 

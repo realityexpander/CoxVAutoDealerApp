@@ -1,20 +1,3 @@
-/*
- * Copyright 2019, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package com.example.android.marsrealestate.overview
 
 import androidx.lifecycle.LiveData
@@ -33,7 +16,7 @@ enum class CarsApiStatus { LOADING, ERROR, DONE }
  */
 class OverviewViewModel : ViewModel() {
 
-    // The MutableLiveData that stores the status of the most recent request
+    // Status of the most recent request
     private val _status = MutableLiveData<CarsApiStatus>()
     val status: LiveData<CarsApiStatus>
         get() = _status
@@ -84,7 +67,7 @@ class OverviewViewModel : ViewModel() {
     private fun getMarsRealEstateProperties(filter: CarsApiFilter) {
         coroutineScope.launch {
             // Get the Deferred object for our Retrofit request
-            val getPropertiesDeferred = MarsApi.retrofitService.getProperties(filter.value)
+            val getPropertiesDeferred = MarsApi.retrofitService.getPropertiesAsync(filter.value)
             try {
                 _status.value = CarsApiStatus.LOADING
                 // this will run on a thread managed by Retrofit
@@ -104,7 +87,7 @@ class OverviewViewModel : ViewModel() {
       val getDealersDeferred = CarsApi.retrofitService2.getDealersAsync()
       try {
         _status.value = CarsApiStatus.LOADING
-        // this will run on a thread managed by Retrofit
+
         val listResult = getDealersDeferred.await()
         _status.value = CarsApiStatus.DONE
 
@@ -159,6 +142,6 @@ class OverviewViewModel : ViewModel() {
         _navigateToSelectedProperty.value = null
     }
     fun displayDealerDetailsComplete() {
-      _navigateToSelectedProperty.value = null
+      _navigateToSelectedDealer.value = null
     }
 }

@@ -27,7 +27,14 @@ data class Vehicle (
     val vehicleId: Int? = null,
     val year: Int? = null,
     val make: String? = null,
-    val model: String? = null ) : Parcelable
+    val model: String? = null ) : Parcelable {
+  val vehicleIdStr
+    get() = "Vehicle ID: $vehicleId"
+  val yearStr
+    get() = "Year: $year"
+  val yearModelStr
+    get() = "$year $model"
+}
 
 @Parcelize
 data class Dealers (

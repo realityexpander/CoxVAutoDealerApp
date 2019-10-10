@@ -49,14 +49,15 @@
 <!--                tools:src="@tools:sample/backgrounds/scenic" />-->
 
             <TextView
-                android:id="@+id/main_photo_image"
-                android:layout_width="0dp"
-                android:layout_height="266dp"
-                app:text="@{safeUnbox(viewModel.selectedDealer.vehicles[0].vehicleId)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="100102939" />
+              android:id="@+id/main_photo_image"
+              android:layout_width="0dp"
+              android:layout_height="266dp"
+              android:text="@{viewModel.selectedDealer.vehicles[0].vehicleIdStr}"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              tools:text="100102939" />
+
 
             <TextView
                 android:id="@+id/property_type_text"
@@ -65,10 +66,11 @@
                 android:layout_marginTop="16dp"
                 android:textColor="#de000000"
                 android:textSize="39sp"
-                android:text="@{viewModel.selectedDealer.vehicles[0].make}"
+                android:text="@{viewModel.selectedDealer.vehicles[0].yearModelStr}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_photo_image"
-                tools:text="Ford" />
+                tools:text="Fiesta" />
+
 
             <TextView
                 android:id="@+id/price_value_text"
@@ -77,10 +79,10 @@
                 android:layout_marginTop="8dp"
                 android:textColor="#de000000"
                 android:textSize="20sp"
-                android:text="@{viewModel.selectedDealer.vehicles[0].model}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/property_type_text"
-                tools:text="Fiesta" />
+                android:text="@{viewModel.selectedDealer.vehicles[0].make}"
+                tools:text="Ford" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

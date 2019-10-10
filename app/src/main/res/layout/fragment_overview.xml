@@ -5,32 +5,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.android.marsrealestate.overview.OverviewViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.android.marsrealestate.MainActivity">
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:context="com.example.android.marsrealestate.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/photos_grid"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="6dp"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:listData="@{viewModel.dealers}"
-            app:spanCount="1"
-            tools:itemCount="16"
-            tools:listitem="@layout/grid_view_item" />
+          android:id="@+id/dealers_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:padding="6dp"
+          android:clipToPadding="false"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:listData="@{viewModel.dealers}"
+          app:spanCount="1"
+          tools:itemCount="16"
+          tools:listitem="@layout/grid_view_item" />
 
         <ImageView
             android:id="@+id/status_image"
@@ -40,7 +34,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/loading_animation"
             app:marsApiStatus="@{viewModel.status}" />
 
+<!--        "@{viewModel.status ? View.GONE : View.VISIBLE}"-->
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.marsrealestate.overview.OverviewViewModel" />
+    </data>
 </layout>
