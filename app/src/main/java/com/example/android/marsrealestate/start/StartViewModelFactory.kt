@@ -30,7 +30,7 @@ class StartViewModelFactory(
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(StartViewModel::class.java)) {
-//            return StartViewModel(marsProperty, application) as T
+//            return StartViewModel(marsProperty, application) as T // ** delete
             return StartViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
