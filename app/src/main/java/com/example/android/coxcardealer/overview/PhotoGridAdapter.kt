@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.coxcardealer.databinding.ItemViewItemBinding
+import com.example.android.coxcardealer.databinding.DealerItemViewItemBinding
 import com.example.android.coxcardealer.network.Dealer
 
 /**
@@ -21,7 +21,7 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
      * The DealerViewHolder constructor takes the binding variable from the associated
      * RecyclerViewItem, which nicely gives it access to the full [Dealer] information.
      */
-    class DealerViewHolder(private var binding: ItemViewItemBinding):
+    class DealerViewHolder(private var binding: DealerItemViewItemBinding):
         RecyclerView.ViewHolder(binding.root) {
             fun bind(dealer: Dealer) {
                 binding.dealer = dealer
@@ -48,7 +48,7 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
      */
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): DealerViewHolder {
-        return DealerViewHolder(ItemViewItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return DealerViewHolder(DealerItemViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     /**
