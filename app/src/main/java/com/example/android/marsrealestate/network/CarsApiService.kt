@@ -17,7 +17,7 @@ enum class CarsApiFilter(val value: String) {
 
 private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com/"
 
-private const val BASE_URL2 = "http://api.coxauto-interview.com/api/"
+private const val BASE_URL2 = "https://api.coxauto-interview.com/api/"
 private const val DATASET_ID = "4x7xITpJ1wg"
 
 /**
