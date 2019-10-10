@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.marsrealestate.databinding.GridViewItemBinding
+import com.example.android.marsrealestate.databinding.ItemViewItemBinding
 import com.example.android.marsrealestate.network.Dealer
-import com.example.android.marsrealestate.network.MarsProperty
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
@@ -22,7 +21,7 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
      * The DealerViewHolder constructor takes the binding variable from the associated
      * RecyclerViewItem, which nicely gives it access to the full [Dealer] information.
      */
-    class DealerViewHolder(private var binding: GridViewItemBinding):
+    class DealerViewHolder(private var binding: ItemViewItemBinding):
         RecyclerView.ViewHolder(binding.root) {
             fun bind(dealer: Dealer) {
                 binding.dealer = dealer
@@ -45,11 +44,11 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
     }
 
     /**
-     * Create new [RecyclerView] item views (invoked by the layout manager)
+     * Create new [RecyclerView] item views (invoked by the Android Layout Manager)
      */
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): DealerViewHolder {
-        return DealerViewHolder(GridViewItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return DealerViewHolder(ItemViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     /**

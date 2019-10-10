@@ -24,7 +24,7 @@
           app:listData="@{viewModel.dealers}"
           app:spanCount="1"
           tools:itemCount="16"
-          tools:listitem="@layout/grid_view_item" />
+          tools:listitem="@layout/item_view_item" />
 
         <ImageView
             android:id="@+id/status_image"

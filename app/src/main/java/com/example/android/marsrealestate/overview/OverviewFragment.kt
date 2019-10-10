@@ -56,25 +56,16 @@ class OverviewFragment : Fragment() {
 
         // ** delete
         // Print the current dealer list
-        viewModel.dealers.observe(this, Observer {
-            it?.forEach { e ->
-                println("Dealer name: ${e.name}")
-                println("Dealer id: ${e.dealerId}")
-                println("Dealer vehicles: ${e.vehicles?.size}")
-            }
-        })
+//        viewModel.dealers.observe(this, Observer {
+//            it?.forEach { e ->
+//                println("Dealer name: ${e.name}")
+//                println("Dealer id: ${e.dealerId}")
+//                println("Dealer vehicles: ${e.vehicles?.size}")
+//            }
+//        })
 
         setHasOptionsMenu(false)
         return binding.root
     }
-
-    /**
-     * Inflates the overflow menu that contains filtering options.
-     */
-    // ** delete?
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.overflow_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
 
 }
