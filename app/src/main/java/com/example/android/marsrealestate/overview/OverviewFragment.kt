@@ -30,7 +30,6 @@ class OverviewFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentOverviewBinding.inflate(inflater)
-        //val binding = GridViewItemBinding.inflate(inflater) // ** delete
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
@@ -38,28 +37,15 @@ class OverviewFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
-        // Sets the adapter of the photosGrid RecyclerView with clickHandler lambda that
-        // tells the viewModel when our property is clicked
-        // ** delete
-//        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
-//            viewModel.displayPropertyDetails(it)
-//        })
+        // Sets the adapter of the RecyclerView with clickHandler lambda that
+        // tells the viewModel when our dealer is clicked
         binding.dealersList.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
           viewModel.displayDealerDetails(it)
         })
 
-        // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
-        // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
+        // Observe the navigateToSelectedDealer LiveData and Navigate when it isn't null
+        // After navigating, call displayDealerComplete() so that the ViewModel is ready
         // for another navigation event.
-        // ** delete
-//        viewModel.navigateToSelectedProperty.observe(this, Observer {
-//            if ( null != it ) {
-//                // Must find the NavController from the Fragment
-//                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
-//                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
-//                viewModel.displayPropertyDetailsComplete()
-//            }
-//        })
         viewModel.navigateToSelectedDealer.observe(this, Observer {
           if ( null != it ) {
             // Must find the NavController from the Fragment
@@ -68,6 +54,8 @@ class OverviewFragment : Fragment() {
           }
         })
 
+        // ** delete
+        // Print the current dealer list
         viewModel.dealers.observe(this, Observer {
             it?.forEach { e ->
                 println("Dealer name: ${e.name}")
@@ -76,7 +64,7 @@ class OverviewFragment : Fragment() {
             }
         })
 
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
         return binding.root
     }
 
@@ -84,24 +72,9 @@ class OverviewFragment : Fragment() {
      * Inflates the overflow menu that contains filtering options.
      */
     // ** delete?
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.overflow_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
 
-    /**
-     * Updates the filter in the [OverviewViewModel] when the menu items are selected from the
-     * overflow menu.
-     */
-    // ** delete?
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        viewModel.updateFilter(
-                when (item.itemId) {
-                    R.id.show_rent_menu -> CarsApiFilter.SHOW_RENT
-                    R.id.show_buy_menu -> CarsApiFilter.SHOW_BUY
-                    else -> CarsApiFilter.SHOW_ALL
-                }
-        )
-        return true
-    }
 }

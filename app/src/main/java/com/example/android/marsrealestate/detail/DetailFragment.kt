@@ -39,9 +39,6 @@ class DetailFragment : Fragment() {
         val binding = FragmentDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        // ** delete
-//        val marsProperty = DetailFragmentArgs.fromBundle(arguments!!).selectedProperty
-//        val viewModelFactory = DetailViewModelFactory(marsProperty, application)
         val dealer = DetailFragmentArgs.fromBundle(arguments!!).selectedDealer
         val viewModelFactory = DetailViewModelFactory(dealer, application)
         binding.viewModel = ViewModelProviders.of(

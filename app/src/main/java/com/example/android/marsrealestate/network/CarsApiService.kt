@@ -15,9 +15,7 @@ enum class CarsApiFilter(val value: String) {
     SHOW_BUY("buy"),
     SHOW_ALL("all") }
 
-private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com/"
-
-private const val BASE_URL2 = "https://api.coxauto-interview.com/api/"
+private const val BASE_URL = "https://api.coxauto-interview.com/api/"
 private const val DATASET_ID = "4x7xITpJ1wg"
 
 /**
@@ -38,44 +36,19 @@ private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .build()
 
-private val retrofit2 = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-    .baseUrl(BASE_URL2)
-    .build()
-
 /**
- * A public interface that exposes the [getPropertiesAsync] method
+ * A public interface to expose the [getDealersAsync] method
+ * Returns a Coroutine [Deferred] [List] of [Dealers] to fetch with await()
  */
-interface MarsApiService {
-    /**
-     * Returns a Coroutine [Deferred] [List] of [MarsProperty] which can be fetched with await() if
-     * in a Coroutine scope.
-     * The @GET annotation indicates that the "realestate" endpoint will be requested with the GET
-     * HTTP method
-     */
-    // ** delete
-    @GET("realestate")
-    fun getPropertiesAsync(@Query("filter") type: String):
-            Deferred<List<MarsProperty>>
-}
-
 interface DealersApiService {
     @GET("/api/${DATASET_ID}/cheat")
     fun getDealersAsync():
         Deferred<Dealers>
-
-    @GET("/api/${DATASET_ID}/cheat")
-    fun getDealers(): Call<Dealers>
 }
 
 /**
- * A public Api object that exposes the lazy-initialized Retrofit service
+ * A public Api object to expose the lazy-initialized Retrofit service
  */
-object MarsApi {
-    val retrofitService : MarsApiService by lazy { retrofit.create(MarsApiService::class.java) }
-}
-
 object CarsApi {
-    val retrofitService2 : DealersApiService by lazy { retrofit2.create(DealersApiService::class.java) }
+    val retrofitService2 : DealersApiService by lazy { retrofit.create(DealersApiService::class.java) }
 }

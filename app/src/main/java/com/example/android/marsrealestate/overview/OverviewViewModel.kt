@@ -16,71 +16,38 @@ enum class CarsApiStatus { LOADING, ERROR, DONE }
  */
 class OverviewViewModel : ViewModel() {
 
-    // Status of the most recent request
+    // Status of the most recent request from API
     private val _status = MutableLiveData<CarsApiStatus>()
     val status: LiveData<CarsApiStatus>
         get() = _status
-
-    // ** delete
-    // Internally, we use a MutableLiveData, because we will be updating the List of MarsProperty
-    // with new values
-    private val _properties = MutableLiveData<List<MarsProperty>>()
-    val properties: LiveData<List<MarsProperty>>
-        get() = _properties
 
     // Dealers List
     private val _dealers = MutableLiveData<List<Dealer>>()
     val dealers: LiveData<List<Dealer>>
       get() = _dealers
 
-    // ** delete
-    // LiveData to handle navigation to the selected property
-    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
-    val navigateToSelectedProperty: LiveData<MarsProperty>
-        get() = _navigateToSelectedProperty
-
-    // LiveData to handle navigation to the selected property
+    // Handle navigation to the selected dealer
     private val _navigateToSelectedDealer = MutableLiveData<Dealer>()
     val navigateToSelectedDealer: LiveData<Dealer>
       get() = _navigateToSelectedDealer
 
-    // Create a Coroutine scope using a job to be able to cancel when needed
+    // Coroutine scope uses a Job to be able to cancel when needed
     private var viewModelJob = Job()
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    /**
-     * Call getMarsRealEstateProperties() on init so we can display status immediately.
-     */
+
+    // Display status immediately.
     init {
-      getMarsRealEstateProperties(CarsApiFilter.SHOW_ALL)
       getDealersList()
     }
 
-    /**
-     * Gets filtered Mars real estate property information from the Mars API Retrofit service and
-     * updates the [Dealer] [List] and [CarsApiStatus] [LiveData]. The Retrofit service
-     * returns a coroutine Deferred, which we await to get the result of the transaction.
-     * @param filter the [CarsApiFilter] that is sent as part of the web server request
-     */
-    // ** delete
-    private fun getMarsRealEstateProperties(filter: CarsApiFilter) {
-        coroutineScope.launch {
-            // Get the Deferred object for our Retrofit request
-            val getPropertiesDeferred = MarsApi.retrofitService.getPropertiesAsync(filter.value)
-            try {
-                _status.value = CarsApiStatus.LOADING
-                // this will run on a thread managed by Retrofit
-                val listResult = getPropertiesDeferred.await()
-                _status.value = CarsApiStatus.DONE
-                _properties.value = listResult
-            } catch (e: Exception) {
-                _status.value = CarsApiStatus.ERROR
-                _properties.value = ArrayList()
-            }
-        }
-    }
-
+  /**
+   * Gets filtered Mars real estate property information from the Mars API Retrofit service and
+   * updates the [Dealer] [List] and [CarsApiStatus] [LiveData]. The Retrofit service
+   * returns a coroutine Deferred, which we await to get the result of the transaction.
+   * @param filter the [CarsApiFilter] that is sent as part of the web server request
+   */
   private fun getDealersList() {
     coroutineScope.launch {
       // Get the Deferred object for our Retrofit request
@@ -113,23 +80,9 @@ class OverviewViewModel : ViewModel() {
     }
 
     /**
-     * Updates the data set filter for the web services by querying the data with the new filter
-     * by calling [getMarsRealEstateProperties]
-     * @param filter the [CarsApiFilter] that is sent as part of the web server request
+     * When the property is clicked, set the [_navigateToSelectedDealer] [MutableLiveData]
+     * @param dealer is The [Dealer] that was clicked on.
      */
-    fun updateFilter(filter: CarsApiFilter) {
-        getMarsRealEstateProperties(filter)
-    }
-
-    /**
-     * When the property is clicked, set the [_navigateToSelectedProperty] [MutableLiveData]
-     * @param marsProperty The [MarsProperty] that was clicked on.
-     */
-    // ** delete
-    fun displayPropertyDetails(marsProperty: MarsProperty) {
-        _navigateToSelectedProperty.value = marsProperty
-    }
-
     fun displayDealerDetails(dealer: Dealer) {
       _navigateToSelectedDealer.value = dealer
     }
@@ -137,10 +90,6 @@ class OverviewViewModel : ViewModel() {
     /**
      * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
      */
-    // ** delete
-    fun displayPropertyDetailsComplete() {
-        _navigateToSelectedProperty.value = null
-    }
     fun displayDealerDetailsComplete() {
       _navigateToSelectedDealer.value = null
     }

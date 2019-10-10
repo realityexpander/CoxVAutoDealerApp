@@ -11,7 +11,8 @@ import kotlinx.android.parcel.Parcelize
 
 /**
  * This data class defines a dealership property which includes an ID and the name of
- * the dealership
+ * the dealership.
+ * The property names of this data class are used by Moshi to match the names of values in JSON.
  */
 @Parcelize
 data class Dealer (
@@ -22,6 +23,9 @@ data class Dealer (
     get() = dealerId.toString()
 }
 
+/**
+ * This data class describes an individual vehicle.
+ */
 @Parcelize
 data class Vehicle (
     val vehicleId: Int? = null,
@@ -29,7 +33,9 @@ data class Vehicle (
     val make: String? = null,
     val model: String? = null ) : Parcelable {
   val vehicleIdStr
-    get() = "Vehicle ID: $vehicleId"
+    get() = "$vehicleId"
+  val vehicleIdFullStr
+    get() = "Vehicle ID: $vehicleIdStr"
   val yearStr
     get() = "Year: $year"
   val yearModelStr
