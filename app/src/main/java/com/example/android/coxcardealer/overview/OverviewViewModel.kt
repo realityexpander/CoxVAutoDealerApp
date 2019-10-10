@@ -40,6 +40,7 @@ class OverviewViewModel : ViewModel() {
     // Display status immediately.
     init {
       getDealersList()
+      _status.value = CarsApiStatus.LOADING
     }
 
   /**

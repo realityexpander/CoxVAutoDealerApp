@@ -37,17 +37,6 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-<!--            <ImageView-->
-<!--                android:id="@+id/main_photo_image"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="266dp"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                app:imageUrl="@{viewModel.selectedProperty.imgSrcUrl}"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                tools:src="@tools:sample/backgrounds/scenic" />-->
-
             <TextView
               android:id="@+id/main_photo_image"
               android:layout_width="0dp"

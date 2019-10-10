@@ -27,17 +27,16 @@
           tools:listitem="@layout/dealer_item_view_item" />
 
         <ImageView
-            android:id="@+id/status_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/loading_animation"
-            app:carsApiStatus="@{viewModel.status}" />
+          android:id="@+id/status_image"
+          android:layout_width="268dp"
+          android:layout_height="270dp"
+          app:carsApiStatus="@{viewModel.status}"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:visibility="gone" />
 
-<!--        "@{viewModel.status ? View.GONE : View.VISIBLE}"-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
