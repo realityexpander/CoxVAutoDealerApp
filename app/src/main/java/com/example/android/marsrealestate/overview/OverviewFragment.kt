@@ -41,34 +41,32 @@ class OverviewFragment : Fragment() {
         // Sets the adapter of the photosGrid RecyclerView with clickHandler lambda that
         // tells the viewModel when our property is clicked
         // ** delete
-        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
-            viewModel.displayPropertyDetails(it)
-        })
 //        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
-//          viewModel.displayDealerDetails(it)
+//            viewModel.displayPropertyDetails(it)
 //        })
+        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+          viewModel.displayDealerDetails(it)
+        })
 
         // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
         // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
         // for another navigation event.
         // ** delete
-        viewModel.navigateToSelectedProperty.observe(this, Observer {
-            if ( null != it ) {
-                // Must find the NavController from the Fragment
-                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
-                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
-                viewModel.displayPropertyDetailsComplete()
-            }
-        })
-
-//        viewModel.navigateToSelectedDealer.observe(this, Observer {
-//          if ( null != it ) {
-//            // Must find the NavController from the Fragment
-//            this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
-//            // Tell the ViewModel we've made the navigate call to prevent multiple navigation
-//            viewModel.displayDealerDetailsComplete()
-//          }
+//        viewModel.navigateToSelectedProperty.observe(this, Observer {
+//            if ( null != it ) {
+//                // Must find the NavController from the Fragment
+//                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
+//                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
+//                viewModel.displayPropertyDetailsComplete()
+//            }
 //        })
+        viewModel.navigateToSelectedDealer.observe(this, Observer {
+          if ( null != it ) {
+            // Must find the NavController from the Fragment
+            this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
+            viewModel.displayDealerDetailsComplete()
+          }
+        })
 
         viewModel.dealers.observe(this, Observer {
             it?.forEach { e ->

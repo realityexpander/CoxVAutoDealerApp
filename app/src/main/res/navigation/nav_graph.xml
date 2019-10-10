@@ -28,20 +28,21 @@
     </fragment>
 
 
-<!--    ** fix selectedProperty-->
+<!--    ** delete -->
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.android.marsrealestate.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="selectedProperty"
-            app:argType="com.example.android.marsrealestate.network.MarsProperty"
-            />
+          android:name="selectedDealer"
+          app:argType="com.example.android.marsrealestate.network.Dealer"
+          />
     </fragment>
 <!--    <argument-->
-<!--      android:name="selectedDealer"-->
-<!--      app:argType="com.example.android.marsrealestate.network.Dealer"-->
+<!--      android:name="selectedProperty"-->
+<!--      app:argType="com.example.android.marsrealestate.network.MarsProperty"-->
 <!--      />-->
+<!--</fragment>-->
 
 </navigation>

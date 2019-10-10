@@ -40,10 +40,10 @@ class DetailFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // ** delete
-        val marsProperty = DetailFragmentArgs.fromBundle(arguments!!).selectedProperty
-        val viewModelFactory = DetailViewModelFactory(marsProperty, application)
-//        val dealer = DetailFragmentArgs.fromBundle(arguments!!).selectedDealer
-//        val viewModelFactory = DetailViewModelFactory(dealer, application)
+//        val marsProperty = DetailFragmentArgs.fromBundle(arguments!!).selectedProperty
+//        val viewModelFactory = DetailViewModelFactory(marsProperty, application)
+        val dealer = DetailFragmentArgs.fromBundle(arguments!!).selectedDealer
+        val viewModelFactory = DetailViewModelFactory(dealer, application)
         binding.viewModel = ViewModelProviders.of(
                 this, viewModelFactory).get(DetailViewModel::class.java)
 

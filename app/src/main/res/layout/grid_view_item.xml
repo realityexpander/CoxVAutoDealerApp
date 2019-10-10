@@ -27,7 +27,6 @@
         name="dealer"
         type="com.example.android.marsrealestate.network.Dealer"/>
     </data>
-
 <!--    name="property"-->
 <!--    type="com.example.android.marsrealestate.network.MarsProperty"/>-->
 <!--</data>-->
@@ -63,15 +62,15 @@
           android:layout_width="80dp"
           android:layout_height="29dp"
           android:layout_gravity="bottom|end"
-          android:text="@{dealer.dealerId}"
           tools:src="@tools:sample/last_names"/>
+      <!--          android:text="@{dealer.dealerIdStr}"-->
 
         <TextView
           android:id="@+id/dealerName"
           android:layout_width="80dp"
           android:layout_height="29dp"
           android:layout_gravity="bottom|start"
-          android:text="@{dealer.name}"
           tools:src="@tools:sample/last_names"/>
+      <!--          android:text="@{dealer.name}"-->
     </FrameLayout>
 </layout>

@@ -37,16 +37,26 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <ImageView
+<!--            <ImageView-->
+<!--                android:id="@+id/main_photo_image"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="266dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                app:imageUrl="@{viewModel.selectedProperty.imgSrcUrl}"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                tools:src="@tools:sample/backgrounds/scenic" />-->
+
+            <TextView
                 android:id="@+id/main_photo_image"
                 android:layout_width="0dp"
                 android:layout_height="266dp"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{viewModel.selectedProperty.imgSrcUrl}"
+                app:text="@{viewModel.selectedDealer.vehicles[0].vehicleId}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                tools:text="100102939" />
 
             <TextView
                 android:id="@+id/property_type_text"
@@ -55,10 +65,10 @@
                 android:layout_marginTop="16dp"
                 android:textColor="#de000000"
                 android:textSize="39sp"
-                android:text="@{viewModel.displayPropertyType}"
+                android:text="@{viewModel.selectedDealer.vehicles[0].make}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_photo_image"
-                tools:text="To Rent" />
+                tools:text="Ford" />
 
             <TextView
                 android:id="@+id/price_value_text"
@@ -67,10 +77,10 @@
                 android:layout_marginTop="8dp"
                 android:textColor="#de000000"
                 android:textSize="20sp"
-                android:text="@{viewModel.displayPropertyPrice}"
+                android:text="@{viewModel.selectedDealer.vehicles[0].model}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/property_type_text"
-                tools:text="$100,000" />
+                tools:text="Fiesta" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

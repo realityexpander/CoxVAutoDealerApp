@@ -20,45 +20,51 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.android.marsrealestate.network.MarsProperty
 import com.example.android.marsrealestate.R
+import com.example.android.marsrealestate.network.Dealer
 
 /**
  *  The [ViewModel] associated with the [StartFragment], containing information about the selected
  *  [MarsProperty].
  */
-class DetailViewModel( marsProperty: MarsProperty,
+class DetailViewModel(
+//                      marsProperty: MarsProperty, // ** delete
+                      dealer: Dealer,
                       app: Application) : AndroidViewModel(app) {
 
     // The internal MutableLiveData for the selected property
-    private val _selectedProperty = MutableLiveData<MarsProperty>()
-
-    // The external LiveData for the SelectedProperty
-    val selectedProperty: LiveData<MarsProperty>
-        get() = _selectedProperty
+//    private val _selectedProperty = MutableLiveData<MarsProperty>()
+  private val _selectedDealer = MutableLiveData<Dealer>()
+//    val selectedProperty: LiveData<MarsProperty> // ** delete
+    val selectedDealer: LiveData<Dealer>
+        get() = _selectedDealer
 
     // Initialize the _selectedProperty MutableLiveData
     init {
-        _selectedProperty.value = marsProperty
+//        _selectedProperty.value = marsProperty
+      _selectedDealer.value = dealer
     }
 
-    // The displayPropertyPrice formatted Transformation Map LiveData, which displays the sale
-    // or rental price.
-    val displayPropertyPrice = Transformations.map(selectedProperty) {
-        app.applicationContext.getString(
-                when (it.isRental) {
-                    true -> R.string.display_price_monthly_rental
-                    false -> R.string.display_price
-                }, it.price)
-    }
+  // ** delete?
+//    // The displayPropertyPrice formatted Transformation Map LiveData, which displays the sale
+//    // or rental price.
+//    val displayPropertyPrice = Transformations.map(selectedProperty) {
+//        app.applicationContext.getString(
+//                when (it.isRental) {
+//                    true -> R.string.display_price_monthly_rental
+//                    false -> R.string.display_price
+//                }, it.price)
+//    }
 
-    // The displayPropertyType formatted Transformation Map LiveData, which displays the
-    // "For Rent/Sale" String
-    val displayPropertyType = Transformations.map(selectedProperty) {
-        app.applicationContext.getString(R.string.display_type,
-                app.applicationContext.getString(
-                        when(it.isRental) {
-                            true -> R.string.type_rent
-                            false -> R.string.type_sale
-                        }))
-    }
+  // ** delete?
+//    // The displayPropertyType formatted Transformation Map LiveData, which displays the
+//    // "For Rent/Sale" String
+//    val displayPropertyType = Transformations.map(selectedProperty) {
+//        app.applicationContext.getString(R.string.display_type,
+//                app.applicationContext.getString(
+//                        when(it.isRental) {
+//                            true -> R.string.type_rent
+//                            false -> R.string.type_sale
+//                        }))
+//    }
 }
 

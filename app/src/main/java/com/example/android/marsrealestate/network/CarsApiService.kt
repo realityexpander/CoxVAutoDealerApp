@@ -53,9 +53,9 @@ interface MarsApiService {
      * The @GET annotation indicates that the "realestate" endpoint will be requested with the GET
      * HTTP method
      */
+    // ** delete
     @GET("realestate")
     fun getProperties(@Query("filter") type: String):
-    // The Coroutine Call Adapter allows us to return a Deferred, a Job with a result
             Deferred<List<MarsProperty>>
 }
 
