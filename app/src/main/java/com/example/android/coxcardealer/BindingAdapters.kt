@@ -1,4 +1,4 @@
-package com.example.android.marsrealestate
+package com.example.android.coxcardealer
 
 import android.view.View
 import android.widget.ImageView
@@ -7,13 +7,12 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.android.marsrealestate.network.Dealer
-import com.example.android.marsrealestate.network.MarsProperty
-import com.example.android.marsrealestate.overview.CarsApiStatus
-import com.example.android.marsrealestate.overview.PhotoGridAdapter
+import com.example.android.coxcardealer.network.Dealer
+import com.example.android.coxcardealer.overview.CarsApiStatus
+import com.example.android.coxcardealer.overview.PhotoGridAdapter
 
 /**
- * When there is no Mars property data (data is null), hide the [RecyclerView], otherwise show it.
+ * When there is no [Dealer] data (data is null), hide the [RecyclerView], otherwise show it.
  */
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Dealer>?) {

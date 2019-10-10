@@ -15,7 +15,7 @@
  *
  */
 
-package com.example.android.marsrealestate
+package com.example.android.coxcardealer
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

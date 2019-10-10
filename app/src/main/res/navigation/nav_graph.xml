@@ -9,7 +9,7 @@
 
     <fragment
       android:id="@+id/startFragment"
-      android:name="com.example.android.marsrealestate.start.StartFragment"
+      android:name="com.example.android.coxcardealer.start.StartFragment"
       android:label="fragment_start"
       tools:layout="@layout/fragment_start" >
       <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/overviewFragment"
-        android:name="com.example.android.marsrealestate.overview.OverviewFragment"
+        android:name="com.example.android.coxcardealer.overview.OverviewFragment"
         android:label="fragment_overview"
         tools:layout="@layout/fragment_overview" >
         <action
@@ -30,12 +30,12 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.android.marsrealestate.detail.DetailFragment"
+        android:name="com.example.android.coxcardealer.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
         <argument
           android:name="selectedDealer"
-          app:argType="com.example.android.marsrealestate.network.Dealer"
+          app:argType="com.example.android.coxcardealer.network.Dealer"
           />
     </fragment>
 

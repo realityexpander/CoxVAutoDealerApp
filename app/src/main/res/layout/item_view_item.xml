@@ -61,7 +61,7 @@
           <import type="android.view.View"/>
           <variable
           name="dealer"
-          type="com.example.android.marsrealestate.network.Dealer"/>
+          type="com.example.android.coxcardealer.network.Dealer"/>
       </data>
 
 </layout>

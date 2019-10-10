@@ -1,9 +1,9 @@
-package com.example.android.marsrealestate.overview
+package com.example.android.coxcardealer.overview
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.marsrealestate.network.*
+import com.example.android.coxcardealer.network.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

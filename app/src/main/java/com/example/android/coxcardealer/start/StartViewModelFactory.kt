@@ -14,24 +14,21 @@
  *  limitations under the License.
  */
 
-package com.example.android.marsrealestate.detail
+package com.example.android.coxcardealer.start
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.marsrealestate.network.Dealer
-import com.example.android.marsrealestate.network.MarsProperty
 
 /**
  * Simple ViewModel factory that provides the MarsProperty and context to the ViewModel.
  */
-class DetailViewModelFactory(
-        private val dealer: Dealer,
+class StartViewModelFactory(
         private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-            return DetailViewModel(dealer, application) as T
+        if (modelClass.isAssignableFrom(StartViewModel::class.java)) {
+            return StartViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

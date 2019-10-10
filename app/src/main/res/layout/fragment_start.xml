@@ -7,7 +7,7 @@
   <data>
     <variable
       name="viewModel"
-      type="com.example.android.marsrealestate.start.StartViewModel" />
+      type="com.example.android.coxcardealer.start.StartViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

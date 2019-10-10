@@ -14,33 +14,30 @@
  *  limitations under the License.
  */
 
-package com.example.android.marsrealestate.start
+package com.example.android.coxcardealer.detail
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.android.coxcardealer.network.MarsProperty
+import com.example.android.coxcardealer.network.Dealer
 
-class StartViewModel(/*marsProperty: MarsProperty,*/
-                     app: Application) : AndroidViewModel(app) {
+/**
+ *  The [ViewModel] associated with the [StartFragment], containing information about the selected
+ *  [MarsProperty].
+ */
+class DetailViewModel(
+                      dealer: Dealer,
+                      app: Application) : AndroidViewModel(app) {
 
-    // The internal MutableLiveData for the selected property
-    private val _navigateToOverview = MutableLiveData<Boolean?>()
-    val navigateToOverview: LiveData<Boolean?>
-        get() = _navigateToOverview
+    // The selected dealer
+  private val _selectedDealer = MutableLiveData<Dealer>()
+    val selectedDealer: LiveData<Dealer>
+        get() = _selectedDealer
 
     // Initialize the _selectedProperty MutableLiveData
     init {
-        _navigateToOverview.value = false
+      _selectedDealer.value = dealer
     }
-
-
-    fun displayOverview() {
-        _navigateToOverview.value = true
-    }
-
-    fun displayOverviewComplete() {
-        _navigateToOverview.value = false
-    }
-
 
 }
 

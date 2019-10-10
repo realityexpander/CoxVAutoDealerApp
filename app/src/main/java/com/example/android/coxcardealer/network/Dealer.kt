@@ -1,12 +1,10 @@
-package com.example.android.marsrealestate.network
-
+package com.example.android.coxcardealer.network
 
 /**
  * Created by Chris Athanas on 2019-10-08.
  */
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 /**

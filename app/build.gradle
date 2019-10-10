@@ -27,7 +27,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.example.android.marsrealestate"
+        applicationId 'com.example.android.coxcardealers'
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1

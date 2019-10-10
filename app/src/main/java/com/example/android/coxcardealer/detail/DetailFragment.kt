@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.example.android.marsrealestate.detail
+package com.example.android.coxcardealer.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,7 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.example.android.marsrealestate.databinding.FragmentDetailBinding
+import com.example.android.coxcardealer.databinding.FragmentDetailBinding
 
 /**
  * This [Fragment] shows the detailed information about a selected piece of Mars real estate.

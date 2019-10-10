@@ -1,13 +1,13 @@
 
-package com.example.android.marsrealestate.overview
+package com.example.android.coxcardealer.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.marsrealestate.databinding.ItemViewItemBinding
-import com.example.android.marsrealestate.network.Dealer
+import com.example.android.coxcardealer.databinding.ItemViewItemBinding
+import com.example.android.coxcardealer.network.Dealer
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]

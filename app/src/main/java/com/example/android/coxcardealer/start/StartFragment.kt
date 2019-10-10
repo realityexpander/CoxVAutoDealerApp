@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.example.android.marsrealestate.start
+package com.example.android.coxcardealer.start
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,7 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.ViewModelProviders.*
 import androidx.navigation.fragment.findNavController
-import com.example.android.marsrealestate.databinding.FragmentStartBinding
+import com.example.android.coxcardealer.databinding.FragmentStartBinding
 
 
 class StartFragment : Fragment() {
