@@ -52,7 +52,7 @@
                 android:id="@+id/main_photo_image"
                 android:layout_width="0dp"
                 android:layout_height="266dp"
-                app:text="@{viewModel.selectedDealer.vehicles[0].vehicleId}"
+                app:text="@{safeUnbox(viewModel.selectedDealer.vehicles[0].vehicleId)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
