@@ -10,7 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.android.coxcardealer.network.Dealer
 import com.example.android.coxcardealer.network.Vehicle
 import com.example.android.coxcardealer.overview.CarsApiStatus
-import com.example.android.coxcardealer.overview.PhotoGridAdapter
+import com.example.android.coxcardealer.overview.OverviewListAdapter
 import com.example.android.coxcardealer.vehicles.VehiclesListAdapter
 
 /**
@@ -18,7 +18,7 @@ import com.example.android.coxcardealer.vehicles.VehiclesListAdapter
  */
 @BindingAdapter("dealerListData")
 fun bindRecyclerViewToDealer(recyclerView: RecyclerView, data: List<Dealer>?) {
-    val adapter = recyclerView.adapter as PhotoGridAdapter
+    val adapter = recyclerView.adapter as OverviewListAdapter
     adapter.submitList(data)
 }
 

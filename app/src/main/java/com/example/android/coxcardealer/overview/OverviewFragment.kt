@@ -36,7 +36,7 @@ class OverviewFragment : Fragment() {
 
         // Sets the adapter of the RecyclerView with clickHandler lambda that
         // tells the viewModel when our dealer is clicked
-        binding.dealersList.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+        binding.dealersList.adapter = OverviewListAdapter(OverviewListAdapter.OnClickListener {
           viewModel.displayVehicles(it)
         })
 

@@ -13,9 +13,9 @@ import com.example.android.coxcardealer.network.Dealer
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
-class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
+class OverviewListAdapter(private val onClickListener: OnClickListener ) :
     ListAdapter<Dealer,
-        PhotoGridAdapter.DealerViewHolder>(DiffCallback) {
+        OverviewListAdapter.DealerViewHolder>(DiffCallback) {
 
     /**
      * The [DealerViewHolder] constructor takes the binding variable from the associated
