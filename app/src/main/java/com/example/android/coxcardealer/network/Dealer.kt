@@ -53,6 +53,7 @@ data class DatasetId(
 data class Vehicles (
     val vehicleIds: List<Int>? = null ) : Parcelable
 
+// ** delete?
 @Parcelize
 data class VehicleInfo (
     val vehicle: Vehicle? = null ) : Parcelable

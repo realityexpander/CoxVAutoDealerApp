@@ -59,7 +59,7 @@ class OverviewViewModel : ViewModel() {
 
         networkDatasetId?.let {
           // Get the Dealers for this DatasetId
-          val listResult = getDealersUsingDatasetIdAsync().await()
+          val listResult = getDealersCheatUsingDatasetIdAsync().await()
           _status.value = CarsApiStatus.DONE
 
           // Set the result from CarsApi

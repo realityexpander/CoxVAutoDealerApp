@@ -8,10 +8,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.coxauto-interview.com/"
-private const val DATASET_ID = "4x7xITpJ1wg"
+//private const val DATASET_ID = "4x7xITpJ1wg" // ** delete
 var datasetId: String? = null
 
 /**
@@ -43,7 +42,7 @@ interface DealersApiService {
         Deferred<DatasetId>
 
     @GET("/api/{datasetId}/cheat")
-    fun getDealersAsync(@Path("datasetId") datasetId: String):
+    fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
       Deferred<Dealers>
 
     @GET("/api/{datasetId}/vehicles")
@@ -56,7 +55,8 @@ interface DealersApiService {
 
     @GET("/api/{datasetId}/dealers/{dealerId}")
     fun getDealersInfoAsync(@Path("datasetId") type: String,
-                            @Path("dealerId") dealerId: String)
+                            @Path("dealerId") dealerId: String) :
+        Deferred<Dealer>
 }
 
 /**
@@ -66,7 +66,7 @@ object CarsApi {
     val retrofitService : DealersApiService by lazy { retrofit.create(DealersApiService::class.java) }
 }
 
-// Retrofit call wrapper includes the datasetId
-fun getDealersUsingDatasetIdAsync() : Deferred<Dealers> {
-    return CarsApi.retrofitService.getDealersAsync(datasetId!!)
+// Retrofit call wrapper includes the datasetId var
+fun getDealersCheatUsingDatasetIdAsync() : Deferred<Dealers> {
+    return CarsApi.retrofitService.getDealersCheatAsync(datasetId!!)
 }
