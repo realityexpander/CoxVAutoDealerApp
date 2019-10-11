@@ -51,16 +51,6 @@ class OverviewFragment : Fragment() {
           }
         })
 
-        // ** delete
-        // Print the current dealer list
-//        viewModel.dealers.observe(this, Observer {
-//            it?.forEach { e ->
-//                println("Dealer name: ${e.name}")
-//                println("Dealer id: ${e.dealerId}")
-//                println("Dealer vehicles: ${e.vehicles?.size}")
-//            }
-//        })
-
         setHasOptionsMenu(false)
         return binding.root
     }
