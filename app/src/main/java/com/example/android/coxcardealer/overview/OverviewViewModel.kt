@@ -62,6 +62,7 @@ class OverviewViewModel : ViewModel() {
           val listResult = getDealersUsingDatasetIdAsync().await()
           _status.value = CarsApiStatus.DONE
 
+          // Set the result from CarsApi
           _dealers.value = listResult.dealers
         }
 

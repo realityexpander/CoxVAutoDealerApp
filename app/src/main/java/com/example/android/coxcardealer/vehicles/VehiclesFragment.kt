@@ -17,7 +17,7 @@ class VehiclesFragment : Fragment() {
     /**
      * Lazily initialize our [VehiclesViewModel].
      */
-    private val viewModel: VehiclesViewModel by lazy {
+    val viewModel: VehiclesViewModel by lazy {
         ViewModelProviders.of(this).get(VehiclesViewModel::class.java)
     }
 
