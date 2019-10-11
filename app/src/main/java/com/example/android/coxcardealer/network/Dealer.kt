@@ -15,7 +15,7 @@ import kotlinx.android.parcel.Parcelize
 data class Dealer (
     val dealerId: Int? = null,
     val name: String? = null,
-    val vehicles: List<Vehicle>? = mutableListOf() ) : Parcelable {
+    val vehicles: List<Vehicle>? = ArrayList() ) : Parcelable {
   val dealerIdStr
     get() = dealerId.toString()
 }

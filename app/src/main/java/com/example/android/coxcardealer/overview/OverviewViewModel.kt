@@ -1,19 +1,17 @@
 package com.example.android.coxcardealer.overview
 
-import androidx.collection.ArraySet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.coxcardealer.network.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import com.example.android.coxcardealer.network.datasetId as networkDatasetId
 
 enum class CarsApiStatus { LOADING, ERROR, DONE }
 
 /**
+ * Show the list of [ Dealers].
+ *
  * The [ViewModel] that is attached to the [VehiclesFragment].
  */
 class OverviewViewModel : ViewModel() {
@@ -39,7 +37,7 @@ class OverviewViewModel : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
-    // Display dealers list immediately
+    // Display Dealers list immediately
     init {
       getDealersList()
     }
@@ -77,31 +75,41 @@ class OverviewViewModel : ViewModel() {
             vehicles.add(vehicle)
           }
 
-          // Determine the unique set of Dealers based on each vehicle's dealerId
+          /**
+           *  Determine the unique Set of Dealers based on each vehicle's dealerId
+           */
           var dealerSet = mutableSetOf<Int?>()
           vehicles.forEach { vehicle ->
             dealerSet.add(vehicle.dealerId)
           }
 
-          // For the set of Dealers, get info for each Dealer
+          /**
+           *  For the Set of Dealers, get info from Api for each Dealer in parallel
+           */
           var dealers = mutableListOf<Dealer>()
+          val dealerInfoCalls = mutableListOf<Deferred<Dealer>>()
           dealerSet.forEach { dealerId ->
-            var dealerInfo = CarsApi.retrofitService.getDealersInfoAsync(datasetId, dealerId).await()
-            dealers.add(dealerInfo)
+            dealerInfoCalls.add(CarsApi.retrofitService.getDealersInfoAsync(datasetId, dealerId) )
+          }
+          dealerInfoCalls.forEach { dealerInfoCall ->
+            dealers.add(dealerInfoCall.await())
           }
 
-          // For the set of Dealers, add the Vehicle that matches the dealer
+          /**
+           *  For the set of Dealers, add the Vehicle that matches the dealer
+           */
           for(vehicle in vehicles) {
             for(dealer in dealers) {
               if(dealer.dealerId == vehicle.dealerId) {
-                (dealer.vehicles as ArrayList<Vehicle>).add(vehicle)
+                (dealer.vehicles as ArrayList<Vehicle>).add(vehicle) // ?? fixme why must use this way
               }
             }
           }
 
-          // Assign the LiveData
+          // Assign the result to LiveData
           _dealers.value = dealers
 
+          // Indicate we are finished
           _status.value = CarsApiStatus.DONE
         }
 
