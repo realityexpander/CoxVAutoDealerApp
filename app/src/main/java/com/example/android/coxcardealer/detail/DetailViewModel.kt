@@ -20,23 +20,23 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.android.coxcardealer.network.MarsProperty
 import com.example.android.coxcardealer.network.Dealer
+import com.example.android.coxcardealer.network.Vehicle
 
 /**
- *  The [ViewModel] associated with the [StartFragment], containing information about the selected
- *  [MarsProperty].
+ *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
+ *  [Vehicle].
  */
-class DetailViewModel(
-                      dealer: Dealer,
+class DetailViewModel(vehicle: Vehicle,
                       app: Application) : AndroidViewModel(app) {
 
-    // The selected dealer
-  private val _selectedDealer = MutableLiveData<Dealer>()
-    val selectedDealer: LiveData<Dealer>
-        get() = _selectedDealer
+    // The selected vehicle
+  private val _selectedVehicle = MutableLiveData<Vehicle>()
+    val selectedVehicle: LiveData<Vehicle>
+        get() = _selectedVehicle
 
-    // Initialize the _selectedProperty MutableLiveData
+    // Initialize the _selectedVehicle MutableLiveData
     init {
-      _selectedDealer.value = dealer
+      _selectedVehicle.value = vehicle
     }
 
 }

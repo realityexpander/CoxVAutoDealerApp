@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 enum class CarsApiStatus { LOADING, ERROR, DONE }
 
 /**
- * The [ViewModel] that is attached to the [OverviewFragment].
+ * The [ViewModel] that is attached to the [VehiclesFragment].
  */
 class OverviewViewModel : ViewModel() {
 
@@ -27,27 +27,24 @@ class OverviewViewModel : ViewModel() {
       get() = _dealers
 
     // Handle navigation to the selected dealer
-    private val _navigateToSelectedDealer = MutableLiveData<Dealer>()
+    private val _navigateToVehicles = MutableLiveData<Dealer>()
     val navigateToSelectedDealer: LiveData<Dealer>
-      get() = _navigateToSelectedDealer
+      get() = _navigateToVehicles
 
-    // Coroutine scope uses a Job to be able to cancel when needed
+    // Coroutine scope for API call uses a Job to be able to cancel when needed
     private var viewModelJob = Job()
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
-    // Display status immediately.
+    // Display dealers list immediately.
     init {
       getDealersList()
-      _status.value = CarsApiStatus.LOADING
     }
 
   /**
-   * Gets filtered Mars real estate property information from the Mars API Retrofit service and
-   * updates the [Dealer] [List] and [CarsApiStatus] [LiveData]. The Retrofit service
-   * returns a coroutine Deferred, which we await to get the result of the transaction.
-   * @param filter the [CarsApiFilter] that is sent as part of the web server request
+   * Updates the [Dealer] [List] and [CarsApiStatus] [LiveData]. The Retrofit service
+   * returns a Deferred coroutine [CarsApi] call which we await for the result of the transaction.
    */
   private fun getDealersList() {
     coroutineScope.launch {
@@ -59,7 +56,7 @@ class OverviewViewModel : ViewModel() {
         val listResult = getDealersDeferred.await()
         _status.value = CarsApiStatus.DONE
 
-        // Map the retrieved dealers object to an array for the gridview
+        // Map the retrieved dealers object to an array for the RecyclerView
         _dealers.value = ArrayList()
         listResult.dealers?.map {
           (_dealers.value as ArrayList<Dealer>).add(it)
@@ -81,17 +78,17 @@ class OverviewViewModel : ViewModel() {
     }
 
     /**
-     * When the property is clicked, set the [_navigateToSelectedDealer] [MutableLiveData]
+     * When the property is clicked, set the [_navigateToVehicles] [MutableLiveData]
      * @param dealer is The [Dealer] that was clicked on.
      */
-    fun displayDealerDetails(dealer: Dealer) {
-      _navigateToSelectedDealer.value = dealer
+    fun displayVehicles(dealer: Dealer) {
+      _navigateToVehicles.value = dealer
     }
 
     /**
      * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
      */
-    fun displayDealerDetailsComplete() {
-      _navigateToSelectedDealer.value = null
+    fun displayVehiclesComplete() {
+      _navigateToVehicles.value = null
     }
 }

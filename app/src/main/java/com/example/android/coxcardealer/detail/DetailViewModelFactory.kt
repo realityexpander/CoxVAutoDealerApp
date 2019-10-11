@@ -20,17 +20,18 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.coxcardealer.network.Dealer
+import com.example.android.coxcardealer.network.Vehicle
 
 /**
- * Simple ViewModel factory that provides the MarsProperty and context to the ViewModel.
+ * Detail ViewModel factory that accepts a vehicle & context, supplies VM to the ViewModel.
  */
 class DetailViewModelFactory(
-        private val dealer: Dealer,
-        private val application: Application) : ViewModelProvider.Factory {
+    private val vehicle: Vehicle,
+    private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-            return DetailViewModel(dealer, application) as T
+            return DetailViewModel(vehicle, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

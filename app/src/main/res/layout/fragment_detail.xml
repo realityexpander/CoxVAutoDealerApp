@@ -41,7 +41,7 @@
               android:id="@+id/main_photo_image"
               android:layout_width="0dp"
               android:layout_height="266dp"
-              android:text="@{viewModel.selectedDealer.vehicles[0].vehicleIdStr}"
+              android:text="@{viewModel.selectedVehicle.vehicleIdStr}"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"
@@ -55,7 +55,7 @@
                 android:layout_marginTop="16dp"
                 android:textColor="#de000000"
                 android:textSize="39sp"
-                android:text="@{viewModel.selectedDealer.vehicles[0].yearModelStr}"
+                android:text="@{viewModel.selectedvehicle.yearModelStr}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_photo_image"
                 tools:text="Fiesta" />
@@ -70,7 +70,7 @@
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/property_type_text"
-                android:text="@{viewModel.selectedDealer.vehicles[0].make}"
+                android:text="@{viewModel.selectedVehicle.make}"
                 tools:text="Ford" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

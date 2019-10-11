@@ -25,8 +25,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.android.coxcardealer.databinding.FragmentDetailBinding
 
 /**
- * This [Fragment] shows the detailed information about a selected piece of Mars real estate.
- * It sets this information in the [StartViewModel], which it gets as a Parcelable property
+ * This [Fragment] shows the detailed information about a selected [Vehicle] of a selected
+ * [Dealer]. It sets this information in the [DetailViewModel], which it gets as a Parcelable property
  * through Jetpack Navigation's SafeArgs.
  */
 class DetailFragment : Fragment() {
@@ -39,8 +39,8 @@ class DetailFragment : Fragment() {
         val binding = FragmentDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        val dealer = DetailFragmentArgs.fromBundle(arguments!!).selectedDealer
-        val viewModelFactory = DetailViewModelFactory(dealer, application)
+        val vehicle = DetailFragmentArgs.fromBundle(arguments!!).selectedVehicle
+        val viewModelFactory = DetailViewModelFactory(vehicle, application)
         binding.viewModel = ViewModelProviders.of(
                 this, viewModelFactory).get(DetailViewModel::class.java)
 

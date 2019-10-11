@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools" >
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/card_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:padding="5dp"
+      app:cardCornerRadius="2dp"
+      app:cardElevation="1dp"
+      app:cardUseCompatPadding="true"
+      app:contentPadding="1dp">
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+          android:id="@+id/vehicle1"
+          style="@style/TextAppearance.AppCompat.Headline"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentStart="true"
+          android:layout_marginLeft="8dp"
+          android:layout_marginBottom="8dp"
+          android:padding="8dp"
+          android:text="@{vehicle.make}"
+          android:textColor="@color/colorIcon"
+          tools:text="Vehicle ID" />
+
+        <TextView
+          android:id="@+id/vehicle2"
+          style="@style/TextAppearance.AppCompat.Subhead"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/vehicle1"
+          android:layout_alignParentStart="true"
+          android:layout_marginLeft="8dp"
+          android:padding="4dp"
+          android:text="@{vehicle.yearModelStr}"
+          android:textStyle="bold"
+          tools:text="Vehicle name" />
+
+      </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+  </LinearLayout>
+
+      <data>
+          <import type="android.view.View"/>
+          <variable
+          name="vehicle"
+          type="com.example.android.coxcardealer.network.Vehicle"/>
+      </data>
+
+</layout>

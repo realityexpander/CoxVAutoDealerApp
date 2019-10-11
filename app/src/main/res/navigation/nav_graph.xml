@@ -7,6 +7,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/startFragment">
 
+    <!-- Start : Loading screen -->
     <fragment
       android:id="@+id/startFragment"
       android:name="com.example.android.coxcardealer.start.StartFragment"
@@ -17,25 +18,48 @@
         app:destination="@id/overviewFragment" />
     </fragment>
 
+
+    <!-- Overview : List of dealers -->
     <fragment
         android:id="@+id/overviewFragment"
         android:name="com.example.android.coxcardealer.overview.OverviewFragment"
         android:label="fragment_overview"
         tools:layout="@layout/fragment_overview" >
         <action
-            android:id="@+id/action_showDetail"
-            app:destination="@id/detailFragment" />
+            android:id="@+id/action_showVehicles"
+            app:destination="@id/vehiclesFragment" />
     </fragment>
 
 
+    <!-- Vehicles : List of vehicles from selected dealer-->
+    <fragment
+      android:id="@+id/vehiclesFragment"
+      android:name="com.example.android.coxcardealer.vehicles.VehiclesFragment"
+      android:label="fragment_vehicles"
+      tools:layout="@layout/fragment_vehicles" >
+        <argument
+          android:name="selectedDealer"
+          app:argType="com.example.android.coxcardealer.network.Dealer"
+          />
+        <action
+          android:id="@+id/action_showDetail"
+          app:destination="@id/detailFragment" />
+    </fragment>
+
+
+
+    <!--    Details : Details of a selected vehicle -->
+    <!--    ** fixme -->
+    <!--    selectedDealer -> selectedVehicle  -->
+    <!--    ...Dealer -> app:argType="com.example.android.coxcardealer.network.Vehicle"-->
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.android.coxcardealer.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
         <argument
-          android:name="selectedDealer"
-          app:argType="com.example.android.coxcardealer.network.Dealer"
+          android:name="selectedVehicle"
+          app:argType="com.example.android.coxcardealer.network.Vehicle"
           />
     </fragment>
 

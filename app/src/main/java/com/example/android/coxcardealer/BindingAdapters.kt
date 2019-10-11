@@ -9,14 +9,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.android.coxcardealer.network.Dealer
 import com.example.android.coxcardealer.overview.CarsApiStatus
-import com.example.android.coxcardealer.overview.PhotoGridAdapter
+import com.example.android.coxcardealer.overview.VehicleListAdapter
 
 /**
  * When there is no [Dealer] data (data is null), hide the [RecyclerView], otherwise show it.
  */
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Dealer>?) {
-    val adapter = recyclerView.adapter as PhotoGridAdapter
+    val adapter = recyclerView.adapter as VehicleListAdapter
     adapter.submitList(data)
 }
 
