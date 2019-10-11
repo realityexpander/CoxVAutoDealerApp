@@ -35,7 +35,7 @@ private val moshi = Moshi.Builder()
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object.
  */
-// fixme delete soon
+// fixme delete soon - experimental
 //val dispatcher: Dispatcher = Dispatcher(Executors.newCachedThreadPool(30)).apply {
 //val dispatcher: Dispatcher = Dispatcher(newWorkStealingPool(15)).apply {
 val dispatcher: Dispatcher = Dispatcher(Executors.newFixedThreadPool(20)).apply {
