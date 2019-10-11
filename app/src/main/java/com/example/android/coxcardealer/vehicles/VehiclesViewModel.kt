@@ -44,6 +44,7 @@ class VehiclesViewModel : ViewModel() {
      * When the property is clicked, set the [_navigateToSelectedVehicle] [MutableLiveData]
      * @param vehicle is The [Vehicle] that was clicked on.
      */
+    // fixme - called from adapter
     fun displayVehicleDetails(vehicle: Vehicle) {
       _navigateToSelectedVehicle.value = vehicle
     }

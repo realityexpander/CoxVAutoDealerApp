@@ -8,15 +8,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.android.coxcardealer.network.Dealer
+import com.example.android.coxcardealer.network.Vehicle
 import com.example.android.coxcardealer.overview.CarsApiStatus
-import com.example.android.coxcardealer.overview.VehicleListAdapter
+import com.example.android.coxcardealer.overview.PhotoGridAdapter
+import com.example.android.coxcardealer.vehicles.VehiclesListAdapter
 
 /**
- * When there is no [Dealer] data (data is null), hide the [RecyclerView], otherwise show it.
+ * When there is no [Dealer] data (data is null), hide the [RecyclerView],
+ * otherwise show it.
  */
-@BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Dealer>?) {
-    val adapter = recyclerView.adapter as VehicleListAdapter
+@BindingAdapter("dealerListData")
+fun bindRecyclerViewToDealer(recyclerView: RecyclerView, data: List<Dealer>?) {
+    val adapter = recyclerView.adapter as PhotoGridAdapter
+    adapter.submitList(data)
+}
+
+/**
+ * When there is no [Vehicle] data (data is null), hide the [RecyclerView],
+ * otherwise show it.
+ */
+// ** testing
+@BindingAdapter("vehicleListData")
+fun bindRecyclerViewToVehicle(recyclerView: RecyclerView, data: List<Vehicle>?) {
+    val adapter = recyclerView.adapter as VehiclesListAdapter
     adapter.submitList(data)
 }
 

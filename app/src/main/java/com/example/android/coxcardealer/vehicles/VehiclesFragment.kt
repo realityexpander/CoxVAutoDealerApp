@@ -15,7 +15,7 @@ import com.example.android.coxcardealer.databinding.FragmentVehiclesBinding
 class VehiclesFragment : Fragment() {
 
     /**
-     * Lazily initialize our [OverviewViewModel].
+     * Lazily initialize our [VehiclesViewModel].
      */
     private val viewModel: VehiclesViewModel by lazy {
         ViewModelProviders.of(this).get(VehiclesViewModel::class.java)
@@ -38,9 +38,10 @@ class VehiclesFragment : Fragment() {
 
         // Sets the adapter of the RecyclerView with clickHandler lambda that
         // tells the viewModel when our dealer is clicked
-        binding.vehiclesList.adapter = VehiclesListAdapter(VehiclesListAdapter.OnClickListener {
-          viewModel.displayVehicleDetails(it)
-        })
+      // ** testing
+//        binding.vehiclesList.adapter = VehiclesListAdapter(VehiclesListAdapter.OnClickListener {
+//          viewModel.displayVehicleDetails(it)
+//        })
 
         // Observe the navigateToSelectedDealer LiveData and Navigate when it isn't null
         // After navigating, call displayDealerComplete() so that the ViewModel is ready
