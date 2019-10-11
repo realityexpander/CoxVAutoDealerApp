@@ -65,14 +65,17 @@ class OverviewViewModel : ViewModel() {
           val vehicleIdsApiResult = CarsApi.retrofitService.getVehiclesAsync(datasetId).await()
 
           /**
-           * Get Vehicle info for all of the Vehicle Ids
+           * Get Vehicle info for all of the Vehicle Ids, in parallel
            */
-          // ** fixme do this in parallel
           var vehicles = ArrayList<Vehicle>()
+          val vehicleInfoCalls = mutableListOf<Deferred<Vehicle>>()
           vehicleIdsApiResult.vehicleIds?.forEach { vehicleId ->
-            // Get the dealerId from the vehicleId
-            val vehicle = CarsApi.retrofitService.getVehiclesInfoAsync(datasetId, vehicleId).await()
-            vehicles.add(vehicle)
+            // Queue up the calls in parallel
+            vehicleInfoCalls.add(CarsApi.retrofitService.getVehicleInfoAsync(datasetId, vehicleId))
+          }
+          // Add the vehicle's info to the vehicles list
+          vehicleInfoCalls.forEach { vehicleInfoCall ->
+            vehicles.add(vehicleInfoCall.await())
           }
 
           /**
@@ -84,13 +87,15 @@ class OverviewViewModel : ViewModel() {
           }
 
           /**
-           *  For the Set of Dealers, get info from Api for each Dealer in parallel
+           *  For the Set of Dealers, get info from Api for each Dealer, in parallel
            */
           var dealers = mutableListOf<Dealer>()
           val dealerInfoCalls = mutableListOf<Deferred<Dealer>>()
+          // Queue up the calls in parallel
           dealerSet.forEach { dealerId ->
             dealerInfoCalls.add(CarsApi.retrofitService.getDealersInfoAsync(datasetId, dealerId) )
           }
+          // Add the DealerInfo to Dealers Set
           dealerInfoCalls.forEach { dealerInfoCall ->
             dealers.add(dealerInfoCall.await())
           }
