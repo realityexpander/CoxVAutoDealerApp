@@ -43,19 +43,20 @@ interface DealersApiService {
 
     @GET("/api/{datasetId}/cheat")
     fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
-      Deferred<Dealers>
+        Deferred<Dealers>
 
     @GET("/api/{datasetId}/vehicles")
-    fun getVehiclesAsync(@Path("datasetId") datasetId: String) :
+    fun getVehiclesAsync(@Path("datasetId") datasetId: String):
         Deferred<Vehicles>
 
     @GET("/api/{datasetId}/vehicles/{vehicleId}")
-    fun getVehiclesInfoAsync(@Path("datasetId") datasetId: String) :
+    fun getVehiclesInfoAsync(@Path("datasetId") datasetId: String,
+                             @Path("vehicleId") vehicleId: Int):
         Deferred<Vehicle>
 
     @GET("/api/{datasetId}/dealers/{dealerId}")
     fun getDealersInfoAsync(@Path("datasetId") type: String,
-                            @Path("dealerId") dealerId: String) :
+                            @Path("dealerId") dealerId: Int?):
         Deferred<Dealer>
 }
 

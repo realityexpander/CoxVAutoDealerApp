@@ -1,5 +1,6 @@
 package com.example.android.coxcardealer.overview
 
+import androidx.collection.ArraySet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -54,21 +55,70 @@ class OverviewViewModel : ViewModel() {
       val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
       try {
         _status.value = CarsApiStatus.LOADING
+
         // Get the DatasetId
         networkDatasetId = getDatasetIdDeferred.await().datasetId
 
-        networkDatasetId?.let {
-          // Get the Dealers for this DatasetId
-          val listResult = getDealersCheatUsingDatasetIdAsync().await()
-          _status.value = CarsApiStatus.DONE
+        /**
+         *  Get the Dealer info for all the vehicles in the DatasetId
+          */
+        networkDatasetId?.let { datasetId ->
+          // Get the list of Vehicles for this DatasetId
+          val vehicleIdsApiResult = CarsApi.retrofitService.getVehiclesAsync(datasetId).await()
 
-          // Set the result from CarsApi
-          _dealers.value = listResult.dealers
+          /**
+           * Get Vehicle info for all of the Vehicle Ids
+           */
+          // ** fixme do this in parallel
+          var vehicles = ArrayList<Vehicle>()
+          vehicleIdsApiResult.vehicleIds?.forEach { vehicleId ->
+            // Get the dealerId from the vehicleId
+            val vehicle = CarsApi.retrofitService.getVehiclesInfoAsync(datasetId, vehicleId).await()
+            vehicles.add(vehicle)
+          }
+
+          // Determine the unique set of Dealers based on each vehicle's dealerId
+          var dealerSet = mutableSetOf<Int?>()
+          vehicles.forEach { vehicle ->
+            dealerSet.add(vehicle.dealerId)
+          }
+
+          // For the set of Dealers, get info for each Dealer
+          var dealers = mutableListOf<Dealer>()
+          dealerSet.forEach { dealerId ->
+            var dealerInfo = CarsApi.retrofitService.getDealersInfoAsync(datasetId, dealerId).await()
+            dealers.add(dealerInfo)
+          }
+
+          // For the set of Dealers, add the Vehicle that matches the dealer
+          for(vehicle in vehicles) {
+            for(dealer in dealers) {
+              if(dealer.dealerId == vehicle.dealerId) {
+                (dealer.vehicles as ArrayList<Vehicle>).add(vehicle)
+              }
+            }
+          }
+
+          // Assign the LiveData
+          _dealers.value = dealers
+
+          _status.value = CarsApiStatus.DONE
         }
+
+//        // Get via cheat
+//        networkDatasetId?.let {
+//          // Get the Dealers for this DatasetId
+//          val listResult = getDealersCheatUsingDatasetIdAsync().await()
+//          _status.value = CarsApiStatus.DONE
+//
+//          // Set the result from CarsApi
+//          _dealers.value = listResult.dealers
+//        }
 
       } catch (e: Exception) {
         _status.value = CarsApiStatus.ERROR
         _dealers.value = ArrayList()
+        println("CarsApi Access error: $e")
       }
     }
   }
