@@ -15,7 +15,7 @@ import com.example.android.coxcardealer.databinding.FragmentOverviewBinding
 class OverviewFragment : Fragment() {
 
     /**
-     * Lazily initialize our [OverviewViewModel].
+     * Lazy init our [OverviewViewModel]
      */
     private val viewModel: OverviewViewModel by lazy {
         ViewModelProviders.of(this).get(OverviewViewModel::class.java)
@@ -51,8 +51,6 @@ class OverviewFragment : Fragment() {
           }
         })
 
-        setHasOptionsMenu(false)
         return binding.root
     }
-
 }
