@@ -27,11 +27,10 @@ class StartViewModel(/*marsProperty: MarsProperty,*/
     val navigateToOverview: LiveData<Boolean?>
         get() = _navigateToOverview
 
-    // Initialize the _selectedProperty MutableLiveData
+    // Initialize the _navigateToOverview MutableLiveData
     init {
         _navigateToOverview.value = false
     }
-
 
     fun displayOverview() {
         _navigateToOverview.value = true

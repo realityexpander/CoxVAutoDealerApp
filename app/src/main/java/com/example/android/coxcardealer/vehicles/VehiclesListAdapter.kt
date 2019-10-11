@@ -30,8 +30,7 @@ class VehiclesListAdapter(private val onClickListener: OnClickListener ) :
     }
 
     /**
-     * Determine which items have changed when the [List] of [Dealer]
-     * has been updated.
+     * Determine which items have changed on the [List] of [Vehicle]
      */
     companion object DiffCallback : DiffUtil.ItemCallback<Vehicle>() {
         override fun areItemsTheSame(oldItem: Vehicle, newItem: Vehicle): Boolean {
@@ -63,9 +62,9 @@ class VehiclesListAdapter(private val onClickListener: OnClickListener ) :
     }
 
     /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Dealer]
-     * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [Dealer]
+     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Vehicle]
+     * associated with the clicked item to the [onClick] function.
+     * @param clickListener lambda that will be called with the selected [Vehicle]
      */
     class OnClickListener(val clickListener: (vehicle: Vehicle) -> Unit) {
         fun onClick(vehicle: Vehicle) = clickListener(vehicle)

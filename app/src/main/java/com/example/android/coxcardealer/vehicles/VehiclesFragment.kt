@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentVehiclesBinding
 
 /**
- * This fragment shows the the selected Vehicle of the selected Dealer.
+ * This fragment shows the selected Vehicle of the selected Dealer.
  */
 class VehiclesFragment : Fragment() {
 
@@ -30,9 +30,8 @@ class VehiclesFragment : Fragment() {
 
         val binding = FragmentVehiclesBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        // Giving the binding access to VehiclesViewModel
         binding.viewModel = viewModel
-        // Retrieve the argument & set the selected dealer
+        // Retrieve the SafeArg & set the selected dealer
         viewModel.setSelectedDealer(VehiclesFragmentArgs.fromBundle(arguments!!).selectedDealer)
 
         // Set the adapter of the RecyclerView with the clickHandler lambda to navigate

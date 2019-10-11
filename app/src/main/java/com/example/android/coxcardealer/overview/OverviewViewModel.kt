@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import com.example.android.coxcardealer.network.datasetId as networkDatasetId
 
 enum class CarsApiStatus { LOADING, ERROR, DONE }
 
@@ -37,7 +38,7 @@ class OverviewViewModel : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
-    // Display dealers list immediately.
+    // Display dealers list immediately
     init {
       getDealersList()
     }
@@ -49,18 +50,21 @@ class OverviewViewModel : ViewModel() {
   private fun getDealersList() {
     coroutineScope.launch {
       // Get the Deferred object for our Retrofit request
-      val getDealersDeferred = CarsApi.retrofitService2.getDealersAsync()
+
+      val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
       try {
         _status.value = CarsApiStatus.LOADING
+        // Get the DatasetId
+        networkDatasetId = getDatasetIdDeferred.await().datasetId
 
-        val listResult = getDealersDeferred.await()
-        _status.value = CarsApiStatus.DONE
+        networkDatasetId?.let {
+          // Get the Dealers for this DatasetId
+          val listResult = getDealersUsingDatasetIdAsync().await()
+          _status.value = CarsApiStatus.DONE
 
-        // Map the retrieved dealers object to an array for the RecyclerView
-        _dealers.value = ArrayList()
-        listResult.dealers?.map {
-          (_dealers.value as ArrayList<Dealer>).add(it)
+          _dealers.value = listResult.dealers
         }
+
       } catch (e: Exception) {
         _status.value = CarsApiStatus.ERROR
         _dealers.value = ArrayList()

@@ -18,7 +18,7 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
         PhotoGridAdapter.DealerViewHolder>(DiffCallback) {
 
     /**
-     * The DealerViewHolder constructor takes the binding variable from the associated
+     * The [DealerViewHolder] constructor takes the binding variable from the associated
      * RecyclerViewItem, which nicely gives it access to the full [Dealer] information.
      */
     class DealerViewHolder(private var binding: DealerItemViewItemBinding):
@@ -65,8 +65,8 @@ class PhotoGridAdapter( private val onClickListener: OnClickListener ) :
 
     /**
      * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Dealer]
-     * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [Dealer]
+     * associated with the selected item to the [onClick] function.
+     * @param clickListener lambda that will be called with the selected [Dealer]
      */
     class OnClickListener(val clickListener: (dealer: Dealer) -> Unit) {
         fun onClick(dealer: Dealer) = clickListener(dealer)

@@ -14,8 +14,7 @@ import com.example.android.coxcardealer.overview.PhotoGridAdapter
 import com.example.android.coxcardealer.vehicles.VehiclesListAdapter
 
 /**
- * When there is no [Dealer] data (data is null), hide the [RecyclerView],
- * otherwise show it.
+ * Binder for [Dealer] [Recyclerview] in [Overview] Fragment
  */
 @BindingAdapter("dealerListData")
 fun bindRecyclerViewToDealer(recyclerView: RecyclerView, data: List<Dealer>?) {
@@ -24,10 +23,8 @@ fun bindRecyclerViewToDealer(recyclerView: RecyclerView, data: List<Dealer>?) {
 }
 
 /**
- * When there is no [Vehicle] data (data is null), hide the [RecyclerView],
- * otherwise show it.
+ * Binder for [Vehicle] [Recyclerview] in [Vehicles] Fragment
  */
-// ** testing
 @BindingAdapter("vehicleListData")
 fun bindRecyclerViewToVehicle(recyclerView: RecyclerView, data: List<Vehicle>?) {
     val adapter = recyclerView.adapter as VehiclesListAdapter

@@ -27,11 +27,13 @@ import androidx.lifecycle.ViewModelProviders.*
 import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentStartBinding
 
-
+/**
+ * Starting view
+ */
 class StartFragment : Fragment() {
 
     /**
-     * Lazily initialize our [StartViewModel].
+     * Lazily init our [StartViewModel].
      */
     private val viewModel: StartViewModel by lazy {
         ViewModelProviders.of(this).get(StartViewModel::class.java)
@@ -43,12 +45,11 @@ class StartFragment : Fragment() {
         val application = requireNotNull(activity).application
         val binding = FragmentStartBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
         val viewModelFactory = StartViewModelFactory(application)
         binding.viewModel = of(
                 this, viewModelFactory).get(StartViewModel::class.java)
 
-        // LoadDealerships.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_showOverview))
+        // Navigate to Overview screen
         viewModel.navigateToOverview.observe(this, Observer {
             if ( it != false ) {
                 this.findNavController().navigate(StartFragmentDirections.actionShowOverview())
