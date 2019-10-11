@@ -8,6 +8,15 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Path
+import okhttp3.OkHttpClient
+import okhttp3.ConnectionPool
+import okhttp3.Dispatcher
+import java.util.concurrent.Executors
+import java.util.concurrent.Executors.newCachedThreadPool
+import java.util.concurrent.Executors.newWorkStealingPool
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
+
 
 private const val BASE_URL = "https://api.coxauto-interview.com/"
 //private const val DATASET_ID = "4x7xITpJ1wg" // ** delete
@@ -25,7 +34,23 @@ private val moshi = Moshi.Builder()
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object.
  */
+// fixme delete soon
+//val dispatcher: Dispatcher = Dispatcher(Executors.newCachedThreadPool(30)).apply {
+val dispatcher: Dispatcher = Dispatcher(newWorkStealingPool(15)).apply {
+//val dispatcher: Dispatcher = Dispatcher(Executors.newFixedThreadPool(200)).apply {
+    this.maxRequests = 2000
+    this.maxRequestsPerHost = 1000
+}
+
+var pool = ConnectionPool(200, 6000, TimeUnit.MILLISECONDS)
+
+val client: OkHttpClient = OkHttpClient.Builder()
+    .dispatcher(dispatcher)
+    .connectionPool(pool)
+    .build()
+
 private val retrofit = Retrofit.Builder()
+        .client(client)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .baseUrl(BASE_URL)
@@ -42,7 +67,7 @@ interface DealersApiService {
         Deferred<DatasetId>
 
     @GET("/api/{datasetId}/cheat")
-    fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
+    fun getDealersCheatAsync(/*@Path("datasetId")*/ datasetId: String):
         Deferred<Dealers>
 
     @GET("/api/{datasetId}/vehicles")
