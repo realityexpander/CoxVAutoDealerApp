@@ -33,17 +33,30 @@ private val retrofit = Retrofit.Builder()
         .build()
 
 /**
- * A public interface to expose the [getDealersAsync] method
- * Returns a Coroutine [Deferred] [List] of [Dealers] to fetch with await()
+ * A public interface to expose the various API access methods
+ * Returns a Coroutine to fetch with await()
  */
 interface DealersApiService {
-    @GET("/api/{datasetId}/cheat")
-    fun getDealersAsync(@Path("datasetId") type: String):
-        Deferred<Dealers>
 
     @GET("/api/datasetId")
     fun getDatasetIdAsync():
         Deferred<DatasetId>
+
+    @GET("/api/{datasetId}/cheat")
+    fun getDealersAsync(@Path("datasetId") datasetId: String):
+      Deferred<Dealers>
+
+    @GET("/api/{datasetId}/vehicles")
+    fun getVehiclesAsync(@Path("datasetId") datasetId: String) :
+        Deferred<Vehicles>
+
+    @GET("/api/{datasetId}/vehicles/{vehicleId}")
+    fun getVehiclesInfoAsync(@Path("datasetId") datasetId: String) :
+        Deferred<Vehicle>
+
+    @GET("/api/{datasetId}/dealers/{dealerId}")
+    fun getDealersInfoAsync(@Path("datasetId") type: String,
+                            @Path("dealerId") dealerId: String)
 }
 
 /**

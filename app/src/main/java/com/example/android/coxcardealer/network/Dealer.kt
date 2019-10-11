@@ -29,7 +29,8 @@ data class Vehicle (
     val vehicleId: Int? = null,
     val year: Int? = null,
     val make: String? = null,
-    val model: String? = null ) : Parcelable {
+    val model: String? = null,
+    val dealerId: Int? = null) : Parcelable {
   val vehicleIdStr
     get() = "$vehicleId"
   val vehicleIdFullStr
@@ -47,3 +48,11 @@ data class Dealers (
 @Parcelize
 data class DatasetId(
     val datasetId: String? = null ) : Parcelable
+
+@Parcelize
+data class Vehicles (
+    val vehicleIds: List<Int>? = null ) : Parcelable
+
+@Parcelize
+data class VehicleInfo (
+    val vehicle: Vehicle? = null ) : Parcelable
