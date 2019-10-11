@@ -8,12 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import kotlinx.coroutines.Deferred
 
-enum class CarsApiFilter(val value: String) {
-    SHOW_RENT("rent"),
-    SHOW_BUY("buy"),
-    SHOW_ALL("all") }
-
-private const val BASE_URL = "https://api.coxauto-interview.com/api/"
+private const val BASE_URL = "https://api.coxauto-interview.com/"
 private const val DATASET_ID = "4x7xITpJ1wg"
 
 /**
@@ -42,6 +37,10 @@ interface DealersApiService {
     @GET("/api/${DATASET_ID}/cheat")
     fun getDealersAsync():
         Deferred<Dealers>
+
+    @GET("/api/dataset")
+    fun getDataSetId():
+        Deferred<String>
 }
 
 /**

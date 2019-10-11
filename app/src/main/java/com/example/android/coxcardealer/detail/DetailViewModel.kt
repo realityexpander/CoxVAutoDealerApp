@@ -18,8 +18,6 @@ package com.example.android.coxcardealer.detail
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.android.coxcardealer.network.MarsProperty
-import com.example.android.coxcardealer.network.Dealer
 import com.example.android.coxcardealer.network.Vehicle
 
 /**

@@ -26,11 +26,11 @@ import com.example.android.coxcardealer.databinding.FragmentDetailBinding
 
 /**
  * This [Fragment] shows the detailed information about a selected [Vehicle] of a selected
- * [Dealer]. It sets this information in the [DetailViewModel], which it gets as a Parcelable property
- * through Jetpack Navigation's SafeArgs.
+ * [Dealer]. It sets this information in the [DetailViewModel].
+ *
+ * selectedVehicle from SafeArgs contains the Vehicle
  */
 class DetailFragment : Fragment() {
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

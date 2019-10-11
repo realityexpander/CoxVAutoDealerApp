@@ -44,3 +44,6 @@ data class Vehicle (
 data class Dealers (
     val dealers: List<Dealer>? = null ) : Parcelable
 
+@Parcelize
+data class DatasetId(
+    val datasetId: String? = null ) : Parcelable
