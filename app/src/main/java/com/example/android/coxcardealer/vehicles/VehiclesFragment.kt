@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentVehiclesBinding
-import com.example.android.coxcardealer.network.Dealer
 
 /**
  * This fragment shows the the selected Vehicle of the selected Dealer.
@@ -30,35 +29,24 @@ class VehiclesFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val binding = FragmentVehiclesBinding.inflate(inflater)
-        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
         // Giving the binding access to VehiclesViewModel
         binding.viewModel = viewModel
         // Retrieve the argument & set the selected dealer
         viewModel.setSelectedDealer(VehiclesFragmentArgs.fromBundle(arguments!!).selectedDealer)
 
-        // Sets the adapter of the RecyclerView with clickHandler lambda that
-        // tells the viewModel when our dealer is clicked
+        // Set the adapter of the RecyclerView with the clickHandler lambda to navigate
         binding.vehiclesList.adapter = VehiclesListAdapter(VehiclesListAdapter.OnClickListener {
-          viewModel.displayVehicleDetails(it)
+          viewModel.displayDetails(it)
         })
 
-        // Navigation to show selected vehicle
-        viewModel.navigateToSelectedVehicle.observe(this, Observer {
+        // Navigation to show selected vehicle detail
+        viewModel.navigateToDetails.observe(this, Observer {
           if ( null != it ) {
             this.findNavController().navigate(VehiclesFragmentDirections.actionShowDetail(it))
-            viewModel.displayVehicleDetailsComplete()
+            viewModel.displayDetailsComplete()
           }
         })
-
-        // ** delete
-//        // Print the current vehicle list
-//        viewModel.vehicles.observe(this, Observer {
-//            it?.forEach { e ->
-//                println("Vehicle make & model: ${e.make} ${e.model}")
-//                println("Vehicle id: ${e.vehicleId}")
-//            }
-//        })
 
         return binding.root
     }

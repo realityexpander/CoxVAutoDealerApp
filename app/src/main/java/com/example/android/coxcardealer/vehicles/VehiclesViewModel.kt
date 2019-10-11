@@ -17,51 +17,38 @@ class VehiclesViewModel : ViewModel() {
 
     // Selected Dealer
     private val _selectedDealer = MutableLiveData<Dealer>()
-    val selectedDealer: LiveData<Dealer>
+    private val selectedDealer: LiveData<Dealer>
       get() = _selectedDealer
 
     // Handle navigation to the selected vehicle
-    private val _navigateToSelectedVehicle = MutableLiveData<Vehicle>()
-    val navigateToSelectedVehicle: LiveData<Vehicle>
-      get() = _navigateToSelectedVehicle
-
-
-    // Display vehicles list immediately.
-    init {
-      //getVehiclesList()
-    }
+    private val _navigateToDetails = MutableLiveData<Vehicle>()
+    val navigateToDetails: LiveData<Vehicle>
+      get() = _navigateToDetails
 
   /**
-   * Gets the vehicles from the dealer [Dealer] [Vehicle] [List]
+   * Sets the vehicles from the dealer [Dealer] to the [Vehicle] [List]
    */
-    fun getVehiclesList() {
-      // Map the list of dealer's vehicles to an array for the RecyclerView
-//      _vehicles.value = ArrayList()
+    private fun setVehiclesList() {
       _vehicles.value = selectedDealer.value?.vehicles
-//    // ** fixme - get dealer & map array vehicles to the listView
-//      selectedDealer?.value?.vehicles?.map {
-//        (_vehicles.value as ArrayList<Vehicle>).add(it)
-//      }
     }
 
     /**
-     * When the property is clicked, set the [_navigateToSelectedVehicle] [MutableLiveData]
+     * When the property is clicked, set the [_navigateToDetails] [MutableLiveData]
      * @param vehicle is The [Vehicle] that was clicked on.
      */
-    // fixme - called from adapter
-    fun displayVehicleDetails(vehicle: Vehicle) {
-      _navigateToSelectedVehicle.value = vehicle
+    fun displayDetails(vehicle: Vehicle) {
+      _navigateToDetails.value = vehicle
     }
 
     /**
      * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
      */
-    fun displayVehicleDetailsComplete() {
-      _navigateToSelectedVehicle.value = null
+    fun displayDetailsComplete() {
+      _navigateToDetails.value = null
     }
 
     fun setSelectedDealer(dealer: Dealer) {
       _selectedDealer.value = dealer
-      getVehiclesList()
+      setVehiclesList()
     }
 }
