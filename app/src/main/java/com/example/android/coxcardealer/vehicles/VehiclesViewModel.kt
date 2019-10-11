@@ -15,29 +15,33 @@ class VehiclesViewModel : ViewModel() {
     val vehicles: LiveData<List<Vehicle>>
       get() = _vehicles
 
+    // Selected Dealer
+    private val _selectedDealer = MutableLiveData<Dealer>()
+    val selectedDealer: LiveData<Dealer>
+      get() = _selectedDealer
+
     // Handle navigation to the selected vehicle
     private val _navigateToSelectedVehicle = MutableLiveData<Vehicle>()
     val navigateToSelectedVehicle: LiveData<Vehicle>
       get() = _navigateToSelectedVehicle
 
-    // Selected Dealer
-    var selectedDealer : Dealer? = null // fix me - should this be a livedata?
 
     // Display vehicles list immediately.
     init {
-      getVehiclesList()
+      //getVehiclesList()
     }
 
   /**
    * Gets the vehicles from the dealer [Dealer] [Vehicle] [List]
    */
-    private fun getVehiclesList() {
-      // Map the list of dealer vehicles to an array for the RecyclerView
-      _vehicles.value = ArrayList()
-    // ** fixme - get dealer & map array vehicles to the listView
-      selectedDealer?.vehicles?.map {
-        (_vehicles.value as ArrayList<Vehicle>).add(it)
-      }
+    fun getVehiclesList() {
+      // Map the list of dealer's vehicles to an array for the RecyclerView
+//      _vehicles.value = ArrayList()
+      _vehicles.value = selectedDealer.value?.vehicles
+//    // ** fixme - get dealer & map array vehicles to the listView
+//      selectedDealer?.value?.vehicles?.map {
+//        (_vehicles.value as ArrayList<Vehicle>).add(it)
+//      }
     }
 
     /**
@@ -54,5 +58,10 @@ class VehiclesViewModel : ViewModel() {
      */
     fun displayVehicleDetailsComplete() {
       _navigateToSelectedVehicle.value = null
+    }
+
+    fun setSelectedDealer(dealer: Dealer) {
+      _selectedDealer.value = dealer
+      getVehiclesList()
     }
 }

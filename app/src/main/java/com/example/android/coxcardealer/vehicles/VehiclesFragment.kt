@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentVehiclesBinding
+import com.example.android.coxcardealer.network.Dealer
 
 /**
  * This fragment shows the the selected Vehicle of the selected Dealer.
@@ -31,39 +32,34 @@ class VehiclesFragment : Fragment() {
         val binding = FragmentVehiclesBinding.inflate(inflater)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
-        // Giving the binding access to the VehiclesViewModel
+        // Giving the binding access to VehiclesViewModel
         binding.viewModel = viewModel
-
-        viewModel.selectedDealer = VehiclesFragmentArgs.fromBundle(arguments!!).selectedDealer
+        // Retrieve the argument & set the selected dealer
+        viewModel.setSelectedDealer(VehiclesFragmentArgs.fromBundle(arguments!!).selectedDealer)
 
         // Sets the adapter of the RecyclerView with clickHandler lambda that
         // tells the viewModel when our dealer is clicked
-      // ** testing
-//        binding.vehiclesList.adapter = VehiclesListAdapter(VehiclesListAdapter.OnClickListener {
-//          viewModel.displayVehicleDetails(it)
-//        })
+        binding.vehiclesList.adapter = VehiclesListAdapter(VehiclesListAdapter.OnClickListener {
+          viewModel.displayVehicleDetails(it)
+        })
 
-        // Observe the navigateToSelectedDealer LiveData and Navigate when it isn't null
-        // After navigating, call displayDealerComplete() so that the ViewModel is ready
-        // for another navigation event.
+        // Navigation to show selected vehicle
         viewModel.navigateToSelectedVehicle.observe(this, Observer {
           if ( null != it ) {
-            // Must find the NavController from the Fragment
             this.findNavController().navigate(VehiclesFragmentDirections.actionShowDetail(it))
             viewModel.displayVehicleDetailsComplete()
           }
         })
 
         // ** delete
-        // Print the current vehicle list
-//        viewModel.dealers.observe(this, Observer {
+//        // Print the current vehicle list
+//        viewModel.vehicles.observe(this, Observer {
 //            it?.forEach { e ->
-//                println("Vehicle name: ${e.name}")
+//                println("Vehicle make & model: ${e.make} ${e.model}")
 //                println("Vehicle id: ${e.vehicleId}")
 //            }
 //        })
 
-        setHasOptionsMenu(false)
         return binding.root
     }
 

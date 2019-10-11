@@ -38,8 +38,8 @@ class DetailFragment : Fragment() {
         val application = requireNotNull(activity).application
         val binding = FragmentDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
         val vehicle = DetailFragmentArgs.fromBundle(arguments!!).selectedVehicle
+
         val viewModelFactory = DetailViewModelFactory(vehicle, application)
         binding.viewModel = ViewModelProviders.of(
                 this, viewModelFactory).get(DetailViewModel::class.java)
