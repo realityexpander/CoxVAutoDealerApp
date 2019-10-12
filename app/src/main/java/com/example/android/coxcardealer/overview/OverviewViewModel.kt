@@ -108,7 +108,7 @@ class OverviewViewModel : ViewModel() {
           for(vehicle in vehicles) {
             for(dealer in dealers) {
               if(dealer.dealerId == vehicle.dealerId) {
-                (dealer.vehicles as ArrayList<Vehicle>).add(vehicle) // ?? fixme why must use this way
+                (dealer.vehicles as ArrayList<Vehicle>).add(vehicle) // ** investigate: why must use this way
               }
             }
           }

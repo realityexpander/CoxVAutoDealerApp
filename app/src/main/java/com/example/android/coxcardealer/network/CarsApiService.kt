@@ -35,16 +35,14 @@ private val moshi = Moshi.Builder()
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object.
  */
-val dispatcher: Dispatcher = Dispatcher(Executors.newFixedThreadPool(20)).apply {
-    this.maxRequests = 20
+//val dispatcher: Dispatcher = Dispatcher(Executors.newFixedThreadPool(20)).apply {
+val dispatcher: Dispatcher = Dispatcher().apply {
+    this.maxRequests = 40
     this.maxRequestsPerHost = 20
 }
-
-
-var cacheDir = File(Environment.getExternalStorageDirectory().path + "/cached_api")
-
-var pool = ConnectionPool(20, 6000, TimeUnit.MILLISECONDS)
-
+var cacheDir = File(Environment.getExternalStorageDirectory().path + "/cached_api2")
+//var cacheDir = File("/cache/cache_api")
+var pool = ConnectionPool(20, 5000, TimeUnit.MILLISECONDS)
 val client: OkHttpClient = OkHttpClient.Builder()
     .dispatcher(dispatcher)
     .connectionPool(pool)
@@ -53,6 +51,7 @@ val client: OkHttpClient = OkHttpClient.Builder()
         10L * 1024L * 1024L // 1 MiB
     ))
     .build()
+
 
 private val retrofit = Retrofit.Builder()
     .client(client)
