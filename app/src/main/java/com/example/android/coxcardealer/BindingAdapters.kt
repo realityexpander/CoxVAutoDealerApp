@@ -9,16 +9,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.android.coxcardealer.network.Dealer
 import com.example.android.coxcardealer.network.Vehicle
-import com.example.android.coxcardealer.overview.CarsApiStatus
-import com.example.android.coxcardealer.overview.OverviewListAdapter
+import com.example.android.coxcardealer.dealers.CarsApiStatus
+import com.example.android.coxcardealer.dealers.DealersListAdapter
 import com.example.android.coxcardealer.vehicles.VehiclesListAdapter
 
 /**
- * Binder for [Dealer] [Recyclerview] in [Overview] Fragment
+ * Binder for [Dealer] [Recyclerview] in [Dealer] Fragment
  */
 @BindingAdapter("dealerListData")
 fun bindRecyclerViewToDealer(recyclerView: RecyclerView, data: List<Dealer>?) {
-    val adapter = recyclerView.adapter as OverviewListAdapter
+    val adapter = recyclerView.adapter as DealersListAdapter
     adapter.submitList(data)
 }
 

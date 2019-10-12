@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.coxcardealer.databinding.VehicleItemViewItemBinding
+import com.example.android.coxcardealer.databinding.VehicleViewItemBinding
 import com.example.android.coxcardealer.network.Vehicle
 
 /**
@@ -21,7 +21,7 @@ class VehiclesListAdapter(private val onClickListener: OnClickListener ) :
      * The DealerViewHolder constructor takes the binding variable from the associated
      * RecyclerViewItem, which nicely gives it access to the full [Dealer] information.
      */
-    class VehicleViewHolder(private var binding: VehicleItemViewItemBinding):
+    class VehicleViewHolder(private var binding: VehicleViewItemBinding):
         RecyclerView.ViewHolder(binding.root) {
             fun bind(vehicle: Vehicle) {
                 binding.vehicle = vehicle
@@ -47,7 +47,7 @@ class VehiclesListAdapter(private val onClickListener: OnClickListener ) :
      */
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): VehicleViewHolder {
-        return VehicleViewHolder(VehicleItemViewItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return VehicleViewHolder(VehicleViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     /**
@@ -62,8 +62,7 @@ class VehiclesListAdapter(private val onClickListener: OnClickListener ) :
     }
 
     /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Vehicle]
-     * associated with the clicked item to the [onClick] function.
+     * Passes the [Vehicle] associated with the clicked item to the [onClick] function.
      * @param clickListener lambda that will be called with the selected [Vehicle]
      */
     class OnClickListener(val clickListener: (vehicle: Vehicle) -> Unit) {

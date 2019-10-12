@@ -25,7 +25,7 @@
           app:vehicleListData="@{viewModel.vehicles}"
           app:spanCount="1"
           tools:itemCount="16"
-          tools:listitem="@layout/vehicle_item_view_item" />
+          tools:listitem="@layout/vehicle_view_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

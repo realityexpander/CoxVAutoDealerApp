@@ -71,7 +71,7 @@ interface DealersApiService {
         Deferred<DatasetId>
 
     @GET("/api/{datasetId}/cheat")
-    fun getDealersCheatAsync(/*@Path("datasetId")*/ datasetId: String):
+    fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
         Deferred<Dealers>
 
     @GET("/api/{datasetId}/vehicles")

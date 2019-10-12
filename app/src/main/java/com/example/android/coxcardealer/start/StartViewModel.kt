@@ -23,21 +23,21 @@ class StartViewModel(/*marsProperty: MarsProperty,*/
                      app: Application) : AndroidViewModel(app) {
 
     // The internal MutableLiveData for the selected property
-    private val _navigateToOverview = MutableLiveData<Boolean?>()
-    val navigateToOverview: LiveData<Boolean?>
-        get() = _navigateToOverview
+    private val _navigateToDealers = MutableLiveData<Boolean?>()
+    val navigateToDealers: LiveData<Boolean?>
+        get() = _navigateToDealers
 
     // Initialize the _navigateToOverview MutableLiveData
     init {
-        _navigateToOverview.value = false
+        _navigateToDealers.value = false
     }
 
-    fun displayOverview() {
-        _navigateToOverview.value = true
+    fun displayDealers() {
+        _navigateToDealers.value = true
     }
 
-    fun displayOverviewComplete() {
-        _navigateToOverview.value = false
+    fun displayDealersComplete() {
+        _navigateToDealers.value = false
     }
 
 

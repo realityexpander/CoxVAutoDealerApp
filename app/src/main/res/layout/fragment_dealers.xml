@@ -24,7 +24,7 @@
           app:dealerListData="@{viewModel.dealers}"
           app:spanCount="1"
           tools:itemCount="16"
-          tools:listitem="@layout/dealer_item_view_item" />
+          tools:listitem="@layout/dealer_view_item" />
 
         <ImageView
           android:id="@+id/status_image"
@@ -42,6 +42,6 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.android.coxcardealer.overview.OverviewViewModel" />
+            type="com.example.android.coxcardealer.dealers.DealersViewModel" />
     </data>
 </layout>

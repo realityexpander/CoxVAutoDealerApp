@@ -14,17 +14,17 @@
       android:label="fragment_start"
       tools:layout="@layout/fragment_start" >
       <action
-        android:id="@+id/action_showOverview"
-        app:destination="@id/overviewFragment" />
+        android:id="@+id/action_showDealers"
+        app:destination="@id/dealersFragment" />
     </fragment>
 
 
-    <!-- Overview : List of dealers -->
+    <!-- Dealers : List of dealers -->
     <fragment
-        android:id="@+id/overviewFragment"
-        android:name="com.example.android.coxcardealer.overview.OverviewFragment"
-        android:label="fragment_overview"
-        tools:layout="@layout/fragment_overview" >
+        android:id="@+id/dealersFragment"
+        android:name="com.example.android.coxcardealer.dealers.DealersFragment"
+        android:label="fragment_dealers"
+        tools:layout="@layout/fragment_dealers" >
         <action
             android:id="@+id/action_showVehicles"
             app:destination="@id/vehiclesFragment" />
