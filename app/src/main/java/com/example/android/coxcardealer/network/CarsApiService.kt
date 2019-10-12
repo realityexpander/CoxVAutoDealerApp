@@ -35,34 +35,31 @@ private val moshi = Moshi.Builder()
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object.
  */
-// fixme delete soon - experimental
-//val dispatcher: Dispatcher = Dispatcher(Executors.newCachedThreadPool(30)).apply {
-//val dispatcher: Dispatcher = Dispatcher(newWorkStealingPool(15)).apply {
 val dispatcher: Dispatcher = Dispatcher(Executors.newFixedThreadPool(20)).apply {
     this.maxRequests = 20
     this.maxRequestsPerHost = 20
 }
 
 
-//var cacheDir = File(Environment.getExternalStorageDirectory().path + "/cached_api")
+var cacheDir = File(Environment.getExternalStorageDirectory().path + "/cached_api")
 
 var pool = ConnectionPool(20, 6000, TimeUnit.MILLISECONDS)
 
 val client: OkHttpClient = OkHttpClient.Builder()
     .dispatcher(dispatcher)
     .connectionPool(pool)
-//    .cache(Cache(
-//        cacheDir,
-//        10L * 1024L * 1024L // 1 MiB
-//    ))
+    .cache(Cache(
+        cacheDir,
+        10L * 1024L * 1024L // 1 MiB
+    ))
     .build()
 
 private val retrofit = Retrofit.Builder()
-        .client(client)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .baseUrl(BASE_URL)
-        .build()
+    .client(client)
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+    .baseUrl(BASE_URL)
+    .build()
 
 /**
  * A public interface to expose the various API access methods
