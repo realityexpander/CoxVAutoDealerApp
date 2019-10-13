@@ -59,44 +59,6 @@ class DealersFragment : Fragment() {
         })
 
         setupRetrofitClient(context)
-        // Move to CarsApiSerivice
-//        // <<<<<<<<<<<<<<<<<
-//        private cacheDir = File(context?.cacheDir?.path + "/cox_cache" )
-//        private client = OkHttpClient.Builder()
-//            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-//            .dispatcher(dispatcher)
-//            .connectionPool(pool)
-//            .cache(Cache(
-//                cacheDir,
-//                10L * 1024L * 1024L // 1 MiB
-//            ))
-//            .addInterceptor { chain ->
-//              var request = chain.request()
-//              request = if (isOnline() )
-//                // If there is Internet, get the cache that was stored up to 60 seconds ago.
-//                // After 60 seconds, refresh the cache.
-//               {
-//                request.newBuilder()
-//                    .header("Cache-Control", "public, max-stale=" + 60)
-//                    .build()
-//              }
-//              else
-//              // If there is no Internet, get the cache that was stored up to 14 days ago.
-//                request.newBuilder()
-//                    .header("Cache-Control",
-//                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
-//                    .build()
-//              chain.proceed(request)
-//            }
-//            .build()
-//
-//        retrofit = Retrofit.Builder()
-//            .client(client)
-//            .addConverterFactory(MoshiConverterFactory.create(moshi))
-//            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-//            .baseUrl(BASE_URL)
-//            .build()
-        // >>>>>>>>>>>>>>>>>>>>>>>>>>
 
         return binding.root
     }

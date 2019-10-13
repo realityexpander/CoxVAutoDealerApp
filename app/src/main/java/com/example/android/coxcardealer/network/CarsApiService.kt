@@ -52,20 +52,12 @@ fun isOnline(): Boolean {
     return false
 }
 
-fun hasNetwork(context: Context): Boolean? {
-    var isConnected: Boolean? = false // Initial Value
-    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
-    if (activeNetwork != null && activeNetwork.isConnected)
-        isConnected = true
-    return isConnected
-}
-
 /**
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object.
  */
 
+// ** delete soon
 private val REWRITE_CACHE_CONTROL_INTERCEPTOR = Interceptor { chain ->
     val originalResponse = chain.proceed(chain.request())
     println("OriginalResponse : $originalResponse")
@@ -78,11 +70,11 @@ private val REWRITE_CACHE_CONTROL_INTERCEPTOR = Interceptor { chain ->
     newResponse
 }
 private val dispatcher: Dispatcher = Dispatcher().apply {
-    this.maxRequests = 40
-    this.maxRequestsPerHost = 20
+    this.maxRequests = 20
+    this.maxRequestsPerHost = 10
 }
 private var cacheDir = File("default")
-private var pool = ConnectionPool(20, 10000, TimeUnit.MILLISECONDS)
+private var pool = ConnectionPool(10, 5000, TimeUnit.MILLISECONDS)
 var client: OkHttpClient = OkHttpClient.Builder().build()
 var retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
@@ -92,7 +84,7 @@ fun setupRetrofitClient(context: Context?) {
     context?.let {
         cacheDir = File(context.cacheDir?.path + "/cox_cache")
         client = OkHttpClient.Builder()
-            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
+//            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
             .dispatcher(dispatcher)
             .connectionPool(pool)
             .cache(Cache(
@@ -101,19 +93,19 @@ fun setupRetrofitClient(context: Context?) {
             ))
             .addInterceptor { chain ->
                 var request = chain.request()
-                request = if (isOnline())
-                // If there is Internet, get the cache that was stored up to 60 seconds ago.
-                // After 60 seconds, refresh the cache.
-                {
+                request = if (isOnline()) {
+                    // If there is Internet, get the cache that was stored up to 60 seconds ago.
+                    // After 60 seconds, refresh the cache.
                     request.newBuilder()
                         .header("Cache-Control", "public, max-stale=" + 60)
                         .build()
-                } else
-                // If there is no Internet, use the cache that was stored up to 14 days ago.
+                } else {
+                    // If there is no Internet, use the cache that was stored up to 14 days ago.
                     request.newBuilder()
                         .header("Cache-Control",
                             "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
                         .build()
+                }
                 chain.proceed(request)
             }
             .build()
@@ -126,48 +118,6 @@ fun setupRetrofitClient(context: Context?) {
             .build()
     }
 }
-
-//var  client: OkHttpClient = OkHttpClient.Builder()
-//    .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-//    .dispatcher(dispatcher)
-//    .connectionPool(pool)
-//    .cache(Cache(
-//        cacheDir,
-//        10L * 1024L * 1024L // 1 MiB
-//    ))
-//    .addInterceptor { chain ->
-//        var request = chain.request()
-//        request = if (isOnline() )
-//        /*
-//        *  If there is Internet, get the cache that was stored 5 seconds ago.
-//        *  The 'max-age' attribute is responsible for this behavior.
-//        */ {
-//            request.newBuilder()
-//                .header("Cache-Control", "public,  max-age=" + 15)
-//                .build()
-//        }
-//        else
-//        /*
-//        *  If there is no Internet, get the cache that was stored 7 days ago.
-//        *  If the cache is older than 7 days, then discard it,
-//        *  The 'max-stale' attribute is responsible for this behavior.
-//        *  The 'only-if-cached' attribute indicates to not retrieve new data; fetch the cache only instead.
-//        */
-//            request.newBuilder()
-//                .header("Cache-Control",
-//                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
-//                .build()
-//        chain.proceed(request)
-//    }
-//    .build()
-//
-////private val retrofit = Retrofit.Builder()
-//var retrofit = Retrofit.Builder()
-//    .client(client)
-//    .addConverterFactory(MoshiConverterFactory.create(moshi))
-//    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-//    .baseUrl(BASE_URL)
-//    .build()
 
 /**
  * A public interface to expose the various API access methods
