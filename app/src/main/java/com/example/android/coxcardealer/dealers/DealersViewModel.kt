@@ -58,7 +58,7 @@ class DealersViewModel : ViewModel() {
         _status.value = CoxApiStatus.LOADING
 
         //** Get the DatasetId
-        networkDatasetId = getDatasetIdDeferred.await().datasetId
+        networkDatasetId = "wy1B5wZQ1wg" //getDatasetIdDeferred.await().datasetId
 
         //** Choose Normal or Cheat endpoint
         when (viaEndpoint) {
@@ -143,6 +143,8 @@ class DealersViewModel : ViewModel() {
     // while we still have vehicle Request active.
     while (numActiveVehicleInfoRequest > 0) {
       numActiveVehicleInfoRequest = vehicleInfoRequest.size
+
+      delay(10) // Relinquish time to OS, so the UI can update.
 
       // Poll each Vehicle Info Api call to see if it's Completed yet
       for (vehicleInfoCall in vehicleInfoRequest) {

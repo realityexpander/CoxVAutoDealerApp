@@ -48,7 +48,7 @@ class DealersFragment : Fragment() {
         })
 
         // Observe the navigateToSelectedDealer LiveData and Navigate when it isn't null
-        // After navigating, call displayDealerComplete() so that the ViewModel is ready
+        // After navigating, call displayDealerComplete() to setup ViewModel to be ready
         // for another navigation event.
         viewModel.navigateToSelectedDealer.observe(this, Observer {
           if ( null != it ) {
@@ -58,51 +58,45 @@ class DealersFragment : Fragment() {
           }
         })
 
-        cacheDir = File(context?.cacheDir?.path + "/cox_cache" )
-        client = OkHttpClient.Builder()
-            .dispatcher(dispatcher)
-            .connectionPool(pool)
-            .cache(Cache(
-                cacheDir,
-                10L * 1024L * 1024L // 1 MiB
-            ))
-            .addInterceptor { chain ->
-              var request = chain.request()
-              request = if (isOnline() ) // (context?.let { hasNetwork(it) }!!)
-              /*
-              *  If there is Internet, get the cache that was stored 5 seconds ago.
-              *  The 'max-age' attribute is responsible for this behavior.
-              */ {
-                println("HIT CACHE new: $request")
-                request.newBuilder()
-                    .header("Cache-Control", "public, max-stale=30, max-age=" + 600)
-                    .build()
-              }
-              else
-              /*
-              *  If there is no Internet, get the cache that was stored 7 days ago.
-              *  If the cache is older than 7 days, then discard it,
-              *  The 'max-stale' attribute is responsible for this behavior.
-              *  The 'only-if-cached' attribute indicates to not retrieve new data; fetch the cache only instead.
-              */
-                request.newBuilder()
-                    .header("Cache-Control",
-                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
-                    .build()
-              chain.proceed(request)
-            }
-            .build().also {
-              println("CacheDir new: $cacheDir")
-            }
-
-            retrofit = Retrofit.Builder()
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .baseUrl(BASE_URL)
-                .build()
-
-
+        setupRetrofitClient(context)
+        // Move to CarsApiSerivice
+//        // <<<<<<<<<<<<<<<<<
+//        private cacheDir = File(context?.cacheDir?.path + "/cox_cache" )
+//        private client = OkHttpClient.Builder()
+//            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
+//            .dispatcher(dispatcher)
+//            .connectionPool(pool)
+//            .cache(Cache(
+//                cacheDir,
+//                10L * 1024L * 1024L // 1 MiB
+//            ))
+//            .addInterceptor { chain ->
+//              var request = chain.request()
+//              request = if (isOnline() )
+//                // If there is Internet, get the cache that was stored up to 60 seconds ago.
+//                // After 60 seconds, refresh the cache.
+//               {
+//                request.newBuilder()
+//                    .header("Cache-Control", "public, max-stale=" + 60)
+//                    .build()
+//              }
+//              else
+//              // If there is no Internet, get the cache that was stored up to 14 days ago.
+//                request.newBuilder()
+//                    .header("Cache-Control",
+//                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
+//                    .build()
+//              chain.proceed(request)
+//            }
+//            .build()
+//
+//        retrofit = Retrofit.Builder()
+//            .client(client)
+//            .addConverterFactory(MoshiConverterFactory.create(moshi))
+//            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+//            .baseUrl(BASE_URL)
+//            .build()
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>
 
         return binding.root
     }

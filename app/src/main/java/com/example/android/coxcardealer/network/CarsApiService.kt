@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Environment
+import com.example.android.coxcardealer.dealers.DealersFragment
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -32,6 +33,10 @@ val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 
+/**
+ * Checks for full internet availability by pinging Google DNS server.
+ * This can be called from anywhere, as it relies on the Android OS linux shell.
+ */
 fun isOnline(): Boolean {
     val runtime = Runtime.getRuntime()
     try {
@@ -60,89 +65,109 @@ fun hasNetwork(context: Context): Boolean? {
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object.
  */
-//private val REWRITE_CACHE_CONTROL_INTERCEPTOR = Interceptor { chain ->
-//    val originalResponse = chain.proceed(chain.request())
-//    println("OriginalResponse : $originalResponse")
-//    originalResponse.newBuilder()
-//        .removeHeader("Pragma")
-//        .addHeader("Cache-Control", String.format("max-age=%d", 60))
-//        .build()
-//}
 
-val dispatcher: Dispatcher = Dispatcher().apply {
+private val REWRITE_CACHE_CONTROL_INTERCEPTOR = Interceptor { chain ->
+    val originalResponse = chain.proceed(chain.request())
+    println("OriginalResponse : $originalResponse")
+    var newResponse = originalResponse.newBuilder()
+        .removeHeader("Pragma")
+        .removeHeader("Cache-Control")
+        .header("Cache-Control", String.format("max-age=%d", 60))
+        .build()
+    println("New Response: $newResponse")
+    newResponse
+}
+private val dispatcher: Dispatcher = Dispatcher().apply {
     this.maxRequests = 40
     this.maxRequestsPerHost = 20
 }
-
-
-var cacheDir = File("hellothere")
-//var cacheDir = File(android.os.Environment.getExternalStoragePublicDirectory(
-//    Environment.DIRECTORY_NOTIFICATIONS).path ).also {
-//        if (!it.exists()) {  // ** testing
-//        it.mkdirs()
-//    }
-//}
-//var cacheDir = File(Environment.getDownloadCacheDirectory().path + "/cached99").also {
-//    if (!it.exists()) {  // ** testing
-//        it.mkdirs()
-//    }
-//}
-//var cacheDir = File(Environment.getExternalStorageDirectory().path + "/cached_api4").also {
-//    if (!it.exists()) {  // ** testing
-//        it.mkdirs()
-//    }
-//}
-//var cacheDir = File(Environment.getDataDirectory().path + "/cache/").also {
-//    if(!it.exists()) {
-//        it.mkdirs()
-//    }
-//}
-
-var pool = ConnectionPool(20, 10000, TimeUnit.MILLISECONDS)
-var client: OkHttpClient = OkHttpClient.Builder()
-//    .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-    .dispatcher(dispatcher)
-    .connectionPool(pool)
-    .cache(Cache(
-        cacheDir,
-        10L * 1024L * 1024L // 1 MiB
-    ))
-    .addInterceptor { chain ->
-        var request = chain.request()
-        request = if (isOnline() )
-        /*
-        *  If there is Internet, get the cache that was stored 5 seconds ago.
-        *  The 'max-age' attribute is responsible for this behavior.
-        */ {
-            println("HIT CACHE new: $request")
-            request.newBuilder()
-                .header("Cache-Control", "public,  max-age=" + 600)
-                .build()
-        }
-        else
-        /*
-        *  If there is no Internet, get the cache that was stored 7 days ago.
-        *  If the cache is older than 7 days, then discard it,
-        *  The 'max-stale' attribute is responsible for this behavior.
-        *  The 'only-if-cached' attribute indicates to not retrieve new data; fetch the cache only instead.
-        */
-            request.newBuilder()
-                .header("Cache-Control",
-                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
-                .build()
-        chain.proceed(request)
-    }
-    .build().also {
-        println("CacheDir old: $cacheDir")
-    }
-
-//private val retrofit = Retrofit.Builder()
-var retrofit = Retrofit.Builder()
-    .client(client)
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+private var cacheDir = File("default")
+private var pool = ConnectionPool(20, 10000, TimeUnit.MILLISECONDS)
+var client: OkHttpClient = OkHttpClient.Builder().build()
+var retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
+
+fun setupRetrofitClient(context: Context?) {
+    context?.let {
+        cacheDir = File(context.cacheDir?.path + "/cox_cache")
+        client = OkHttpClient.Builder()
+            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
+            .dispatcher(dispatcher)
+            .connectionPool(pool)
+            .cache(Cache(
+                cacheDir,
+                10L * 1024L * 1024L // 1 MiB
+            ))
+            .addInterceptor { chain ->
+                var request = chain.request()
+                request = if (isOnline())
+                // If there is Internet, get the cache that was stored up to 60 seconds ago.
+                // After 60 seconds, refresh the cache.
+                {
+                    request.newBuilder()
+                        .header("Cache-Control", "public, max-stale=" + 60)
+                        .build()
+                } else
+                // If there is no Internet, use the cache that was stored up to 14 days ago.
+                    request.newBuilder()
+                        .header("Cache-Control",
+                            "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
+                        .build()
+                chain.proceed(request)
+            }
+            .build()
+
+        retrofit = Retrofit.Builder()
+            .client(client)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .baseUrl(BASE_URL)
+            .build()
+    }
+}
+
+//var  client: OkHttpClient = OkHttpClient.Builder()
+//    .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
+//    .dispatcher(dispatcher)
+//    .connectionPool(pool)
+//    .cache(Cache(
+//        cacheDir,
+//        10L * 1024L * 1024L // 1 MiB
+//    ))
+//    .addInterceptor { chain ->
+//        var request = chain.request()
+//        request = if (isOnline() )
+//        /*
+//        *  If there is Internet, get the cache that was stored 5 seconds ago.
+//        *  The 'max-age' attribute is responsible for this behavior.
+//        */ {
+//            request.newBuilder()
+//                .header("Cache-Control", "public,  max-age=" + 15)
+//                .build()
+//        }
+//        else
+//        /*
+//        *  If there is no Internet, get the cache that was stored 7 days ago.
+//        *  If the cache is older than 7 days, then discard it,
+//        *  The 'max-stale' attribute is responsible for this behavior.
+//        *  The 'only-if-cached' attribute indicates to not retrieve new data; fetch the cache only instead.
+//        */
+//            request.newBuilder()
+//                .header("Cache-Control",
+//                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
+//                .build()
+//        chain.proceed(request)
+//    }
+//    .build()
+//
+////private val retrofit = Retrofit.Builder()
+//var retrofit = Retrofit.Builder()
+//    .client(client)
+//    .addConverterFactory(MoshiConverterFactory.create(moshi))
+//    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+//    .baseUrl(BASE_URL)
+//    .build()
 
 /**
  * A public interface to expose the various API access methods
