@@ -57,11 +57,11 @@ class DealersViewModel : ViewModel() {
         //** Get the DatasetId
         networkDatasetId = getDatasetIdDeferred.await().datasetId
 
-          if (!getViaCheatApiEndpoint) {
-
+        //** Choose Normal or Cheat endpoint
+        when (getViaCheatApiEndpoint) {
+          false ->
             //** Get the Dealer info for all the vehicles in the DatasetId
             networkDatasetId?.let { datasetId ->
-
               //** Get the list of Vehicle Id's for this DatasetId.
               val vehicleIds = CarsApi.retrofitService.getVehiclesAsync(datasetId).await()
 
@@ -72,7 +72,7 @@ class DealersViewModel : ViewModel() {
               // dealer's info, concurrently.
               val vehicles = mutableListOf<Vehicle>()
               val dealerIdsSet = mutableSetOf<Int?>()
-              val dealerInfoRequest = getVehiclesAndStartDealerInfoRequest(vehicleInfoRequest, vehicles, dealerIdsSet, datasetId)
+              val dealerInfoRequest = getVehiclesAndStartDealerInfoRequests(vehicleInfoRequest, vehicles, dealerIdsSet, datasetId)
 
               //** Create list of Dealers with full Dealer Info
               val dealers = mutableListOf<Dealer>()
@@ -87,18 +87,18 @@ class DealersViewModel : ViewModel() {
               _status.value = CarsApiStatus.DONE
             }
 
-          } else {
-
-            // ** Get via cheat
+          true ->
+            // ** Get via cheat Api
             networkDatasetId?.let {
               // Get the Dealers for this DatasetId
               val listResult = CarsApi.retrofitService.getDealersCheatAsync(it).await()
-              _status.value = CarsApiStatus.DONE
 
               // Set the result from CarsApi
               _dealers.value = listResult.dealers
+              // Indicate we are finished
+              _status.value = CarsApiStatus.DONE
             }
-          }
+        }
 
       } catch (e: Exception) {
         _status.value = CarsApiStatus.ERROR
@@ -110,13 +110,13 @@ class DealersViewModel : ViewModel() {
 
   /**
    * Match each Vehicle to each Dealer that it is associated with, and add it to Dealers
-   * list of vehicles.
+   * list of vehicles. Mutates dealers
    */
-  private fun matchVehiclesToDealers(vehicles: MutableList<Vehicle>, dealers: MutableList<Dealer>) {
+  private fun matchVehiclesToDealers(vehicles: List<Vehicle>, dealers: MutableList<Dealer>) {
     for (vehicle in vehicles) {
       loop@ for (dealer in dealers) {
         if (dealer.dealerId == vehicle.dealerId) {
-          (dealer.vehicles as ArrayList<Vehicle>).add(vehicle) // ** investigate: why must use this way
+          (dealer.vehicles as MutableList<Vehicle>).add(vehicle) // ** investigate: why must call this way
           break@loop
         }
       }
@@ -126,7 +126,7 @@ class DealersViewModel : ViewModel() {
   /**
    * Get the Vehicle info from the Api and start the Api call to the dealers, concurrently.
    */
-  private suspend fun getVehiclesAndStartDealerInfoRequest(
+  private suspend fun getVehiclesAndStartDealerInfoRequests(
       vehicleInfoRequest: MutableList<Deferred<Vehicle>>,
       vehicles: MutableList<Vehicle>,
       dealerIdsSet: MutableSet<Int?>,
