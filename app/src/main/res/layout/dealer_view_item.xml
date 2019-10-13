@@ -33,7 +33,7 @@
           android:layout_marginLeft="8dp"
           android:text="@{dealer.name}"
           android:textColor="#2E2E2E"
-          tools:text="Dealer Name" />
+          tools:text="@tools:sample/last_names" />
 
         <TextView
           android:id="@+id/dealer2"
@@ -48,7 +48,7 @@
           android:text="@{dealer.dealerIdStr}"
           android:textColor="#9C9C9C"
           android:textStyle="bold"
-          tools:text="DealerId" />
+          tools:text="@tools:sample/date/hhmmss" />
 
         <ImageView
           android:id="@+id/imageView"
