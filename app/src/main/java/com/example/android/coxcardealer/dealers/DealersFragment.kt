@@ -8,6 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentDealersBinding
+import com.example.android.coxcardealer.network.*
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import okhttp3.Cache
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
 
 /**
  * This fragment shows the the status of the Dealer List web services transaction.
@@ -50,6 +57,52 @@ class DealersFragment : Fragment() {
             viewModel.displayVehiclesComplete()
           }
         })
+
+        cacheDir = File(context?.cacheDir?.path + "/stuff" )
+        client = OkHttpClient.Builder()
+            .dispatcher(dispatcher)
+            .connectionPool(pool)
+            .cache(Cache(
+                cacheDir,
+                10L * 1024L * 1024L // 1 MiB
+            ))
+            .addInterceptor { chain ->
+              var request = chain.request()
+              request = if (isOnline() ) // (context?.let { hasNetwork(it) }!!)
+              /*
+              *  If there is Internet, get the cache that was stored 5 seconds ago.
+              *  The 'max-age' attribute is responsible for this behavior.
+              */ {
+                println("HIT CACHE new: $request")
+                request.newBuilder()
+                    .header("Cache-Control", "public,  max-age=" + 600)
+                    .build()
+              }
+              else
+              /*
+              *  If there is no Internet, get the cache that was stored 7 days ago.
+              *  If the cache is older than 7 days, then discard it,
+              *  The 'max-stale' attribute is responsible for this behavior.
+              *  The 'only-if-cached' attribute indicates to not retrieve new data; fetch the cache only instead.
+              */
+                request.newBuilder()
+                    .header("Cache-Control",
+                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7)
+                    .build()
+              chain.proceed(request)
+            }
+            .build().also {
+              println("CacheDir new: $cacheDir")
+            }
+
+            retrofit = Retrofit.Builder()
+                .client(client)
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .baseUrl(BASE_URL)
+                .build()
+
+
 
         return binding.root
     }

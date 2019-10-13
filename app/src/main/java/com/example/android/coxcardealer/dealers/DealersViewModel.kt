@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.coxcardealer.network.*
 import kotlinx.coroutines.*
+import okhttp3.Cache
 import com.example.android.coxcardealer.network.datasetId as networkDatasetId
 
 enum class CoxApiStatus { LOADING, ERROR, DONE }
@@ -50,14 +51,14 @@ class DealersViewModel : ViewModel() {
    */
   private fun getDealersList(viaEndpoint: CoxApiEndpointFormat) {
     coroutineScope.launch {
-      val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
+      //val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
 
       try {
         // Show the loading indicator
         _status.value = CoxApiStatus.LOADING
 
         //** Get the DatasetId
-        networkDatasetId = getDatasetIdDeferred.await().datasetId
+        networkDatasetId = "yL28BqVP1wg" //getDatasetIdDeferred.await().datasetId
 
         //** Choose Normal or Cheat endpoint
         when (viaEndpoint) {
@@ -170,7 +171,7 @@ class DealersViewModel : ViewModel() {
   }
 
   private fun startVehicleInfoRequest(vehicleIdsApiResult: Vehicles,
-                                    datasetId: String): MutableList<Deferred<Vehicle>> {
+                                      datasetId: String): MutableList<Deferred<Vehicle>> {
     val vehicleInfoRequest = mutableListOf<Deferred<Vehicle>>()
     vehicleIdsApiResult.vehicleIds?.forEach { vehicleId ->
       // Queue up the Request in parallel
