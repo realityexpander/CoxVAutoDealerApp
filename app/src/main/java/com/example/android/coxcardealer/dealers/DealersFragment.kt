@@ -58,7 +58,7 @@ class DealersFragment : Fragment() {
           }
         })
 
-        cacheDir = File(context?.cacheDir?.path + "/cox_stuff" )
+        cacheDir = File(context?.cacheDir?.path + "/cox_cache" )
         client = OkHttpClient.Builder()
             .dispatcher(dispatcher)
             .connectionPool(pool)

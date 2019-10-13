@@ -92,7 +92,7 @@ var cacheDir = File("hellothere")
 //        it.mkdirs()
 //    }
 //}
-//var cacheDir = File(Environment.getDataDirectory().path + "/cache/cache_api5").also {
+//var cacheDir = File(Environment.getDataDirectory().path + "/cache/").also {
 //    if(!it.exists()) {
 //        it.mkdirs()
 //    }
