@@ -68,7 +68,7 @@ var retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-fun setupRetrofitClient(context: Context?) {
+fun setupRetrofitAndOkHttpClient(context: Context?) {
     context?.let {
         cacheDir = File(context.cacheDir?.path + "/cox_cache")
         client = OkHttpClient.Builder()
@@ -82,7 +82,7 @@ fun setupRetrofitClient(context: Context?) {
                 var request = chain.request()
                 request = if (isOnline()) {
                     // If there is Internet, get the cache that was stored up to 60 seconds ago.
-                    // After 60 seconds, refresh the cache.
+                    // After 60 seconds, force refresh the cache.
                     request.newBuilder()
                         .header("Cache-Control", "public, max-stale=" + 60)
                         .build()

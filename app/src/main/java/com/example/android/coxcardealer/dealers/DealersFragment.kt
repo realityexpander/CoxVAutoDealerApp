@@ -9,12 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentDealersBinding
 import com.example.android.coxcardealer.network.*
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import java.io.File
 
 /**
  * This fragment shows the the status of the Dealer List web services transaction.
@@ -57,7 +51,7 @@ class DealersFragment : Fragment() {
           }
         })
 
-        setupRetrofitClient(context)
+        setupRetrofitAndOkHttpClient(context)
 
         return binding.root
     }
