@@ -102,7 +102,7 @@ class DealersViewModel : ViewModel() {
 
       } catch (e: Exception) {
         _status.value = CarsApiStatus.ERROR
-        _dealers.value = ArrayList()
+        _dealers.value = mutableListOf()
         println("CarsApi Access error: $e")
       }
     }
