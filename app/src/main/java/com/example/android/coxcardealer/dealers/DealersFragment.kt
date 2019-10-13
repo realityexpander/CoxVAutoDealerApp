@@ -58,7 +58,7 @@ class DealersFragment : Fragment() {
           }
         })
 
-        cacheDir = File(context?.cacheDir?.path + "/stuff" )
+        cacheDir = File(context?.cacheDir?.path + "/cox_stuff" )
         client = OkHttpClient.Builder()
             .dispatcher(dispatcher)
             .connectionPool(pool)
@@ -75,7 +75,7 @@ class DealersFragment : Fragment() {
               */ {
                 println("HIT CACHE new: $request")
                 request.newBuilder()
-                    .header("Cache-Control", "public,  max-age=" + 600)
+                    .header("Cache-Control", "public, max-stale=30, max-age=" + 600)
                     .build()
               }
               else
