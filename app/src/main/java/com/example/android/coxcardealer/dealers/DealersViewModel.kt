@@ -8,7 +8,7 @@ import kotlinx.coroutines.*
 import com.example.android.coxcardealer.network.datasetId as networkDatasetId
 
 enum class CoxApiStatus { LOADING, ERROR, DONE }
-enum class CoxApiEndpointFormat { NORMAL, CHEAT }
+enum class CoxApiEndpointVersion { NORMAL, CHEAT }
 
 /**
  * Show the list of [ Dealers].
@@ -40,15 +40,15 @@ class DealersViewModel : ViewModel() {
 
     // Display Dealers list immediately
     init {
-      getDealersList(viaEndpoint = CoxApiEndpointFormat.NORMAL)
+      getDealersList(endpointVersion = CoxApiEndpointVersion.NORMAL)
     }
 
   /**
    * Updates the [Dealer] [List] and [CoxApiStatus] [LiveData]. The Retrofit service
    * returns a Deferred coroutine [CarsApi] call which we await for the result of the transaction.
-   * @param viaEndpoint represents the mode of api to use, normal or cheat
+   * @param endpointVersion represents the mode of api to use, normal or cheat
    */
-  private fun getDealersList(viaEndpoint: CoxApiEndpointFormat) {
+  private fun getDealersList(endpointVersion: CoxApiEndpointVersion) {
     coroutineScope.launch {
       val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
 
@@ -60,9 +60,10 @@ class DealersViewModel : ViewModel() {
         networkDatasetId = getDatasetIdDeferred.await().datasetId
 
         //** Choose Normal or Cheat endpoint
-        when (viaEndpoint) {
+        when (endpointVersion) {
 
-          CoxApiEndpointFormat.NORMAL ->
+          // Use the normal (slow) Api call
+          CoxApiEndpointVersion.NORMAL ->
             //** Get the Dealer info for all the vehicles in the DatasetId
             networkDatasetId?.let { datasetId ->
               //** Get the list of Vehicle Id's for this DatasetId.
@@ -90,7 +91,8 @@ class DealersViewModel : ViewModel() {
               _status.value = CoxApiStatus.DONE
             }
 
-          CoxApiEndpointFormat.CHEAT ->
+          // Use the cheat Api call
+          CoxApiEndpointVersion.CHEAT ->
             // ** Get via cheat Api
             networkDatasetId?.let {datasetId ->
               // Get the Dealers for this DatasetId

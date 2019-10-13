@@ -29,14 +29,12 @@ class DealersFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        // Bind & associate ViewModel with Dealers Fragment
         val binding = FragmentDealersBinding.inflate(inflater)
-        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
-        // Giving the binding access to the DealersViewModel
         binding.viewModel = viewModel
 
-        // Sets the adapter of the RecyclerView with clickHandler lambda that
-        // tells the viewModel when our dealer is clicked
+        // Set the adapter of the RecyclerView with clickHandler lambda for Dealer
         binding.dealersList.adapter = DealersListAdapter(DealersListAdapter.OnClickListener {
           viewModel.displayVehicles(it)
         })
