@@ -48,12 +48,11 @@ class DealersFragment : Fragment() {
         })
 
         // Observe the navigateToSelectedDealer LiveData and Navigate when it isn't null
-        // After navigating, call displayDealerComplete() to setup ViewModel to be ready
-        // for another navigation event.
-        viewModel.navigateToSelectedDealer.observe(this, Observer {
-          if ( null != it ) {
+        // After navigating, call displayDealerComplete() reset for future navigation.
+        viewModel.navigateToSelectedDealer.observe(this, Observer { dealer ->
+          dealer.let {
             // Must find the NavController from the Fragment
-            this.findNavController().navigate(DealersFragmentDirections.actionShowVehicles(it))
+            this.findNavController().navigate(DealersFragmentDirections.actionShowVehicles(dealer))
             viewModel.displayVehiclesComplete()
           }
         })

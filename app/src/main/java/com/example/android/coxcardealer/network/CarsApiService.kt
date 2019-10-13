@@ -57,18 +57,6 @@ fun isOnline(): Boolean {
  * object.
  */
 
-// ** delete soon
-private val REWRITE_CACHE_CONTROL_INTERCEPTOR = Interceptor { chain ->
-    val originalResponse = chain.proceed(chain.request())
-    println("OriginalResponse : $originalResponse")
-    var newResponse = originalResponse.newBuilder()
-        .removeHeader("Pragma")
-        .removeHeader("Cache-Control")
-        .header("Cache-Control", String.format("max-age=%d", 60))
-        .build()
-    println("New Response: $newResponse")
-    newResponse
-}
 private val dispatcher: Dispatcher = Dispatcher().apply {
     this.maxRequests = 20
     this.maxRequestsPerHost = 10
@@ -84,7 +72,6 @@ fun setupRetrofitClient(context: Context?) {
     context?.let {
         cacheDir = File(context.cacheDir?.path + "/cox_cache")
         client = OkHttpClient.Builder()
-//            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
             .dispatcher(dispatcher)
             .connectionPool(pool)
             .cache(Cache(
