@@ -51,14 +51,14 @@ class DealersViewModel : ViewModel() {
    */
   private fun getDealersList(viaEndpoint: CoxApiEndpointFormat) {
     coroutineScope.launch {
-      //val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
+      val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
 
       try {
         // Show the loading indicator
         _status.value = CoxApiStatus.LOADING
 
         //** Get the DatasetId
-        networkDatasetId = "yL28BqVP1wg" //getDatasetIdDeferred.await().datasetId
+        networkDatasetId = getDatasetIdDeferred.await().datasetId
 
         //** Choose Normal or Cheat endpoint
         when (viaEndpoint) {
