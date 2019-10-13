@@ -29,12 +29,11 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_alignParentStart="true"
+          android:layout_marginStart="57dp"
           android:layout_marginLeft="8dp"
-          android:layout_marginBottom="8dp"
-          android:padding="8dp"
-          android:text="@{dealer.dealerIdStr}"
-          android:textColor="@color/colorIcon"
-          tools:text="Dealer ID" />
+          android:text="@{dealer.name}"
+          android:textColor="#2E2E2E"
+          tools:text="Dealer Name" />
 
         <TextView
           android:id="@+id/dealer2"
@@ -43,11 +42,19 @@
           android:layout_height="wrap_content"
           android:layout_below="@+id/dealer1"
           android:layout_alignParentStart="true"
+          android:layout_marginStart="58dp"
           android:layout_marginLeft="8dp"
-          android:padding="4dp"
-          android:text="@{dealer.name}"
+          android:layout_marginTop="-4dp"
+          android:text="@{dealer.dealerIdStr}"
+          android:textColor="#9C9C9C"
           android:textStyle="bold"
-          tools:text="Dealer name" />
+          tools:text="DealerId" />
+
+        <ImageView
+          android:id="@+id/imageView"
+          android:layout_width="54dp"
+          android:layout_height="54dp"
+          app:srcCompat="@drawable/ic_location_city_black_24dp" />
 
       </RelativeLayout>
 

@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit
 
 
 const val BASE_URL = "https://api.coxauto-interview.com/"
-var datasetId: String? = null
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -34,7 +33,7 @@ val moshi: Moshi = Moshi.Builder()
         .build()
 
 /**
- * Checks for full internet availability by pinging Google DNS server.
+ * Checks for full internet availability by pinging Google DNS server. (Not just "wifi is on.")
  * This can be called from anywhere, as it relies on the Android OS linux shell.
  */
 fun isOnline(): Boolean {
@@ -53,10 +52,8 @@ fun isOnline(): Boolean {
 }
 
 /**
- * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
- * object.
+ * Use the OkHttp3 & Retrofit builder to build a retrofit object using a Moshi converter
  */
-
 private val dispatcher: Dispatcher = Dispatcher().apply {
     this.maxRequests = 20
     this.maxRequestsPerHost = 10
@@ -143,7 +140,3 @@ object CarsApi {
 //    val retrofitService : DealersApiService =  retrofit.create(DealersApiService::class.java)
 }
 
-// Retrofit call wrapper includes the datasetId var
-fun getDealersCheatUsingDatasetIdAsync() : Deferred<Dealers> {
-    return CarsApi.retrofitService.getDealersCheatAsync(datasetId!!)
-}

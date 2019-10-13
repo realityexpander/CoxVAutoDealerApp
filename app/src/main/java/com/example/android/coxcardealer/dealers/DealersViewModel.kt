@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.coxcardealer.network.*
 import kotlinx.coroutines.*
-import com.example.android.coxcardealer.network.datasetId as networkDatasetId
 
 enum class CoxApiStatus { LOADING, ERROR, DONE }
 enum class CoxApiEndpointVersion { NORMAL, CHEAT }
@@ -55,17 +54,17 @@ class DealersViewModel : ViewModel() {
         // Show the loading indicator
         _status.value = CoxApiStatus.LOADING
 
-        //** Get the DatasetId
-        networkDatasetId = getDatasetIdDeferred.await().datasetId
+        //** Get the DatasetId for the unique set of vehicles
+        val datasetId = getDatasetIdDeferred.await().datasetId
 
         //** Choose Normal or Cheat endpoint
         when (endpointVersion) {
 
-          // Use the normal (slow) Api call
+          // Use normal (slow) Api call
           CoxApiEndpointVersion.NORMAL ->
             //** Get the Dealer info for all the vehicles in the DatasetId
-            networkDatasetId?.let { datasetId ->
-              //** Get the list of Vehicle Id's for this DatasetId.
+            datasetId?.let {
+              //** Get list of Vehicle Id's for this DatasetId.
               val vehicleIds = CarsApi.retrofitService.getVehiclesAsync(datasetId).await()
 
               //** Start calls for Vehicle info for all the Vehicle Ids, concurrently.
@@ -90,10 +89,10 @@ class DealersViewModel : ViewModel() {
               _status.value = CoxApiStatus.DONE
             }
 
-          // Use the cheat Api call
+          //** Use the cheat Api call
           CoxApiEndpointVersion.CHEAT ->
             // ** Get via cheat Api
-            networkDatasetId?.let {datasetId ->
+            datasetId?.let { datasetId ->
               // Get the Dealers for this DatasetId
               val listResult = CarsApi.retrofitService.getDealersCheatAsync(datasetId).await()
 
