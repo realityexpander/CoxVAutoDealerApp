@@ -27,7 +27,7 @@ import com.example.android.coxcardealer.network.Vehicle
 class DetailViewModel(vehicle: Vehicle,
                       app: Application) : AndroidViewModel(app) {
 
-    // The selected vehicle
+  // The selected vehicle
   private val _selectedVehicle = MutableLiveData<Vehicle>()
     val selectedVehicle: LiveData<Vehicle>
         get() = _selectedVehicle

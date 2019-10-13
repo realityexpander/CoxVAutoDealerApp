@@ -34,7 +34,6 @@ class DealersViewModel : ViewModel() {
 
     // Coroutine scope for API call uses a Job to be able to cancel when needed
     private var viewModelJob = Job()
-    // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
@@ -72,22 +71,22 @@ class DealersViewModel : ViewModel() {
               //** Start calls for Vehicle info for all the Vehicle Ids, concurrently.
               val vehicleInfoRequests = startVehicleInfoRequest(vehicleIds, datasetId)
 
-              //** Add the vehicle's info to the vehicles list & start loading
+              //** Add vehicle's info to vehicles list & start loading the
               // dealer's info, concurrently.
               val vehicles = mutableListOf<Vehicle>()
               val dealerIds = mutableSetOf<Int?>()
-              val dealerInfoRequests = getVehiclesAndStartDealerInfoRequests(vehicleInfoRequests, vehicles, dealerIds, datasetId)
+              val dealerInfoRequests = getVehiclesInfoAndStartDealerInfoRequests(vehicleInfoRequests, vehicles, dealerIds, datasetId)
 
-              //** Create list of Dealers with full Dealer Info
+              //** Create list of Dealers with complete Dealer Info
               val dealers = mutableListOf<Dealer>()
               dealerInfoRequests.forEach { dealers.add(it.await()) }
 
-              //** For the set of Dealers, match the Vehicle to the Dealer
+              //** For the list of vehicles, match each Vehicle to associated Dealer
               matchVehiclesToDealers(vehicles, dealers)
 
-              // Assign the result to LiveData
+              // Update UI with result
               _dealers.value = dealers
-              // Indicate we are finished
+              // Indicate to UI we are finished
               _status.value = CoxApiStatus.DONE
             }
 
@@ -129,7 +128,7 @@ class DealersViewModel : ViewModel() {
   /**
    * Get the Vehicle info from the Api and concurrently start the Api call to the dealers.
    */
-  private suspend fun getVehiclesAndStartDealerInfoRequests(
+  private suspend fun getVehiclesInfoAndStartDealerInfoRequests(
       vehicleInfoRequests: MutableList<Deferred<Vehicle>>,
       vehicles: MutableList<Vehicle>,
       dealerIds: MutableSet<Int?>,

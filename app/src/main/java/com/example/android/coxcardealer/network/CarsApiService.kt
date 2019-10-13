@@ -29,7 +29,7 @@ var datasetId: String? = null
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
  * full Kotlin compatibility.
  */
-val moshi = Moshi.Builder()
+val moshi: Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 

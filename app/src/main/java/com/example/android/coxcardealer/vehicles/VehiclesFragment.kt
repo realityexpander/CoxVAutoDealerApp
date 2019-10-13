@@ -34,12 +34,12 @@ class VehiclesFragment : Fragment() {
         // Retrieve the SafeArg & set the selected dealer
         viewModel.setSelectedDealer(VehiclesFragmentArgs.fromBundle(arguments!!).selectedDealer)
 
-        // Set the adapter of the RecyclerView with the clickHandler lambda to navigate
+        // Set adapter of the RecyclerView with clickHandler lambda for navigation
         binding.vehiclesList.adapter = VehiclesListAdapter(VehiclesListAdapter.OnClickListener {
           viewModel.displayDetails(it)
         })
 
-        // Navigation to show selected vehicle detail
+        // Navigate to show selected vehicle detail
         viewModel.navigateToDetails.observe(this, Observer {
           if ( null != it ) {
             this.findNavController().navigate(VehiclesFragmentDirections.actionShowDetail(it))
