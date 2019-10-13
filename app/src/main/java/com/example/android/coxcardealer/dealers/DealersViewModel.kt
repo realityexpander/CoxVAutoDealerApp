@@ -7,7 +7,8 @@ import com.example.android.coxcardealer.network.*
 import kotlinx.coroutines.*
 import com.example.android.coxcardealer.network.datasetId as networkDatasetId
 
-enum class CarsApiStatus { LOADING, ERROR, DONE }
+enum class CoxApiStatus { LOADING, ERROR, DONE }
+enum class CoxApiEndpointFormat { NORMAL, CHEAT }
 
 /**
  * Show the list of [ Dealers].
@@ -17,8 +18,8 @@ enum class CarsApiStatus { LOADING, ERROR, DONE }
 class DealersViewModel : ViewModel() {
 
     // Status of the most recent request from API
-    private val _status = MutableLiveData<CarsApiStatus>()
-    val status: LiveData<CarsApiStatus>
+    private val _status = MutableLiveData<CoxApiStatus>()
+    val status: LiveData<CoxApiStatus>
         get() = _status
 
     // Dealers List
@@ -39,27 +40,29 @@ class DealersViewModel : ViewModel() {
 
     // Display Dealers list immediately
     init {
-      getDealersList(getViaCheatApiEndpoint = false)
+      getDealersList(viaEndpoint = CoxApiEndpointFormat.NORMAL)
     }
 
   /**
-   * Updates the [Dealer] [List] and [CarsApiStatus] [LiveData]. The Retrofit service
+   * Updates the [Dealer] [List] and [CoxApiStatus] [LiveData]. The Retrofit service
    * returns a Deferred coroutine [CarsApi] call which we await for the result of the transaction.
+   * @param viaEndpoint represents the mode of api to use, normal or cheat
    */
-  private fun getDealersList(getViaCheatApiEndpoint: Boolean) {
+  private fun getDealersList(viaEndpoint: CoxApiEndpointFormat) {
     coroutineScope.launch {
       val getDatasetIdDeferred = CarsApi.retrofitService.getDatasetIdAsync()
 
       try {
         // Show the loading indicator
-        _status.value = CarsApiStatus.LOADING
+        _status.value = CoxApiStatus.LOADING
 
         //** Get the DatasetId
         networkDatasetId = getDatasetIdDeferred.await().datasetId
 
         //** Choose Normal or Cheat endpoint
-        when (getViaCheatApiEndpoint) {
-          false ->
+        when (viaEndpoint) {
+
+          CoxApiEndpointFormat.NORMAL ->
             //** Get the Dealer info for all the vehicles in the DatasetId
             networkDatasetId?.let { datasetId ->
               //** Get the list of Vehicle Id's for this DatasetId.
@@ -84,10 +87,10 @@ class DealersViewModel : ViewModel() {
               // Assign the result to LiveData
               _dealers.value = dealers
               // Indicate we are finished
-              _status.value = CarsApiStatus.DONE
+              _status.value = CoxApiStatus.DONE
             }
 
-          true ->
+          CoxApiEndpointFormat.CHEAT ->
             // ** Get via cheat Api
             networkDatasetId?.let {
               // Get the Dealers for this DatasetId
@@ -96,12 +99,12 @@ class DealersViewModel : ViewModel() {
               // Set the result from CarsApi
               _dealers.value = listResult.dealers
               // Indicate we are finished
-              _status.value = CarsApiStatus.DONE
+              _status.value = CoxApiStatus.DONE
             }
         }
 
       } catch (e: Exception) {
-        _status.value = CarsApiStatus.ERROR
+        _status.value = CoxApiStatus.ERROR
         _dealers.value = mutableListOf()
         println("CarsApi Access error: $e")
       }

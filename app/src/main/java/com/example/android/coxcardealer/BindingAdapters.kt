@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.android.coxcardealer.network.Dealer
 import com.example.android.coxcardealer.network.Vehicle
-import com.example.android.coxcardealer.dealers.CarsApiStatus
+import com.example.android.coxcardealer.dealers.CoxApiStatus
 import com.example.android.coxcardealer.dealers.DealersListAdapter
 import com.example.android.coxcardealer.vehicles.VehiclesListAdapter
 
@@ -48,23 +48,23 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 /**
- * This binding adapter displays the [CarsApiStatus] of the network request in an image view.  When
+ * This binding adapter displays the [CoxApiStatus] of the network request in an image view.  When
  * the request is loading, it displays a loading_animation.  If the request has an error, it
  * displays a broken image to reflect the connection error.  When the request is finished, it
  * hides the image view.
  */
 @BindingAdapter("carsApiStatus")
-fun bindStatus(statusImageView: ImageView, status: CarsApiStatus?) {
+fun bindStatus(statusImageView: ImageView, status: CoxApiStatus?) {
     when (status) {
-        CarsApiStatus.LOADING -> {
+        CoxApiStatus.LOADING -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.loading_animation)
         }
-        CarsApiStatus.ERROR -> {
+        CoxApiStatus.ERROR -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_connection_error)
         }
-        CarsApiStatus.DONE -> {
+        CoxApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
         }
     }
