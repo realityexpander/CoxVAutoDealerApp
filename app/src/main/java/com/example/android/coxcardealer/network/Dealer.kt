@@ -36,8 +36,10 @@ data class Vehicle (
     get() = "Vehicle ID: $vehicleIdStr"
   val yearStr
     get() = "Year: $year"
-  val yearModelStr
-    get() = "$year $model"
+  val yearMakeModelStr
+    get() = "$year $make $model"
+  val makeModelStr
+    get() = "$make $model"
 }
 
 @Parcelize

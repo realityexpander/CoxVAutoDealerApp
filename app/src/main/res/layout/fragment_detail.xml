@@ -38,40 +38,47 @@
             android:padding="16dp">
 
             <TextView
-              android:id="@+id/main_photo_image"
-              android:layout_width="0dp"
-              android:layout_height="266dp"
-              android:text="@{viewModel.selectedVehicle.vehicleIdStr}"
+              android:id="@+id/textview1_text"
+              android:layout_width="381dp"
+              android:layout_height="26dp"
+              android:text="@{viewModel.selectedVehicle.vehicleIdFullStr}"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"
               tools:text="100102939" />
 
 
-            <TextView
-                android:id="@+id/property_type_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textColor="#de000000"
-                android:textSize="39sp"
-                android:text="@{viewModel.selectedVehicle.yearModelStr}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/main_photo_image"
-                tools:text="Fiesta" />
-
+            <ImageView
+              android:id="@+id/imageView3"
+              android:layout_width="202dp"
+              android:layout_height="158dp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="@+id/textview1_text"
+              app:srcCompat="@drawable/ic_directions_car_black_24dp" />
 
             <TextView
-                android:id="@+id/price_value_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="#de000000"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/property_type_text"
-                android:text="@{viewModel.selectedVehicle.make}"
-                tools:text="Ford" />
+              android:id="@+id/textview2_text"
+              android:layout_width="387dp"
+              android:layout_height="45dp"
+              android:text="@{viewModel.selectedVehicle.makeModelStr}"
+              android:textColor="#de000000"
+              android:textSize="39sp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/imageView3"
+              tools:text="Fiesta" />
+
+            <TextView
+              android:id="@+id/price_value_text"
+              android:layout_width="389dp"
+              android:layout_height="32dp"
+              android:layout_marginTop="8dp"
+              android:text="@{viewModel.selectedVehicle.yearStr}"
+              android:textColor="#de000000"
+              android:textSize="20sp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/textview2_text"
+              tools:text="1992 Ford" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

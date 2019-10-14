@@ -10,7 +10,6 @@
       android:layout_height="match_parent"
       tools:context="com.example.android.coxcardealer.MainActivity">
 
-<!--        ** testing-->
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/vehicles_list"
           android:layout_width="match_parent"

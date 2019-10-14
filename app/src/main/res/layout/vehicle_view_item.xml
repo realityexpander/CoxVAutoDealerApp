@@ -26,28 +26,41 @@
         <TextView
           android:id="@+id/vehicle1"
           style="@style/TextAppearance.AppCompat.Headline"
-          android:layout_width="match_parent"
+          android:layout_width="308dp"
           android:layout_height="wrap_content"
           android:layout_alignParentStart="true"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentEnd="true"
+          android:layout_marginStart="74dp"
           android:layout_marginLeft="8dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginEnd="2dp"
           android:layout_marginBottom="8dp"
           android:padding="8dp"
-          android:text="@{vehicle.make}"
-          android:textColor="@color/colorIcon"
-          tools:text="Vehicle ID" />
+          android:text="@{vehicle.yearMakeModelStr}"
+          android:textColor="#333333"
+          tools:text="@tools:sample/cities" />
 
         <TextView
           android:id="@+id/vehicle2"
           style="@style/TextAppearance.AppCompat.Subhead"
-          android:layout_width="match_parent"
+          android:layout_width="279dp"
           android:layout_height="wrap_content"
           android:layout_below="@+id/vehicle1"
           android:layout_alignParentStart="true"
+          android:layout_marginStart="84dp"
           android:layout_marginLeft="8dp"
-          android:padding="4dp"
-          android:text="@{vehicle.yearModelStr}"
+          android:layout_marginTop="-10dp"
+          android:text="@{vehicle.vehicleIdFullStr}"
+          android:textColor="@color/colorIcon"
           android:textStyle="bold"
-          tools:text="Vehicle name" />
+          tools:text="@tools:sample/date/hhmmss" />
+
+        <ImageView
+          android:id="@+id/imageView2"
+          android:layout_width="75dp"
+          android:layout_height="49dp"
+          app:srcCompat="@drawable/ic_directions_car_black_24dp" />
 
       </RelativeLayout>
 
