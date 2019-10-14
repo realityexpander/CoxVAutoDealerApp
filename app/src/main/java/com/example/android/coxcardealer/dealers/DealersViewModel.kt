@@ -70,17 +70,17 @@ class DealersViewModel : ViewModel() {
               //** Start calls for Vehicle info for all the Vehicle Ids, concurrently.
               val vehicleInfoRequests = startVehicleInfoRequest(vehicleIds, datasetId)
 
-              //** Add vehicle's info to vehicles list & start loading the
-              // dealer's info, concurrently.
+              //** Add vehicle's info to vehicles list & start loading dealer's info, concurrently.
               val vehicles = mutableListOf<Vehicle>()
               val dealerIds = mutableSetOf<Int?>()
-              val dealerInfoRequests = getVehiclesInfoAndStartDealerInfoRequests(vehicleInfoRequests, vehicles, dealerIds, datasetId)
+              val dealerInfoRequests = getVehiclesInfoAndStartDealerInfoReqs( vehicleInfoRequests,
+                  vehicles, dealerIds, datasetId)
 
-              //** Create list of Dealers with complete Dealer Info
+              //** Create list of Dealers with finalized Dealer Info
               val dealers = mutableListOf<Dealer>()
               dealerInfoRequests.forEach { dealers.add(it.await()) }
 
-              //** For the list of vehicles, match each Vehicle to associated Dealer
+              //** For the list of Vehicles, match each Vehicle to it's associated Dealer
               matchVehiclesToDealers(vehicles, dealers)
 
               // Update UI with result
@@ -127,7 +127,7 @@ class DealersViewModel : ViewModel() {
   /**
    * Get the Vehicle info from the Api and concurrently start the Api call to the dealers.
    */
-  private suspend fun getVehiclesInfoAndStartDealerInfoRequests(
+  private suspend fun getVehiclesInfoAndStartDealerInfoReqs(
       vehicleInfoRequests: MutableList<Deferred<Vehicle>>,
       vehicles: MutableList<Vehicle>,
       dealerIds: MutableSet<Int?>,
