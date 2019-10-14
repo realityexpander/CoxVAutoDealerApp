@@ -20,7 +20,7 @@ class VehiclesViewModel : ViewModel() {
   private val selectedDealer: LiveData<Dealer>
     get() = _selectedDealer
 
-  // String for UI
+  // Vehicle & Dealer display for UI
   val selectedDealerStr
     get() = "Vehicles at ${selectedDealer.value?.name}"
 

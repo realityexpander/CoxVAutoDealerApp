@@ -48,6 +48,7 @@ class DealersFragment : Fragment() {
       }
     })
 
+    // Init api & client
     setupRetrofitAndOkHttpClient(context)
 
     return binding.root
