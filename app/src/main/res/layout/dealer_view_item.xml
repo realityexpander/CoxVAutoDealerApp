@@ -45,7 +45,7 @@
           android:layout_marginStart="58dp"
           android:layout_marginLeft="8dp"
           android:layout_marginTop="-4dp"
-          android:text="@{dealer.dealerIdStr}"
+          android:text="@{dealer.dealerIdFullStr}"
           android:textColor="#9C9C9C"
           android:textStyle="bold"
           tools:text="@tools:sample/date/hhmmss" />

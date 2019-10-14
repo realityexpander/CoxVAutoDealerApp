@@ -19,6 +19,8 @@ data class Dealer(
     val vehicles: MutableList<Vehicle>? = ArrayList()) : Parcelable {
   val dealerIdStr
     get() = dealerId.toString()
+  val dealerIdFullStr
+    get() = "Dealer ID: $dealerIdStr"
 }
 
 /**
