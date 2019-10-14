@@ -1,11 +1,6 @@
 package com.example.android.coxcardealer.network
 
 import android.content.Context
-import android.content.pm.PackageManager
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.os.Environment
-import com.example.android.coxcardealer.dealers.DealersFragment
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -17,7 +12,6 @@ import okhttp3.*
 import retrofit2.http.Path
 import java.io.File
 import java.io.IOException
-import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
@@ -57,20 +51,19 @@ private val dispatcher: Dispatcher = Dispatcher().apply {
   this.maxRequests = 20
   this.maxRequestsPerHost = 10
 }
-private var cacheDir = File("default")
+private var cacheDir = File("default") // this will be replaced during setup call
 private var pool = ConnectionPool(10, 20000, TimeUnit.MILLISECONDS)
-var client: OkHttpClient = OkHttpClient.Builder().build()
-var retrofit: Retrofit = Retrofit.Builder()
+private var client: OkHttpClient = OkHttpClient.Builder().build()
+private var retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
-
 fun setupRetrofitAndOkHttpClient(context: Context?) {
   context?.let {
     cacheDir = File(context.cacheDir?.path + "/cox_cache")
     client = OkHttpClient.Builder()
         .dispatcher(dispatcher)
         .connectionPool(pool)
-        .readTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS) // due to very slow cox server emulation
         .cache(Cache(
             cacheDir,
             10L * 1024L * 1024L // 1 MiB
@@ -81,13 +74,14 @@ fun setupRetrofitAndOkHttpClient(context: Context?) {
             // If there is Internet, get the cache that was stored up to 60 seconds ago.
             // After 60 seconds, force refresh the cache.
             request.newBuilder()
-                .header("Cache-Control", "public, max-stale=" + 60)
+                .header("Cache-Control",
+                        "public, max-stale=" + 60)
                 .build()
           } else {
             // If there is no Internet, use the cache that was stored up to 14 days ago.
             request.newBuilder()
                 .header("Cache-Control",
-                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
+                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
                 .build()
           }
           chain.proceed(request)
@@ -107,19 +101,15 @@ fun setupRetrofitAndOkHttpClient(context: Context?) {
  * A public interface to expose the various API access methods
  * Returns a Coroutine to fetch with await()
  */
-interface DealersApiService {
+interface CoxApiService {
 
   @GET("/api/datasetId")
   fun getDatasetIdAsync():
       Deferred<DatasetId>
 
-  @GET("/api/{datasetId}/cheat")
-  fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
-      Deferred<Dealers>
-
   @GET("/api/{datasetId}/vehicles")
-  fun getVehiclesAsync(@Path("datasetId") datasetId: String):
-      Deferred<Vehicles>
+  fun getVehicleIdsAsync(@Path("datasetId") datasetId: String):
+      Deferred<VehicleIds>
 
   @GET("/api/{datasetId}/vehicles/{vehicleId}")
   fun getVehicleInfoAsync(@Path("datasetId") datasetId: String,
@@ -130,12 +120,16 @@ interface DealersApiService {
   fun getDealersInfoAsync(@Path("datasetId") datasetId: String,
                           @Path("dealerId") dealerId: Int?):
       Deferred<Dealer>
+
+  @GET("/api/{datasetId}/cheat")
+  fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
+      Deferred<Dealers>
 }
 
 /**
  * A public Api object to expose the lazy-initialized Retrofit service
  */
-object CarsApi {
-  val retrofitService: DealersApiService by lazy { retrofit.create(DealersApiService::class.java) }
+object CoxApi {
+  val retrofitService: CoxApiService by lazy { retrofit.create(CoxApiService::class.java) }
 }
 

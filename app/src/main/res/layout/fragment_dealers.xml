@@ -19,7 +19,7 @@
           android:textSize="24sp"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          tools:text="Vehicles from Dealer: XXXX XXXXX" />
+          tools:text="List of Dealers" />
 
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/dealers_list"

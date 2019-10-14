@@ -31,7 +31,7 @@
     </fragment>
 
 
-    <!-- Vehicles : List of vehicles from selected dealer-->
+    <!-- VehicleIds : List of vehicles from selected dealer-->
     <fragment
       android:id="@+id/vehiclesFragment"
       android:name="com.example.android.coxcardealer.vehicles.VehiclesFragment"

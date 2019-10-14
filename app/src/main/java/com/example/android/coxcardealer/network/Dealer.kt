@@ -53,5 +53,5 @@ data class DatasetId(
     val datasetId: String? = null) : Parcelable
 
 @Parcelize
-data class Vehicles(
+data class VehicleIds(
     val vehicleIds: List<Int>? = null) : Parcelable

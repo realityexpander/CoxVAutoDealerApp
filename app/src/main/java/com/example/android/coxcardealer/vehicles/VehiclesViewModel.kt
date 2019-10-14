@@ -10,7 +10,7 @@ import com.example.android.coxcardealer.network.*
  */
 class VehiclesViewModel : ViewModel() {
 
-  // Vehicles List
+  // VehicleIds List
   private val _vehicles = MutableLiveData<List<Vehicle>>()
   val vehicles: LiveData<List<Vehicle>>
     get() = _vehicles
@@ -22,7 +22,7 @@ class VehiclesViewModel : ViewModel() {
 
   // Vehicle & Dealer display for UI
   val selectedDealerStr
-    get() = "Vehicles at ${selectedDealer.value?.name}"
+    get() = "VehicleIds at ${selectedDealer.value?.name}"
 
   // Handle navigation to the selected vehicle
   private val _navigateToDetails = MutableLiveData<Vehicle>()
