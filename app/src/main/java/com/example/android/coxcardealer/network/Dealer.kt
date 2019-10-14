@@ -7,6 +7,7 @@ package com.example.android.coxcardealer.network
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+
 /**
  * This data class defines a dealership property which includes an ID and the name of
  * the dealership.
