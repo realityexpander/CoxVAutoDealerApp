@@ -57,50 +57,14 @@ class DealersViewModel : ViewModel() {
         //** Get the DatasetId for the unique set of vehicles
         val datasetId = getDatasetIdDeferred.await().datasetId
 
-        //** Choose Normal or Cheat endpoint
         when (endpointVersion) {
-
           // Use normal (slow) Api call
           CoxApiEndpointVersion.NORMAL ->
-            //** Get the Dealer info for all the vehicles in the DatasetId
-            datasetId?.let {
-              //** Get list of Vehicle Id's for this DatasetId.
-              val vehicleIds = CoxApi.retrofitService.getVehicleIdsAsync(datasetId).await()
-
-              //** Start calls for Vehicle info for all the Vehicle Ids, concurrently.
-              val vehicleInfoRequests = startVehicleInfoRequest(vehicleIds, datasetId)
-
-              //** Add vehicle's info to vehicles list & start loading dealer's info, concurrently.
-              val vehicles = mutableListOf<Vehicle>()
-              val dealerIds = mutableSetOf<Int?>()
-              val dealerInfoRequests = getVehiclesInfoAndStartDealerInfoReqs( vehicleInfoRequests,
-                  vehicles, dealerIds, datasetId)
-
-              //** Create list of Dealers with finalized Dealer Info
-              val dealers = mutableListOf<Dealer>()
-              dealerInfoRequests.forEach { dealers.add(it.await()) }
-
-              //** For the list of VehicleIds, match each Vehicle to it's associated Dealer
-              matchVehiclesToDealers(vehicles, dealers)
-
-              // Update UI with result
-              _dealers.value = dealers
-              // Indicate to UI we are finished
-              _status.value = CoxApiStatus.DONE
-            }
+            processCoxApi(datasetId)
 
           //** Use the cheat Api call
           CoxApiEndpointVersion.CHEAT ->
-            // ** Get via cheat Api
-            datasetId?.let {
-              // Get the Dealers for this DatasetId
-              val listResult = CoxApi.retrofitService.getDealersCheatAsync(it).await()
-
-              // Set the result from CoxApi
-              _dealers.value = listResult.dealers
-              // Indicate we are finished
-              _status.value = CoxApiStatus.DONE
-            }
+            processCheatCoxApi(datasetId)
         }
 
       } catch (e: Exception) {
@@ -112,15 +76,62 @@ class DealersViewModel : ViewModel() {
   }
 
   /**
+   * Process the cheat Cox Api - gets endpoint and data structure fully formed
+   */
+  private suspend fun processCheatCoxApi(datasetId: String?) {
+    datasetId?.let {
+      // Get the Dealers for this DatasetId
+      val listResult = CoxApi.retrofitService.getDealersCheatAsync(it).await()
+
+      // Set the result from CoxApi
+      _dealers.value = listResult.dealers
+      // Indicate we are finished
+      _status.value = CoxApiStatus.DONE
+    }
+  }
+
+  /**
+   * Process the standard Cox Api - Servers simulate high load and long waits to access data.
+   */
+  private suspend fun processCoxApi(datasetId: String?) {
+    datasetId?.let {
+      //** Get list of Vehicle Id's for this DatasetId.
+      val vehicleIds = CoxApi.retrofitService.getVehicleIdsAsync(datasetId).await()
+
+      //** Start calls for Vehicle info for all the Vehicle Ids, concurrently.
+      val vehicleInfoRequests = startVehicleInfoRequest(vehicleIds, datasetId)
+
+      //** Add vehicle's info to vehicles list & start loading dealer's info, concurrently.
+      val vehicles = mutableListOf<Vehicle>()
+      val dealerIds = mutableSetOf<Int?>()
+      val dealerInfoRequests = getVehiclesInfoAndStartDealerInfoReqs(vehicleInfoRequests,
+          vehicles, dealerIds, datasetId)
+
+      //** Create list of Dealers with finalized Dealer Info
+      val dealers = mutableListOf<Dealer>()
+      dealerInfoRequests.forEach { dealers.add(it.await()) }
+
+      //** For the list of VehicleIds, match each Vehicle to it's associated Dealer
+      matchVehiclesToDealers(vehicles, dealers)
+
+      // Update UI with result
+      _dealers.value = dealers
+      // Indicate to UI we are finished
+      _status.value = CoxApiStatus.DONE
+    }
+  }
+
+  /**
    * Get the list of [Vehicle] Id's.
    */
   private fun startVehicleInfoRequest(vehicleIdsApiResult: VehicleIds,
                                       datasetId: String): MutableList<Deferred<Vehicle>> {
     val vehicleInfoRequests = mutableListOf<Deferred<Vehicle>>()
     vehicleIdsApiResult.vehicleIds?.forEach { vehicleId ->
-      // Queue up the Request in parallel
+      // Queue up the Requests concurrently
       vehicleInfoRequests.add(CoxApi.retrofitService.getVehicleInfoAsync(datasetId, vehicleId))
     }
+
     return vehicleInfoRequests
   }
 
@@ -157,8 +168,8 @@ class DealersViewModel : ViewModel() {
             vehicles.add(vehicle)
           }
 
-          // If inserting a new dealerId, then start the request of the dealerId info
-          //  Add it to the set of Dealer Id's and start the dealer info request.
+          // If inserting a new dealerId, then concurrently start the request of the dealerId info.
+          // Add it to the set of Dealer Id's and start the dealer info request.
           if (!dealerIds.contains(vehicle.dealerId)) {
             dealerIds.add(vehicle.dealerId)
             dealerInfoRequests.add(CoxApi.retrofitService.getDealersInfoAsync(datasetId, vehicle.dealerId))
@@ -166,6 +177,7 @@ class DealersViewModel : ViewModel() {
         }
       }
     }
+
     return dealerInfoRequests
   }
 
@@ -177,7 +189,7 @@ class DealersViewModel : ViewModel() {
       loop@ for (dealer in dealers) {
         if (dealer.dealerId == vehicle.dealerId) {
           dealer.vehicles?.add(vehicle)
-          break@loop
+          break@loop // only one dealer per vehicle
         }
       }
     }
