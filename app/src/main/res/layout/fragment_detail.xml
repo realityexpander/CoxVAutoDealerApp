@@ -37,33 +37,36 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+
             <TextView
               android:id="@+id/textview1_text"
               android:layout_width="381dp"
               android:layout_height="26dp"
+              android:layout_marginTop="1dp"
               android:text="@{viewModel.selectedVehicle.vehicleIdFullStr}"
               app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintHorizontal_bias="0.0"
+              app:layout_constraintStart_toStartOf="@+id/price_value_text"
+              app:layout_constraintTop_toBottomOf="@+id/price_value_text"
               tools:text="100102939" />
-
 
             <ImageView
               android:id="@+id/imageView3"
-              android:layout_width="202dp"
-              android:layout_height="158dp"
+              android:layout_width="237dp"
+              android:layout_height="197dp"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="@+id/textview1_text"
+              app:layout_constraintTop_toTopOf="parent"
               app:srcCompat="@drawable/ic_directions_car_black_24dp" />
 
             <TextView
               android:id="@+id/textview2_text"
-              android:layout_width="387dp"
-              android:layout_height="45dp"
+              android:layout_width="384dp"
+              android:layout_height="53dp"
               android:text="@{viewModel.selectedVehicle.makeModelStr}"
               android:textColor="#de000000"
               android:textSize="39sp"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/imageView3"
               tools:text="Fiesta" />
@@ -72,7 +75,7 @@
               android:id="@+id/price_value_text"
               android:layout_width="389dp"
               android:layout_height="32dp"
-              android:layout_marginTop="8dp"
+              android:layout_marginStart="4dp"
               android:text="@{viewModel.selectedVehicle.yearStr}"
               android:textColor="#de000000"
               android:textSize="20sp"

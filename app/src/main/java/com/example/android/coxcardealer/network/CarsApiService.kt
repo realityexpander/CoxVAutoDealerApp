@@ -59,7 +59,7 @@ private val dispatcher: Dispatcher = Dispatcher().apply {
     this.maxRequestsPerHost = 10
 }
 private var cacheDir = File("default")
-private var pool = ConnectionPool(10, 5000, TimeUnit.MILLISECONDS)
+private var pool = ConnectionPool(10, 15000, TimeUnit.MILLISECONDS)
 var client: OkHttpClient = OkHttpClient.Builder().build()
 var retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
@@ -78,10 +78,10 @@ fun setupRetrofitAndOkHttpClient(context: Context?) {
             .addInterceptor { chain ->
                 var request = chain.request()
                 request = if (isOnline()) {
-                    // If there is Internet, get the cache that was stored up to 60 seconds ago.
+                    // If there is Internet, get the cache that was stored up to 600 seconds ago.
                     // After 60 seconds, force refresh the cache.
                     request.newBuilder()
-                        .header("Cache-Control", "public, max-stale=" + 60)
+                        .header("Cache-Control", "public, max-stale=" + 600)
                         .build()
                 } else {
                     // If there is no Internet, use the cache that was stored up to 14 days ago.
