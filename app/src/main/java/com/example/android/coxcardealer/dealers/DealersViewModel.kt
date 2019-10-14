@@ -92,6 +92,7 @@ class DealersViewModel : ViewModel() {
 
   /**
    * Process the standard Cox Api - Servers simulate high load and long waits to access data.
+   * @param [datasetId] is the ID of this dataset
    */
   private suspend fun processCoxApi(datasetId: String?) {
     datasetId?.let {
@@ -137,6 +138,12 @@ class DealersViewModel : ViewModel() {
 
   /**
    * Get the Vehicle info from the Api and concurrently start the Api call to the dealers.
+   *
+   * @param [vehicleInfoRequests] List of pending info requests
+   * @param [vehicle] List of vehicles to get info for
+   * @param [dealerIds] Set of dealer Ids from the vehicles
+   * @param [datasetId] Dataset ID for this batch of dealers/vehicles
+   * @return contains the list of concurrent requests for dealer info
    */
   private suspend fun getVehiclesInfoAndStartDealerInfoReqs(
       vehicleInfoRequests: MutableList<Deferred<Vehicle>>,
@@ -182,7 +189,10 @@ class DealersViewModel : ViewModel() {
   }
 
   /**
-   * Match each Vehicle to each Dealer, and add it to Dealers list of vehicles. Mutates dealers.
+   * Match each Vehicle to each Dealer, and add it to Dealers list of vehicles.
+   *
+   * @param [dealers] is Mutated.
+   * @return [dealers] contains the list of dealers with vehicles.
    */
   private fun matchVehiclesToDealers(vehicles: List<Vehicle>, dealers: MutableList<Dealer>) {
     for (vehicle in vehicles) {
@@ -206,7 +216,7 @@ class DealersViewModel : ViewModel() {
 
   /**
    * When the property is clicked, set the [_navigateToVehicles] [MutableLiveData]
-   * @param dealer is The [Dealer] that was clicked on.
+   * @param [dealer] The [Dealer] that was clicked on.
    */
   fun displayVehicles(dealer: Dealer) {
     _navigateToVehicles.value = dealer
