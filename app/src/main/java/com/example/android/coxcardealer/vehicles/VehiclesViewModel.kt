@@ -20,6 +20,10 @@ class VehiclesViewModel : ViewModel() {
     private val selectedDealer: LiveData<Dealer>
       get() = _selectedDealer
 
+    // String for UI
+    val selectedDealerStr
+      get() = "Vehicles at ${selectedDealer.value?.name}"
+
     // Handle navigation to the selected vehicle
     private val _navigateToDetails = MutableLiveData<Vehicle>()
     val navigateToDetails: LiveData<Vehicle>

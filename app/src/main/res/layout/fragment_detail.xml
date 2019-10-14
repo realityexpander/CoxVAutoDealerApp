@@ -46,9 +46,20 @@
               android:text="@{viewModel.selectedVehicle.vehicleIdFullStr}"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintHorizontal_bias="0.0"
-              app:layout_constraintStart_toStartOf="@+id/price_value_text"
-              app:layout_constraintTop_toBottomOf="@+id/price_value_text"
-              tools:text="100102939" />
+              app:layout_constraintStart_toStartOf="@+id/textview3_text"
+              app:layout_constraintTop_toBottomOf="@+id/textview3_text"
+              tools:text="Vehicle ID: 12391243" />
+
+            <TextView
+              android:id="@+id/textview4_text"
+              android:layout_width="375dp"
+              android:layout_height="23dp"
+              android:text="@{viewModel.selectedVehicle.dealerIdStr}"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintHorizontal_bias="0.933"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/textview1_text"
+              tools:text="Dealer ID: 121098230192" />
 
             <ImageView
               android:id="@+id/imageView3"
@@ -69,10 +80,10 @@
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/imageView3"
-              tools:text="Fiesta" />
+              tools:text="Ford Fiesta" />
 
             <TextView
-              android:id="@+id/price_value_text"
+              android:id="@+id/textview3_text"
               android:layout_width="389dp"
               android:layout_height="32dp"
               android:layout_marginStart="4dp"
@@ -81,7 +92,7 @@
               android:textSize="20sp"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/textview2_text"
-              tools:text="1992 Ford" />
+              tools:text="Year: 1992" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -40,6 +40,8 @@ data class Vehicle (
     get() = "$year $make $model"
   val makeModelStr
     get() = "$make $model"
+  val dealerIdStr
+    get() = "Dealer ID: $dealerId"
 }
 
 @Parcelize

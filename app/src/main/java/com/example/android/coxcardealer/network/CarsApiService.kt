@@ -78,10 +78,10 @@ fun setupRetrofitAndOkHttpClient(context: Context?) {
             .addInterceptor { chain ->
                 var request = chain.request()
                 request = if (isOnline()) {
-                    // If there is Internet, get the cache that was stored up to 600 seconds ago.
+                    // If there is Internet, get the cache that was stored up to 60 seconds ago.
                     // After 60 seconds, force refresh the cache.
                     request.newBuilder()
-                        .header("Cache-Control", "public, max-stale=" + 600)
+                        .header("Cache-Control", "public, max-stale=" + 60)
                         .build()
                 } else {
                     // If there is no Internet, use the cache that was stored up to 14 days ago.

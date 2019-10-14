@@ -12,10 +12,10 @@
 
         <TextView
           android:id="@+id/textView"
-          android:layout_width="287dp"
-          android:layout_height="34dp"
+          android:layout_width="392dp"
+          android:layout_height="40dp"
           android:layout_marginStart="16dp"
-          android:text="@string/vehicles"
+          android:text="@{viewModel.selectedDealerStr}"
           android:textSize="24sp"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
