@@ -24,12 +24,12 @@ import androidx.lifecycle.ViewModelProvider
  * Simple ViewModel factory that provides the MarsProperty and context to the ViewModel.
  */
 class StartViewModelFactory(
-        private val application: Application) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(StartViewModel::class.java)) {
-            return StartViewModel(application) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    private val application: Application) : ViewModelProvider.Factory {
+  @Suppress("unchecked_cast")
+  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    if (modelClass.isAssignableFrom(StartViewModel::class.java)) {
+      return StartViewModel(application) as T
     }
+    throw IllegalArgumentException("Unknown ViewModel class")
+  }
 }

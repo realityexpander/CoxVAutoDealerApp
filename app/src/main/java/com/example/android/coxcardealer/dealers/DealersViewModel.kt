@@ -16,30 +16,30 @@ enum class CoxApiEndpointVersion { NORMAL, CHEAT }
  */
 class DealersViewModel : ViewModel() {
 
-    // Status of the most recent request from API
-    private val _status = MutableLiveData<CoxApiStatus>()
-    val status: LiveData<CoxApiStatus>
-        get() = _status
+  // Status of the most recent request from API
+  private val _status = MutableLiveData<CoxApiStatus>()
+  val status: LiveData<CoxApiStatus>
+    get() = _status
 
-    // Dealers List
-    private val _dealers = MutableLiveData<List<Dealer>>()
-    val dealers: LiveData<List<Dealer>>
-      get() = _dealers
+  // Dealers List
+  private val _dealers = MutableLiveData<List<Dealer>>()
+  val dealers: LiveData<List<Dealer>>
+    get() = _dealers
 
-    // Handle navigation to the selected dealer
-    private val _navigateToVehicles = MutableLiveData<Dealer>()
-    val navigateToSelectedDealer: LiveData<Dealer>
-      get() = _navigateToVehicles
+  // Handle navigation to the selected dealer
+  private val _navigateToVehicles = MutableLiveData<Dealer>()
+  val navigateToSelectedDealer: LiveData<Dealer>
+    get() = _navigateToVehicles
 
-    // Coroutine scope for API call uses a Job to be able to cancel when needed
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+  // Coroutine scope for API call uses a Job to be able to cancel when needed
+  private var viewModelJob = Job()
+  private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
-    // Display Dealers list immediately
-    init {
-      getDealersList(endpointVersion = CoxApiEndpointVersion.NORMAL)
-    }
+  // Display Dealers list immediately
+  init {
+    getDealersList(endpointVersion = CoxApiEndpointVersion.NORMAL)
+  }
 
   /**
    * Updates the [Dealer] [List] and [CoxApiStatus] [LiveData]. The Retrofit service
@@ -185,26 +185,26 @@ class DealersViewModel : ViewModel() {
   }
 
   /**
-     * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
-     * Retrofit service to stop.
-     */
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
+   * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
+   * Retrofit service to stop.
+   */
+  override fun onCleared() {
+    super.onCleared()
+    viewModelJob.cancel()
+  }
 
-    /**
-     * When the property is clicked, set the [_navigateToVehicles] [MutableLiveData]
-     * @param dealer is The [Dealer] that was clicked on.
-     */
-    fun displayVehicles(dealer: Dealer) {
-      _navigateToVehicles.value = dealer
-    }
+  /**
+   * When the property is clicked, set the [_navigateToVehicles] [MutableLiveData]
+   * @param dealer is The [Dealer] that was clicked on.
+   */
+  fun displayVehicles(dealer: Dealer) {
+    _navigateToVehicles.value = dealer
+  }
 
-    /**
-     * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
-     */
-    fun displayVehiclesComplete() {
-      _navigateToVehicles.value = null
-    }
+  /**
+   * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
+   */
+  fun displayVehiclesComplete() {
+    _navigateToVehicles.value = null
+  }
 }

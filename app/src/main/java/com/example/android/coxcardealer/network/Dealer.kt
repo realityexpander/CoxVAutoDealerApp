@@ -12,10 +12,10 @@ import kotlinx.android.parcel.Parcelize
  * the dealership.
  */
 @Parcelize
-data class Dealer (
+data class Dealer(
     val dealerId: Int? = null,
     val name: String? = null,
-    val vehicles: MutableList<Vehicle>? = ArrayList() ) : Parcelable {
+    val vehicles: MutableList<Vehicle>? = ArrayList()) : Parcelable {
   val dealerIdStr
     get() = dealerId.toString()
 }
@@ -24,7 +24,7 @@ data class Dealer (
  * This data class describes an individual vehicle.
  */
 @Parcelize
-data class Vehicle (
+data class Vehicle(
     val vehicleId: Int? = null,
     val year: Int? = null,
     val make: String? = null,
@@ -45,13 +45,13 @@ data class Vehicle (
 }
 
 @Parcelize
-data class Dealers (
-    val dealers: List<Dealer>? = null ) : Parcelable
+data class Dealers(
+    val dealers: List<Dealer>? = null) : Parcelable
 
 @Parcelize
 data class DatasetId(
-    val datasetId: String? = null ) : Parcelable
+    val datasetId: String? = null) : Parcelable
 
 @Parcelize
-data class Vehicles (
-    val vehicleIds: List<Int>? = null ) : Parcelable
+data class Vehicles(
+    val vehicleIds: List<Int>? = null) : Parcelable

@@ -32,32 +32,32 @@ import com.example.android.coxcardealer.databinding.FragmentStartBinding
  */
 class StartFragment : Fragment() {
 
-    /**
-     * Lazily init our [StartViewModel].
-     */
-    private val viewModel: StartViewModel by lazy {
-        ViewModelProviders.of(this).get(StartViewModel::class.java)
-    }
+  /**
+   * Lazily init our [StartViewModel].
+   */
+  private val viewModel: StartViewModel by lazy {
+    ViewModelProviders.of(this).get(StartViewModel::class.java)
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                            savedInstanceState: Bundle?): View? {
 
-        val application = requireNotNull(activity).application
-        val binding = FragmentStartBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-        val viewModelFactory = StartViewModelFactory(application)
-        binding.viewModel = of(
-                this, viewModelFactory).get(StartViewModel::class.java)
+    val application = requireNotNull(activity).application
+    val binding = FragmentStartBinding.inflate(inflater)
+    binding.lifecycleOwner = this
+    val viewModelFactory = StartViewModelFactory(application)
+    binding.viewModel = of(
+        this, viewModelFactory).get(StartViewModel::class.java)
 
-        // Navigate to Dealers screen
-        viewModel.navigateToDealers.observe(this, Observer {
-            if ( it != false ) {
-                this.findNavController().navigate(StartFragmentDirections.actionShowDealers())
-                viewModel.displayDealersComplete()
-            }
-        })
+    // Navigate to Dealers screen
+    viewModel.navigateToDealers.observe(this, Observer {
+      if (it != false) {
+        this.findNavController().navigate(StartFragmentDirections.actionShowDealers())
+        viewModel.displayDealersComplete()
+      }
+    })
 
-        return binding.root
-    }
+    return binding.root
+  }
 
 }

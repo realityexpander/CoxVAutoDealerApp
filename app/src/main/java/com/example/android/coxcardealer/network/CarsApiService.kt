@@ -21,7 +21,6 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
-
 const val BASE_URL = "https://api.coxauto-interview.com/"
 
 /**
@@ -29,34 +28,34 @@ const val BASE_URL = "https://api.coxauto-interview.com/"
  * full Kotlin compatibility.
  */
 val moshi: Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    .add(KotlinJsonAdapterFactory())
+    .build()
 
 /**
  * Checks for full internet availability by pinging Google DNS server. (Not just "wifi is on.")
  * This can be called from anywhere, as it relies on the Android OS linux shell.
  */
 fun isOnline(): Boolean {
-    val runtime = Runtime.getRuntime()
-    try {
-        val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
-        val exitValue = ipProcess.waitFor()
-        return exitValue == 0
-    } catch (e: IOException) {
-        e.printStackTrace()
-    } catch (e: InterruptedException) {
-        e.printStackTrace()
-    }
+  val runtime = Runtime.getRuntime()
+  try {
+    val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+    val exitValue = ipProcess.waitFor()
+    return exitValue == 0
+  } catch (e: IOException) {
+    e.printStackTrace()
+  } catch (e: InterruptedException) {
+    e.printStackTrace()
+  }
 
-    return false
+  return false
 }
 
 /**
  * Use the OkHttp3 & Retrofit builder to build a retrofit object using a Moshi converter
  */
 private val dispatcher: Dispatcher = Dispatcher().apply {
-    this.maxRequests = 20
-    this.maxRequestsPerHost = 10
+  this.maxRequests = 20
+  this.maxRequestsPerHost = 10
 }
 private var cacheDir = File("default")
 private var pool = ConnectionPool(10, 15000, TimeUnit.MILLISECONDS)
@@ -66,41 +65,41 @@ var retrofit: Retrofit = Retrofit.Builder()
     .build()
 
 fun setupRetrofitAndOkHttpClient(context: Context?) {
-    context?.let {
-        cacheDir = File(context.cacheDir?.path + "/cox_cache")
-        client = OkHttpClient.Builder()
-            .dispatcher(dispatcher)
-            .connectionPool(pool)
-            .cache(Cache(
-                cacheDir,
-                10L * 1024L * 1024L // 1 MiB
-            ))
-            .addInterceptor { chain ->
-                var request = chain.request()
-                request = if (isOnline()) {
-                    // If there is Internet, get the cache that was stored up to 60 seconds ago.
-                    // After 60 seconds, force refresh the cache.
-                    request.newBuilder()
-                        .header("Cache-Control", "public, max-stale=" + 60)
-                        .build()
-                } else {
-                    // If there is no Internet, use the cache that was stored up to 14 days ago.
-                    request.newBuilder()
-                        .header("Cache-Control",
-                            "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
-                        .build()
-                }
-                chain.proceed(request)
-            }
-            .build()
+  context?.let {
+    cacheDir = File(context.cacheDir?.path + "/cox_cache")
+    client = OkHttpClient.Builder()
+        .dispatcher(dispatcher)
+        .connectionPool(pool)
+        .cache(Cache(
+            cacheDir,
+            10L * 1024L * 1024L // 1 MiB
+        ))
+        .addInterceptor { chain ->
+          var request = chain.request()
+          request = if (isOnline()) {
+            // If there is Internet, get the cache that was stored up to 60 seconds ago.
+            // After 60 seconds, force refresh the cache.
+            request.newBuilder()
+                .header("Cache-Control", "public, max-stale=" + 60)
+                .build()
+          } else {
+            // If there is no Internet, use the cache that was stored up to 14 days ago.
+            request.newBuilder()
+                .header("Cache-Control",
+                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 14)
+                .build()
+          }
+          chain.proceed(request)
+        }
+        .build()
 
-        retrofit = Retrofit.Builder()
-            .client(client)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .baseUrl(BASE_URL)
-            .build()
-    }
+    retrofit = Retrofit.Builder()
+        .client(client)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .baseUrl(BASE_URL)
+        .build()
+  }
 }
 
 /**
@@ -109,34 +108,34 @@ fun setupRetrofitAndOkHttpClient(context: Context?) {
  */
 interface DealersApiService {
 
-    @GET("/api/datasetId")
-    fun getDatasetIdAsync():
-        Deferred<DatasetId>
+  @GET("/api/datasetId")
+  fun getDatasetIdAsync():
+      Deferred<DatasetId>
 
-    @GET("/api/{datasetId}/cheat")
-    fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
-        Deferred<Dealers>
+  @GET("/api/{datasetId}/cheat")
+  fun getDealersCheatAsync(@Path("datasetId") datasetId: String):
+      Deferred<Dealers>
 
-    @GET("/api/{datasetId}/vehicles")
-    fun getVehiclesAsync(@Path("datasetId") datasetId: String):
-        Deferred<Vehicles>
+  @GET("/api/{datasetId}/vehicles")
+  fun getVehiclesAsync(@Path("datasetId") datasetId: String):
+      Deferred<Vehicles>
 
-    @GET("/api/{datasetId}/vehicles/{vehicleId}")
-    fun getVehicleInfoAsync(@Path("datasetId") datasetId: String,
-                            @Path("vehicleId") vehicleId: Int):
-        Deferred<Vehicle>
+  @GET("/api/{datasetId}/vehicles/{vehicleId}")
+  fun getVehicleInfoAsync(@Path("datasetId") datasetId: String,
+                          @Path("vehicleId") vehicleId: Int):
+      Deferred<Vehicle>
 
-    @GET("/api/{datasetId}/dealers/{dealerId}")
-    fun getDealersInfoAsync(@Path("datasetId") datasetId: String,
-                            @Path("dealerId") dealerId: Int?):
-        Deferred<Dealer>
+  @GET("/api/{datasetId}/dealers/{dealerId}")
+  fun getDealersInfoAsync(@Path("datasetId") datasetId: String,
+                          @Path("dealerId") dealerId: Int?):
+      Deferred<Dealer>
 }
 
 /**
  * A public Api object to expose the lazy-initialized Retrofit service
  */
 object CarsApi {
-    val retrofitService : DealersApiService by lazy { retrofit.create(DealersApiService::class.java) }
+  val retrofitService: DealersApiService by lazy { retrofit.create(DealersApiService::class.java) }
 //    val retrofitService : DealersApiService =  retrofit.create(DealersApiService::class.java)
 }
 

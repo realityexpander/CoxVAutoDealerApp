@@ -1,4 +1,3 @@
-
 package com.example.android.coxcardealer.detail
 
 import android.app.Application
@@ -13,11 +12,11 @@ import com.example.android.coxcardealer.network.Vehicle
 class DetailViewModelFactory(
     private val vehicle: Vehicle,
     private val application: Application) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-            return DetailViewModel(vehicle, application) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+  @Suppress("unchecked_cast")
+  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
+      return DetailViewModel(vehicle, application) as T
     }
+    throw IllegalArgumentException("Unknown ViewModel class")
+  }
 }

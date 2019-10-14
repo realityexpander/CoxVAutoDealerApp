@@ -32,19 +32,19 @@ import com.example.android.coxcardealer.databinding.FragmentDetailBinding
  */
 class DetailFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                            savedInstanceState: Bundle?): View? {
 
-        // Bind & associate ViewModel with Details Fragment
-        val application = requireNotNull(activity).application
-        val binding = FragmentDetailBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-        val vehicle = DetailFragmentArgs.fromBundle(arguments!!).selectedVehicle
+    // Bind & associate ViewModel with Details Fragment
+    val application = requireNotNull(activity).application
+    val binding = FragmentDetailBinding.inflate(inflater)
+    binding.lifecycleOwner = this
+    val vehicle = DetailFragmentArgs.fromBundle(arguments!!).selectedVehicle
 
-        val viewModelFactory = DetailViewModelFactory(vehicle, application)
-        binding.viewModel = ViewModelProviders.of(
-                this, viewModelFactory).get(DetailViewModel::class.java)
+    val viewModelFactory = DetailViewModelFactory(vehicle, application)
+    binding.viewModel = ViewModelProviders.of(
+        this, viewModelFactory).get(DetailViewModel::class.java)
 
-        return binding.root
-    }
+    return binding.root
+  }
 }

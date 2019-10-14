@@ -18,8 +18,8 @@ import com.example.android.coxcardealer.vehicles.VehiclesListAdapter
  */
 @BindingAdapter("dealerListData")
 fun bindRecyclerViewToDealer(recyclerView: RecyclerView, data: List<Dealer>?) {
-    val adapter = recyclerView.adapter as DealersListAdapter
-    adapter.submitList(data)
+  val adapter = recyclerView.adapter as DealersListAdapter
+  adapter.submitList(data)
 }
 
 /**
@@ -27,8 +27,8 @@ fun bindRecyclerViewToDealer(recyclerView: RecyclerView, data: List<Dealer>?) {
  */
 @BindingAdapter("vehicleListData")
 fun bindRecyclerViewToVehicle(recyclerView: RecyclerView, data: List<Vehicle>?) {
-    val adapter = recyclerView.adapter as VehiclesListAdapter
-    adapter.submitList(data)
+  val adapter = recyclerView.adapter as VehiclesListAdapter
+  adapter.submitList(data)
 }
 
 /**
@@ -36,15 +36,15 @@ fun bindRecyclerViewToVehicle(recyclerView: RecyclerView, data: List<Vehicle>?) 
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
-                .load(imgUri)
-                .apply(RequestOptions()
-                        .placeholder(R.drawable.loading_animation)
-                        .error(R.drawable.ic_broken_image))
-                .into(imgView)
-    }
+  imgUrl?.let {
+    val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+    Glide.with(imgView.context)
+        .load(imgUri)
+        .apply(RequestOptions()
+            .placeholder(R.drawable.loading_animation)
+            .error(R.drawable.ic_broken_image))
+        .into(imgView)
+  }
 }
 
 /**
@@ -55,17 +55,17 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
  */
 @BindingAdapter("carsApiStatus")
 fun bindStatus(statusImageView: ImageView, status: CoxApiStatus?) {
-    when (status) {
-        CoxApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-        CoxApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-        CoxApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
+  when (status) {
+    CoxApiStatus.LOADING -> {
+      statusImageView.visibility = View.VISIBLE
+      statusImageView.setImageResource(R.drawable.loading_animation)
     }
+    CoxApiStatus.ERROR -> {
+      statusImageView.visibility = View.VISIBLE
+      statusImageView.setImageResource(R.drawable.ic_connection_error)
+    }
+    CoxApiStatus.DONE -> {
+      statusImageView.visibility = View.GONE
+    }
+  }
 }

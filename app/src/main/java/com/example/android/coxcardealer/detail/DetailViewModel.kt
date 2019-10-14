@@ -29,13 +29,13 @@ class DetailViewModel(vehicle: Vehicle,
 
   // The selected vehicle
   private val _selectedVehicle = MutableLiveData<Vehicle>()
-    val selectedVehicle: LiveData<Vehicle>
-        get() = _selectedVehicle
+  val selectedVehicle: LiveData<Vehicle>
+    get() = _selectedVehicle
 
-    // Initialize the _selectedVehicle MutableLiveData
-    init {
-      _selectedVehicle.value = vehicle
-    }
+  // Initialize the _selectedVehicle MutableLiveData
+  init {
+    _selectedVehicle.value = vehicle
+  }
 
 }
 
