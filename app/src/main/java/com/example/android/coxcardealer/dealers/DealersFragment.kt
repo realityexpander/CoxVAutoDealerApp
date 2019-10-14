@@ -11,6 +11,7 @@ import com.example.android.coxcardealer.network.*
 
 /**
  * This fragment shows the the status of the Dealer List web services transaction.
+ * Minor refactor here.
  */
 class DealersFragment : Fragment() {
 
