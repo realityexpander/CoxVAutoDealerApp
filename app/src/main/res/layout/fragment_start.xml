@@ -19,37 +19,64 @@
       android:id="@+id/imageView1"
       android:layout_width="88dp"
       android:layout_height="93dp"
-      android:layout_marginTop="236dp"
+      android:layout_marginBottom="76dp"
+      app:layout_constraintBottom_toTopOf="@+id/LoadDealerships"
       app:layout_constraintEnd_toStartOf="@+id/imageView2"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintHorizontal_bias="0.608"
+      app:layout_constraintStart_toStartOf="@+id/imageView5"
+      app:layout_constraintTop_toBottomOf="@+id/imageView5"
+      app:layout_constraintVertical_bias="0.0"
       app:srcCompat="@drawable/ic_location_city_black_24dp" />
 
     <ImageView
       android:id="@+id/imageView2"
       android:layout_width="88dp"
       android:layout_height="93dp"
-      android:layout_marginTop="236dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.789"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginBottom="76dp"
+      app:layout_constraintBottom_toTopOf="@+id/LoadDealerships"
+      app:layout_constraintEnd_toEndOf="@+id/imageView5"
+      app:layout_constraintHorizontal_bias="0.851"
+      app:layout_constraintStart_toStartOf="@+id/imageView5"
+      app:layout_constraintTop_toBottomOf="@+id/imageView5"
+      app:layout_constraintVertical_bias="0.0"
       app:srcCompat="@drawable/ic_directions_car_black_24dp" />
 
     <Button
       android:id="@+id/LoadDealerships"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="280dp"
+      android:layout_marginTop="244dp"
+      android:onClick="@{()->viewModel.displayDealers()}"
       android:text="Load Dealerships"
-      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.499"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+      android:id="@+id/imageView5"
+      android:layout_width="256dp"
+      android:layout_height="152dp"
+      app:layout_constraintBottom_toTopOf="@+id/textView2"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="1.0"
-      android:onClick="@{()->viewModel.displayDealers()}"
-      />
+      app:layout_constraintVertical_bias="0.0"
+      app:srcCompat="@drawable/coxautomotive" />
+
+    <TextView
+      android:id="@+id/textView2"
+      android:layout_width="314dp"
+      android:layout_height="58dp"
+      android:text="Network results cached for 60 seconds if online. 14 days if offline."
+      android:textAlignment="center"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.494"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/LoadDealerships"
+      app:layout_constraintVertical_bias="0.064" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
