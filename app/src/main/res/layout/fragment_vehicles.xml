@@ -18,7 +18,8 @@
           android:text="@{viewModel.selectedDealerStr}"
           android:textSize="24sp"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="Vehicles from Dealer: XXXX XXXXX" />
 
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/vehicles_list"
@@ -28,11 +29,11 @@
           android:padding="6dp"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintHorizontal_bias="1.0"
           app:layout_constraintLeft_toLeftOf="parent"
           app:layout_constraintRight_toRightOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/textView"
-          app:layout_constraintVertical_bias="1.0"
+          app:layout_constraintVertical_bias="0.0"
           app:spanCount="1"
           app:vehicleListData="@{viewModel.vehicles}"
           tools:itemCount="16"

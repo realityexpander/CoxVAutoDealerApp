@@ -12,26 +12,29 @@
 
         <TextView
           android:id="@+id/textView"
-          android:layout_width="287dp"
-          android:layout_height="34dp"
+          android:layout_width="392dp"
+          android:layout_height="40dp"
           android:layout_marginStart="16dp"
           android:text="@string/dealers"
           android:textSize="24sp"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="Vehicles from Dealer: XXXX XXXXX" />
 
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/dealers_list"
-          android:layout_width="399dp"
-          android:layout_height="693dp"
+          android:layout_width="413dp"
+          android:layout_height="644dp"
+          android:layout_marginBottom="4dp"
           android:clipToPadding="false"
-          android:padding="6dp"
+          android:paddingBottom="20dp"
           app:dealerListData="@{viewModel.dealers}"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintLeft_toLeftOf="parent"
           app:layout_constraintRight_toRightOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/textView"
+          app:layout_constraintVertical_bias="0.0"
           app:spanCount="1"
           tools:itemCount="16"
           tools:listitem="@layout/dealer_view_item" />

@@ -70,6 +70,7 @@ fun setupRetrofitAndOkHttpClient(context: Context?) {
     client = OkHttpClient.Builder()
         .dispatcher(dispatcher)
         .connectionPool(pool)
+        .readTimeout(30, TimeUnit.SECONDS)
         .cache(Cache(
             cacheDir,
             10L * 1024L * 1024L // 1 MiB

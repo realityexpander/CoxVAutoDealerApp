@@ -92,9 +92,9 @@ class DealersViewModel : ViewModel() {
           //** Use the cheat Api call
           CoxApiEndpointVersion.CHEAT ->
             // ** Get via cheat Api
-            datasetId?.let { datasetId ->
+            datasetId?.let {
               // Get the Dealers for this DatasetId
-              val listResult = CarsApi.retrofitService.getDealersCheatAsync(datasetId).await()
+              val listResult = CarsApi.retrofitService.getDealersCheatAsync(it).await()
 
               // Set the result from CarsApi
               _dealers.value = listResult.dealers
@@ -152,12 +152,12 @@ class DealersViewModel : ViewModel() {
           var vehicle = vehicleInfoCall.await()
           numActiveVehicleInfoRequests--
 
-          // Check if we don't have this vehicle in our vehicles list yet, and add it if absent.
+          // Insert this vehicle into vehicles list, but only it if absent.
           if (!vehicles.contains(vehicle)) {
             vehicles.add(vehicle)
           }
 
-          // Is the dealerId of this vehicle not in the set of known dealers?
+          // If inserting a new dealerId, then start the request of the dealerId info
           //  Add it to the set of Dealer Id's and start the dealer info request.
           if (!dealerIds.contains(vehicle.dealerId)) {
             dealerIds.add(vehicle.dealerId)
@@ -170,8 +170,7 @@ class DealersViewModel : ViewModel() {
   }
 
   /**
-   * Match each Vehicle to each Dealer that it is associated with, and add it to Dealers
-   * list of vehicles. Mutates dealers.
+   * Match each Vehicle to each Dealer, and add it to Dealers list of vehicles. Mutates dealers.
    */
   private fun matchVehiclesToDealers(vehicles: List<Vehicle>, dealers: MutableList<Dealer>) {
     for (vehicle in vehicles) {
@@ -185,7 +184,7 @@ class DealersViewModel : ViewModel() {
   }
 
   /**
-   * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
+   * When the [ViewModel] is finished, cancel our coroutine [viewModelJob], which tells the
    * Retrofit service to stop.
    */
   override fun onCleared() {
