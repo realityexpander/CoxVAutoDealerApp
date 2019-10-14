@@ -29,9 +29,9 @@ class VehiclesViewModel : ViewModel() {
     val navigateToDetails: LiveData<Vehicle>
       get() = _navigateToDetails
 
-  /**
-   * Sets the vehicles from the dealer [Dealer] to the [Vehicle] [List]
-   */
+    /**
+     * Sets the vehicles from the dealer [Dealer] to the [Vehicle] [List]
+     */
     private fun setVehiclesList() {
       _vehicles.value = selectedDealer.value?.vehicles
     }

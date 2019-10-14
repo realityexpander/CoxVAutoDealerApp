@@ -29,10 +29,7 @@ class DealersListAdapter(private val onClickListener: OnClickListener ) :
             }
     }
 
-    /**
-     * Determine which items have changed when the [List] of [Dealer]
-     * has been updated.
-     */
+    // ** Determine which items have changed when the [List] of [Dealer]
     companion object DiffCallback : DiffUtil.ItemCallback<Dealer>() {
         override fun areItemsTheSame(oldItem: Dealer, newItem: Dealer): Boolean {
             return oldItem === newItem
@@ -43,18 +40,14 @@ class DealersListAdapter(private val onClickListener: OnClickListener ) :
         }
     }
 
-    /**
-     * Create new [RecyclerView] item views (invoked by the Android Layout Manager)
-     */
+    // ** Create new [RecyclerView] item views (invoked by the Android Layout Manager)
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): DealerViewHolder {
         return DealerViewHolder(DealerViewItemBinding
             .inflate(LayoutInflater.from(parent.context)))
     }
 
-    /**
-     * Replaces the contents of a view (invoked by the layout manager)
-     */
+    // ** Replaces the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: DealerViewHolder, position: Int) {
         val dealer = getItem(position)
         holder.itemView.setOnClickListener {
