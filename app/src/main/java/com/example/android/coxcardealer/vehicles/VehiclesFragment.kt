@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentVehiclesBinding
 
 /**
- * This fragment shows the selected Vehicle of the selected Dealer.
+ * This fragment shows the Vehicles of the selected Dealer.
  */
 class VehiclesFragment : Fragment() {
 
