@@ -10,7 +10,7 @@
     <string name="display_type">For %s</string>
     <string name="display_price_monthly_rental">$%,.0f/month</string>
     <string name="display_price">$%,.0f</string>
-  <string name="dealers">List of Dealers</string>
+    <string name="dealers">Dealers</string>
     <string name="vehicles">List of Vehicles</string>
   <string name="car_image">car image</string>
 </resources>
