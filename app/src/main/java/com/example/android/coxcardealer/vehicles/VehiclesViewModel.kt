@@ -22,7 +22,7 @@ class VehiclesViewModel : ViewModel() {
 
   // Vehicle & Dealer display for UI
   val selectedDealerStr
-    get() = "VehicleIds at ${selectedDealer.value?.name}"
+    get() = "Vehicles at ${selectedDealer.value?.name}"
 
   // Handle navigation to the selected vehicle
   private val _navigateToDetails = MutableLiveData<Vehicle>()

@@ -14,7 +14,9 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * Api reference:  [http://api.coxauto-interview.com/swagger/index.html]
+ */
 const val BASE_URL = "https://api.coxauto-interview.com/"
 
 /**
