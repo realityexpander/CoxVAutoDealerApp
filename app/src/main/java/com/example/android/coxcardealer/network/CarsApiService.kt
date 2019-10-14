@@ -58,7 +58,7 @@ private val dispatcher: Dispatcher = Dispatcher().apply {
   this.maxRequestsPerHost = 10
 }
 private var cacheDir = File("default")
-private var pool = ConnectionPool(10, 15000, TimeUnit.MILLISECONDS)
+private var pool = ConnectionPool(10, 20000, TimeUnit.MILLISECONDS)
 var client: OkHttpClient = OkHttpClient.Builder().build()
 var retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
@@ -136,6 +136,5 @@ interface DealersApiService {
  */
 object CarsApi {
   val retrofitService: DealersApiService by lazy { retrofit.create(DealersApiService::class.java) }
-//    val retrofitService : DealersApiService =  retrofit.create(DealersApiService::class.java)
 }
 
