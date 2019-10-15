@@ -19,8 +19,7 @@ package com.example.android.coxcardealer.start
 import android.app.Application
 import androidx.lifecycle.*
 
-class StartViewModel(/*marsProperty: MarsProperty,*/
-    app: Application) : AndroidViewModel(app) {
+class StartViewModel(app: Application) : AndroidViewModel(app) {
 
   // The internal MutableLiveData for the selected property
   private val _navigateToDealers = MutableLiveData<Boolean?>()
