@@ -155,11 +155,8 @@ class DealersViewModel : ViewModel() {
 
     // Sequentially poll the list of vehicleInfoRequests to see which one has completed
     // while we still have vehicle Request active.
-    var numActiveVehicleInfoRequests = vehicleInfoRequests.size
-    while (numActiveVehicleInfoRequests > 0) {
-      numActiveVehicleInfoRequests = vehicleInfoRequests.size
-
-      delay(20) // Relinquish time to OS, don't block the UI.
+    do {
+      var numActiveVehicleInfoRequests = vehicleInfoRequests.size
 
       // Poll each Vehicle Info Api call to see if it's Completed yet
       for (vehicleInfoCall in vehicleInfoRequests) {
@@ -167,7 +164,7 @@ class DealersViewModel : ViewModel() {
         // Poll to see if vehicleInfo Api request has finished, if so then get the dealerID from
         // vehicleInfo and request the Dealer's Info from Api
         if (vehicleInfoCall.isCompleted || vehicleInfoCall.isCancelled) {
-          var vehicle = vehicleInfoCall.await()
+          val  vehicle = vehicleInfoCall.await()
           numActiveVehicleInfoRequests--
 
           // Insert this vehicle into vehicles list, but only it if absent.
@@ -183,7 +180,9 @@ class DealersViewModel : ViewModel() {
           }
         }
       }
-    }
+
+      delay(20) // Relinquish time to OS, don't block the UI.
+    } while (numActiveVehicleInfoRequests > 0)
 
     return dealerInfoRequests
   }
