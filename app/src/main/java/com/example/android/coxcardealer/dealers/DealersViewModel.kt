@@ -173,7 +173,6 @@ class DealersViewModel : ViewModel() {
           }
 
           // If inserting a new dealerId, then concurrently start the request of the dealerId info.
-          // Add it to the set of Dealer Id's and start the dealer info request.
           if (!dealerIds.contains(vehicle.dealerId)) {
             dealerIds.add(vehicle.dealerId)
             dealerInfoRequests.add(CoxApi.retrofitService.getDealersInfoAsync(datasetId, vehicle.dealerId))

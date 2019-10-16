@@ -49,13 +49,18 @@ class StartFragment : Fragment() {
     binding.viewModel = of(
         this, viewModelFactory).get(StartViewModel::class.java)
 
-    // Navigate to Dealers screen
-    viewModel.navigateToDealers.observe(this, Observer {
-      if (it != false) {
-        this.findNavController().navigate(StartFragmentDirections.actionShowDealers())
-        viewModel.displayDealersComplete()
-      }
-    })
+    // Navigate to Dealers Fragment
+    binding.LoadDealerships.setOnClickListener {
+        findNavController().navigate(StartFragmentDirections.actionShowDealers())
+    }
+
+//    // Navigate to Dealers screen
+//    viewModel.navigateToDealers.observe(this, Observer {
+//      if (it != false) {
+//        this.findNavController().navigate(StartFragmentDirections.actionShowDealers())
+//        viewModel.displayDealersComplete()
+//      }
+//    })
 
     return binding.root
   }

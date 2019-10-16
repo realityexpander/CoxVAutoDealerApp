@@ -10,6 +10,8 @@ import com.example.android.coxcardealer.databinding.FragmentVehiclesBinding
 
 /**
  * This fragment shows the VehicleIds of the selected Dealer.
+ *
+ * selectedDealer from SafeArgs contains the Dealer
  */
 class VehiclesFragment : Fragment() {
 

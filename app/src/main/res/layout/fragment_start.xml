@@ -46,12 +46,12 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="244dp"
-      android:onClick="@{()->viewModel.displayDealers()}"
       android:text="Load Dealerships"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.499"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+<!--      android:onClick="@{()->viewModel.displayDealers()}"-->
 
     <ImageView
       android:id="@+id/imageView5"

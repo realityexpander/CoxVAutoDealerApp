@@ -41,6 +41,7 @@ class VehiclesViewModel : ViewModel() {
    * @param vehicle is The [Vehicle] that was clicked on.
    */
   fun displayDetails(vehicle: Vehicle) {
+
     _navigateToDetails.value = vehicle
   }
 
