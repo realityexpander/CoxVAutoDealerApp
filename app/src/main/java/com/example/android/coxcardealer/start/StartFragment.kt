@@ -21,9 +21,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.ViewModelProviders.*
 import androidx.navigation.fragment.findNavController
 import com.example.android.coxcardealer.databinding.FragmentStartBinding
 
@@ -35,32 +32,24 @@ class StartFragment : Fragment() {
   /**
    * Lazily init our [StartViewModel].
    */
-  private val viewModel: StartViewModel by lazy {
-    ViewModelProviders.of(this).get(StartViewModel::class.java)
-  }
+//  private val viewModel: StartViewModel by lazy {
+//    ViewModelProviders.of(this).get(StartViewModel::class.java)
+//  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
 
-    val application = requireNotNull(activity).application
+//    val application = requireNotNull(activity).application
     val binding = FragmentStartBinding.inflate(inflater)
-    binding.lifecycleOwner = this
-    val viewModelFactory = StartViewModelFactory(application)
-    binding.viewModel = of(
-        this, viewModelFactory).get(StartViewModel::class.java)
+//    binding.lifecycleOwner = this
+//    val viewModelFactory = StartViewModelFactory(application)
+//    binding.viewModel = of(
+//        this, viewModelFactory).get(StartViewModel::class.java)
 
     // Navigate to Dealers Fragment
     binding.LoadDealerships.setOnClickListener {
         findNavController().navigate(StartFragmentDirections.actionShowDealers())
     }
-
-//    // Navigate to Dealers screen
-//    viewModel.navigateToDealers.observe(this, Observer {
-//      if (it != false) {
-//        this.findNavController().navigate(StartFragmentDirections.actionShowDealers())
-//        viewModel.displayDealersComplete()
-//      }
-//    })
 
     return binding.root
   }
