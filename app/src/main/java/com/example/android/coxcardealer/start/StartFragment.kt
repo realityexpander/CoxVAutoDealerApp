@@ -29,9 +29,6 @@ import com.example.android.coxcardealer.databinding.FragmentStartBinding
  */
 class StartFragment : Fragment() {
 
-  /**
-   * Lazily init our [StartViewModel].
-   */
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {

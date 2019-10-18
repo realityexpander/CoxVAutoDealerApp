@@ -38,7 +38,7 @@ class DealersViewModel : ViewModel() {
 
   // Display Dealers list immediately
   init {
-    getDealersList(endpointVersion = CoxApiEndpointVersion.NORMAL)
+    getDealersList(endpointVersion = CoxApiEndpointVersion.CHEAT)
   }
 
   /**
@@ -137,7 +137,7 @@ class DealersViewModel : ViewModel() {
   }
 
   /**
-   * Get the Vehicle info from the Api and concurrently start the Api call to the dealers.
+   * Get the Vehicle info from the Api and concurrently start Api call to dealerInfo.
    *
    * @param [vehicleInfoRequests] List of pending info requests
    * @param [vehicle] List of vehicles to get info for
@@ -146,7 +146,7 @@ class DealersViewModel : ViewModel() {
    * @return contains the list of concurrent requests for dealer info
    */
   private suspend fun getVehiclesInfoAndStartDealerInfoReqs(
-      vehicleInfoRequests: MutableList<Deferred<Vehicle>>,
+      vehicleInfoRequests: List<Deferred<Vehicle>>,
       vehicles: MutableList<Vehicle>,
       dealerIds: MutableSet<Int?>,
       datasetId: String): MutableList<Deferred<Dealer>> {
@@ -167,7 +167,7 @@ class DealersViewModel : ViewModel() {
           val  vehicleInfo = vehicleInfoRequest.await()
           numActiveVehicleInfoRequests--
 
-          // Insert this vehicle into vehicles list, but only it if absent.
+          // Insert this vehicleInfo into vehicles list
           if (!vehicles.contains(vehicleInfo)) {
             vehicles.add(vehicleInfo)
           }

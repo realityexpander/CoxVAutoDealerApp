@@ -20,7 +20,7 @@ class VehiclesViewModel : ViewModel() {
   private val selectedDealer: LiveData<Dealer>
     get() = _selectedDealer
 
-  // Vehicle & Dealer display for UI
+  // "Vehicle at Dealer" display string for UI
   val selectedDealerStr
     get() = "Vehicles at ${selectedDealer.value?.name}"
 
@@ -46,8 +46,8 @@ class VehiclesViewModel : ViewModel() {
   }
 
   /**
-   * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
-   */
+   * After the navigation has taken place
+   * */
   fun displayDetailsComplete() {
     _navigateToDetails.value = null
   }
