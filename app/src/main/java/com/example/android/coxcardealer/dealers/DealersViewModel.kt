@@ -38,7 +38,7 @@ class DealersViewModel : ViewModel() {
 
   // Display Dealers list immediately
   init {
-    getDealersList(endpointVersion = CoxApiEndpointVersion.CHEAT)
+    getDealersList(endpointVersion = CoxApiEndpointVersion.NORMAL)
   }
 
   /**

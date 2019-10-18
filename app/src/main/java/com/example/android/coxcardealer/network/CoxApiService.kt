@@ -1,6 +1,7 @@
 package com.example.android.coxcardealer.network
 
 import android.content.Context
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -65,6 +66,7 @@ fun setupRetrofitAndOkHttpClient(context: Context?) {
     client = OkHttpClient.Builder()
         .dispatcher(dispatcher)
         .connectionPool(pool)
+        .addNetworkInterceptor(StethoInterceptor())
         .readTimeout(30, TimeUnit.SECONDS) // due to very slow cox server emulation
         .cache(Cache(
             cacheDir,

@@ -89,4 +89,8 @@ dependencies {
 
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+
+    // Stetho
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+    implementation 'com.facebook.stetho:stetho-js-rhino:1.5.1'
 }

@@ -22,13 +22,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.android.coxcardealer.MyApplication
 import com.example.android.coxcardealer.databinding.FragmentStartBinding
 
 /**
  * Starting view
  */
 class StartFragment : Fragment() {
-
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {

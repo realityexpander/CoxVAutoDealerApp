@@ -17,8 +17,12 @@
 
 package com.example.android.coxcardealer
 
+import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.facebook.stetho.Stetho
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,5 +33,24 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+    println( (applicationContext as MyApplication).userName)
+  }
+
+}
+
+class MyApplication : Application() {
+
+  // Global vars for activities/fragments
+  var userName: String = "Chris"
+
+  private var singleton: MyApplication? = null
+  fun getInstance(): MyApplication? {
+    return singleton
+  }
+
+  override fun onCreate() {
+    super.onCreate()
+    singleton = this
+    Stetho.initializeWithDefaults(this)
   }
 }
