@@ -159,23 +159,23 @@ class DealersViewModel : ViewModel() {
       var numActiveVehicleInfoRequests = vehicleInfoRequests.size
 
       // Poll each Vehicle Info Api call to see if it's Completed yet
-      for (vehicleInfoCall in vehicleInfoRequests) {
+      for (vehicleInfoRequest in vehicleInfoRequests) {
 
         // Poll to see if vehicleInfo Api request has finished, if so then get the dealerID from
         // vehicleInfo and request the Dealer's Info from Api
-        if (vehicleInfoCall.isCompleted || vehicleInfoCall.isCancelled) {
-          val  vehicle = vehicleInfoCall.await()
+        if (vehicleInfoRequest.isCompleted || vehicleInfoRequest.isCancelled) {
+          val  vehicleInfo = vehicleInfoRequest.await()
           numActiveVehicleInfoRequests--
 
           // Insert this vehicle into vehicles list, but only it if absent.
-          if (!vehicles.contains(vehicle)) {
-            vehicles.add(vehicle)
+          if (!vehicles.contains(vehicleInfo)) {
+            vehicles.add(vehicleInfo)
           }
 
           // If inserting a new dealerId, then concurrently start the request of the dealerId info.
-          if (!dealerIds.contains(vehicle.dealerId)) {
-            dealerIds.add(vehicle.dealerId)
-            dealerInfoRequests.add(CoxApi.retrofitService.getDealersInfoAsync(datasetId, vehicle.dealerId))
+          if (!dealerIds.contains(vehicleInfo.dealerId)) {
+            dealerIds.add(vehicleInfo.dealerId)
+            dealerInfoRequests.add(CoxApi.retrofitService.getDealersInfoAsync(datasetId, vehicleInfo.dealerId))
           }
         }
       }
