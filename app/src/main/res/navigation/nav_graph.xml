@@ -14,7 +14,7 @@
       android:label="fragment_start"
       tools:layout="@layout/fragment_start" >
       <action
-        android:id="@+id/action_showDealers"
+        android:id="@+id/actionShowDealers"
         app:destination="@id/dealersFragment" />
     </fragment>
 
@@ -26,7 +26,7 @@
         android:label="fragment_dealers"
         tools:layout="@layout/fragment_dealers" >
         <action
-            android:id="@+id/action_showVehicles"
+            android:id="@+id/actionShowVehicles"
             app:destination="@id/vehiclesFragment" />
     </fragment>
 

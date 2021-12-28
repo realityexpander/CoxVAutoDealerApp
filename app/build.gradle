@@ -17,9 +17,10 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: "kotlin-parcelize"
 
 android {
     compileSdkVersion 28
@@ -28,7 +29,7 @@ android {
     }
     defaultConfig {
         applicationId 'com.example.android.coxcardealers'
-        minSdkVersion 24
+        minSdkVersion 28
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -44,16 +45,16 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-    androidExtensions {
-        experimental = true
-    }
+//    androidExtensions {
+//        experimental = true
+//    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version_kotlin"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$version_kotlin"
 
     // Constraint Layout
@@ -63,8 +64,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
 
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 
     // Core with Ktx
     implementation "androidx.core:core-ktx:1.1.0"
