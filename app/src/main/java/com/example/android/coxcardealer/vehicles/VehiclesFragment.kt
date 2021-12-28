@@ -43,9 +43,9 @@ class VehiclesFragment : Fragment() {
     })
 
     // Navigate to show selected vehicle detail
-    viewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {
-      if (null != it) {
-        this.findNavController().navigate(VehiclesFragmentDirections.actionShowDetail(it))
+    viewModel.navigateToDetails.observe(viewLifecycleOwner, Observer { vehicle ->
+      if (null != vehicle) {
+        this.findNavController().navigate(VehiclesFragmentDirections.actionShowDetail(vehicle))
         viewModel.displayDetailsComplete()
       }
     })

@@ -35,8 +35,9 @@ class DealersFragment : Fragment() {
     binding.viewModel = viewModel
 
     // Set the adapter of the RecyclerView with clickHandler lambda for Dealer
-    binding.dealersList.adapter = DealersListAdapter(DealersListAdapter.OnClickListener {
-      viewModel.displayVehicles(it)
+    binding.dealersList.adapter = DealersListAdapter(
+      DealersListAdapter.OnClickListener {
+        viewModel.displayVehicles(it)
     })
 
     // Observe the navigateToSelectedDealer LiveData and Navigate when it isn't null
